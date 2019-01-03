@@ -1,0 +1,34 @@
+{
+  "name": "phaser-webpack-babel-boilerplate",
+  "version": "1.0.0",
+  "description": "phaser-webpack-babel-boilerplate =======",
+  "dependencies": {
+    "babel-core": "^5.8.34",
+    "babel-loader": "^5.4.0",
+    "phaser-shim": "^2.4.7",
+    "script-loader": "^0.6.1",
+    "webpack": "^1.12.11",
+    "webpack-dev-server": "^1.14.1",
+    "webpack-error-notification": "^0.1.6"
+  },
+  "devDependencies": {
+    "babel-core": "^5.8.35",
+    "babel-loader": "^5.3.2",
+    "webpack": "^1.12.14",
+    "webpack-dev-server": "^1.12.1",
+    "webpack-error-notification": "^0.1.4"
+  },
+  "scripts": {
+    "start": "webpack-dev-server --hot"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anaibol/phaser-webpack-babel-boilerplate.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/anaibol/phaser-webpack-babel-boilerplate/issues"
+  },
+  "homepage": "https://github.com/anaibol/phaser-webpack-babel-boilerplate#readme"
+}
