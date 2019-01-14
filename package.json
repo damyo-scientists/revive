@@ -1,0 +1,29 @@
+{
+  "name": "game-starter",
+  "version": "1.0.0",
+  "description": "Phaser Game Starter",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon --exec babel-node app.js --ignore src"
+  },
+  "author": "Max Quinn",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.0.0-beta.55",
+    "@babel/node": "^7.0.0-beta.55",
+    "@babel/preset-env": "^7.0.0-beta.55",
+    "babel-loader": "^8.0.0-beta.4",
+    "css-loader": "^1.0.0",
+    "html-webpack-plugin": "^3.2.0",
+    "nodemon": "^1.18.3",
+    "style-loader": "^0.21.0",
+    "webpack": "^4.16.2",
+    "webpack-dev-middleware": "^3.1.3",
+    "webpack-livereload-plugin": "^2.1.1"
+  },
+  "dependencies": {
+    "express": "^4.16.3",
+    "phaser": "^3.11.0"
+  }
+}
