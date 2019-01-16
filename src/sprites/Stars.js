@@ -9,6 +9,7 @@ class Stars {
         this.body.children.iterate(function(child) {
             child.body.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
         });
+
     }
 
     respawn() {

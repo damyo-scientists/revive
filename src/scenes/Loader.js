@@ -9,7 +9,7 @@ class Loader extends Phaser.Scene {
     }
 
     init() {
-        this.scene.start('Game');
+        this.scene.start('Start');
     }
 }
 

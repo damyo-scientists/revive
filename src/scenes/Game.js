@@ -13,6 +13,7 @@ class Game extends Phaser.Scene {
         this.player;
         this.stars;
         this.scoreText;
+        this.button;
     }
 
     create() {
@@ -35,7 +36,8 @@ class Game extends Phaser.Scene {
             { x: 50, y: 250 },
             { x: 750, y: 220 }
         ]);
-        this.stars = new Stars(this, 12, 0, 70, 11);
+        this.stars = new Stars(this, 12, 0, 70, 1);
+
     }
 
     addCollision() {
