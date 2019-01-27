@@ -1,5 +1,6 @@
 import BaseScene from "./BaseScene";
 
+
 class Start extends BaseScene {
 
     constructor() {

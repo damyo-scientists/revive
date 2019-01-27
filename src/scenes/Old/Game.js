@@ -1,7 +1,7 @@
-import Dude from '../sprites/Dude';
-import Stars from '../sprites/Stars';
-import Platforms from '../sprites/Platforms';
-import Bombs from '../sprites/Bombs';
+import Dude from '../../sprites/Dude';
+import Stars from '../../sprites/Stars';
+import Platforms from '../../sprites/Platforms';
+import Bombs from '../../sprites/Bombs';
 
 class Game extends Phaser.Scene {
     constructor() {

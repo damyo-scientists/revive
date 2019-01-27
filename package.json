@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "express": "^4.16.3",
+    "lodash": "^4.17.11",
     "phaser": "^3.11.0"
   }
 }
