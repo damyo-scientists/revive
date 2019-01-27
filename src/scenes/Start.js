@@ -9,12 +9,15 @@ class Start extends BaseScene {
         this.startButton;
     }
 
-    create(){
-        this.startButton = this.add.image(100,100,'bomb');
+    create() {
+        this.startButton = this.add.image(100, 100, 'bomb');
         this.startButton.setInteractive();
+        this.startButton.on('pointerover', () => {
+            console.log('pointerover')
+        });
+        this.startButton.on('pointerdown', () => this.changeScene('Test'));
 
-        this.startButton.on('pointerover', () => {console.log('pointerover')});
-        this.startButton.on('pointerdown', ()=> this.changeScene('Test'));
+
     }
 }
 
