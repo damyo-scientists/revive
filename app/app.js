@@ -1,20 +1,15 @@
 // get canvas and context
-const canvas = document.getElementById('app'),
-      ctx = canvas.getContext('2d');
-
-ctx.fillStyle = 'lightgray';
-ctx.fillRect(0,0,640,480);
-
-// draw text outline
-ctx.fillStyle = 'black';
-ctx.font = '36px sans-serif';
-ctx.textAlign = 'center';
-ctx.lineWidth = 4;
-ctx.strokeText('This is a sample canvas', 640 / 2, 480 / 2);
-
-// fill text
-ctx.fillStyle = 'red';
-ctx.fillText('This is a sample canvas', 640 / 2, 480 / 2);
 
 // Log successful msg for pixi
+import BriefStage from "./scene/brief-stage";
+
 if (PIXI) console.info("PIXI.JS is successfully installed")
+
+var app = new PIXI.Application(800, 600, {backgroundColor : 0x1099bb});
+document.body.appendChild(app.view);
+var briefStage = new BriefStage();
+app.stage.addChild(briefStage);
+
+briefStage.x = (app.screen.width - briefStage.width) / 2;
+briefStage.y = (app.screen.height - briefStage.height) / 2;
+
