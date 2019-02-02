@@ -1,9 +1,12 @@
+import DialogManager from "../managers/DialogManager";
+
 export default class BriefStage extends PIXI.Container {
     constructor() {
         super();
-        let basicText = new PIXI.Text('Basic text in pixi');
-        basicText.x = 30;
-        basicText.y = 90;
-        this.addChild(basicText);
+        let dialogManager = new DialogManager();
+        let dialog = dialogManager.getDialog();
+        dialog.x = 30;
+        dialog.y = 60;
+        this.addChild(dialog);
     }
 }
