@@ -10,7 +10,7 @@ To set this project up and running simply clone this repo and then:
 This project uses Webpack and Babel to enable you to write ES6.
 
 # CSS
-Webpack makes uses of SASS loader to enable you to modularize any CSS that might be included in the project. All basic styles written in styles/app.scss are made globally available in the project.
+Webpack makes uses of SASS loader to enable you to modularize any CSS that might be included in the project. All basic styles written in styles/main.scss are made globally available in the project.
 
 # Feature Overview
 * Libraries included are Pixi.JS, jQuery

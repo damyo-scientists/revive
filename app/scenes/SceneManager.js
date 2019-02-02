@@ -1,5 +1,5 @@
-import BriefStage from './brief-stage'
-import PlanStage from './plan-stage'
+import BriefStage from './BriefStage'
+import PlanStage from './PlanStage'
 
 export default class SceneManager extends PIXI.Container {
     constructor() {

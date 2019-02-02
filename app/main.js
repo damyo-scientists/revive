@@ -2,8 +2,9 @@
 
 // Log successful msg for pixi
 import SceneManager from './scenes/SceneManager'
-import BriefStage from "./scenes/brief-stage";
+import Vue from 'vue'
 
+Vue.config.productionTip = false;
 
 if (PIXI) console.info("PIXI.JS is successfully installed")
 
@@ -20,4 +21,3 @@ app.stage.addChild(sceneManager);
 //
 // sceneManager.x = (app.screen.width - sceneManager.width) / 2;
 // sceneManager.y = (app.screen.height - sceneManager.height) / 2;
-
