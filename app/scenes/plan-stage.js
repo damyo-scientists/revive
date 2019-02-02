@@ -1,8 +1,16 @@
 export default class PlanStage extends PIXI.Container {
     constructor() {
         super();
-        let planImage = new PIXI.Sprite.fromImage('app/assets/teemo.png');
+        let basicText = new PIXI.Text('Basic text in pixi');
+        basicText.x = 90;
+        basicText.y = 90;
+        //basicText.interactive = true;
 
-        this.addChild(planImage);
+        // basicText.on('pointerdown', (event) => {
+        //     this.removeChild();
+        //     this.addChild(PlanStage);
+        // });
+
+        this.addChild(basicText);
     }
 }

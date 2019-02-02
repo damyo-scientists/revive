@@ -14,7 +14,7 @@ var sceneManager = new SceneManager();
 
 //app.stage.addChild(briefStage);
 app.stage.addChild(sceneManager);
-sceneManager.openScene(0);
+//sceneManager.init();
 
 //sceneManager.startBrief();
 //
