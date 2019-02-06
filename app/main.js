@@ -3,6 +3,7 @@
 // Log successful msg for pixi
 import SceneManager from './scenes/SceneManager'
 import Vue from 'vue'
+import App from './App.vue'
 
 Vue.config.productionTip = false;
 
@@ -21,3 +22,7 @@ app.stage.addChild(sceneManager);
 //
 // sceneManager.x = (app.screen.width - sceneManager.width) / 2;
 // sceneManager.y = (app.screen.height - sceneManager.height) / 2;
+new Vue({
+    el: '#app',
+    render: h => h(App)
+})
