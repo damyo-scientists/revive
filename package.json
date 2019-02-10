@@ -1,7 +1,7 @@
 {
   "name": "revive",
   "version": "1.0.0",
-  "description": "A simple game",
+  "description": "revive",
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --progress --inline --hot --mode development",
@@ -41,6 +41,7 @@
     "style-loader": "^0.13.2",
     "vue": "^2.6.2",
     "vue-loader": "^15.6.2",
+    "vue-pixi": "^0.1.1",
     "vue-style-loader": "^4.1.2",
     "vue-template-compiler": "^2.6.2",
     "webpack": "^4.29.1",
