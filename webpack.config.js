@@ -1,6 +1,7 @@
 const ProvidePlugin = require('webpack').ProvidePlugin;
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const { VueLoaderPlugin } = require('vue-loader')
+var path = require('path');
 
 module.exports = {
     entry: [
@@ -11,12 +12,12 @@ module.exports = {
         './app/main',
     ],
     output: {
-        path: __dirname,
+        path: path.resolve(__dirname, './dist'),
+        publicPath: '/dist/',
         filename: 'bundle.js',
     },
     module: {
         rules: [
-
             {
                 test: /\.html$/,
                 use: {
@@ -34,7 +35,10 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                loader: 'css-loader',
+                use: ExtractTextPlugin.extract({
+                    fallback: "style-loader",
+                    use: "css-loader"
+                })
             },
             {
                 test: /\.scss$/,
@@ -56,6 +60,13 @@ module.exports = {
             {
                 test: /\.(shader|vert|frag|geom)$/i,
                 use: 'raw-loader'
+            },
+            {
+                test: /\.(png|jpg|gif|svg)$/,
+                loader: 'file-loader',
+                options: {
+                    name: '[name].[ext]?[hash]'
+                }
             },
             {
                 test: /\.vue$/,
@@ -91,7 +102,7 @@ module.exports = {
     },
     plugins: [
         // extract compiled CSS
-        new ExtractTextPlugin('public/styles.css', {
+        new ExtractTextPlugin('main.css', {
             allChunks: true,
         }),
         new ProvidePlugin({

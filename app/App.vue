@@ -1,5 +1,6 @@
 <template>
     <div class="stage">
+        <button class="btn btn-primary">Vue UI</button><br/>
     </div>
 </template>
 
