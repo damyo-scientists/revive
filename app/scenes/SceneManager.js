@@ -10,8 +10,8 @@ export default class SceneManager extends PIXI.Container {
         this.sceneNumber = 0;
 
         this.sceneChanger = new PIXI.Sprite.fromImage('app/assets/original.png');
-        this.sceneChanger.x = 300;
-        this.sceneChanger.y = 300;
+        this.sceneChanger.x = 280;
+        this.sceneChanger.y = 400;
         this.sceneChanger.interactive = true;
         this.sceneChanger.buttonMode = true;
         var self = this;
@@ -33,8 +33,9 @@ export default class SceneManager extends PIXI.Container {
         console.log(this.sceneNumber);
         let beforeScene = this.sceneList[this.sceneNumber - 1];
         console.log(beforeScene);
-        this.sceneChanger.removeChildren();
-        this.sceneChanger.addChild(this.sceneList[this.sceneNumber]);
+        this.removeChildren();
+        this.addChild(this.sceneList[this.sceneNumber]);
+        this.addChild(this.sceneChanger);
 
         this.sceneNumber = (this.sceneNumber + 1) % 2;
         console.log("Res : " + this.sceneNumber);
