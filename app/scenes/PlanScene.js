@@ -1,3 +1,5 @@
+import Doramong from '../objects/Doramong'
+
 export default class PlanScene extends PIXI.Container {
     constructor() {
         super();
@@ -15,9 +17,17 @@ export default class PlanScene extends PIXI.Container {
         var doraButton = new PIXI.Texture.fromImage('app/assets/doramong.png');
 
         doraButton.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
+        let Doraemong = new Doramong();
+        console.log(Doraemong);
+        let dm = Doraemong.initialize(100, 100, doraButton, 10);
+        console.log(dm);
 
         for (var i = 0; i < 5; i++) {
-            this.createDoramong(Math.floor(this.width * i + 100), 100, doraButton);
+
+            //dm.initialize(this.width * i + 100, 100, doraButton, i);
+            //this.addChild(dm);
+
+            //this.createDoramong(Math.floor(this.width * i + 100), 100, doraButton, i);
         }
     }
 
@@ -42,9 +52,8 @@ export default class PlanScene extends PIXI.Container {
         }
     }
 
-    createDoramong(x, y, t) {
+    createDoramong(x, y, t, data) {
         var doramong = new PIXI.Sprite(t);
-
         doramong.interactive = true;
         doramong.buttonMode = true;
         doramong.anchor.set(0.5);
@@ -54,6 +63,7 @@ export default class PlanScene extends PIXI.Container {
             .on('pointermove', this.onDragMove);
         doramong.x = x;
         doramong.y = y;
+
 
         this.addChild(doramong);
     }
