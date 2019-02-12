@@ -17,17 +17,13 @@ export default class PlanScene extends PIXI.Container {
         var doraButton = new PIXI.Texture.fromImage('app/assets/doramong.png');
 
         doraButton.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
-        let Doraemong = new Doramong();
-        console.log(Doraemong);
-        let dm = Doraemong.initialize(100, 100, doraButton, 10);
-        console.log(dm);
 
         for (var i = 0; i < 5; i++) {
 
-            //dm.initialize(this.width * i + 100, 100, doraButton, i);
-            //this.addChild(dm);
+            let dm = new Doramong().initialize(this.width * i + 100, 100, doraButton, i);
+            this.addChild(dm);
 
-            //this.createDoramong(Math.floor(this.width * i + 100), 100, doraButton, i);
+                this.createDoramong(Math.floor(this.width * i + 100), 100, doraButton, i);
         }
     }
 

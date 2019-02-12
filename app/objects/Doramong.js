@@ -9,7 +9,7 @@ export default class Doramong extends PIXI.Container {
         this.createFace(t);
         this.setPosition(x, y);
         this.setData(i);
-
+        return this;
     }
 
     createFace(t) {
