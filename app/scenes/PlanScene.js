@@ -23,7 +23,7 @@ export default class PlanScene extends PIXI.Container {
             let dm = new Doramong().initialize(this.width * i + 100, 100, doraButton, i);
             this.addChild(dm);
 
-                this.createDoramong(Math.floor(this.width * i + 100), 100, doraButton, i);
+            this.createDoramong(Math.floor(this.width * i + 100), 100, doraButton, i);
         }
     }
 
