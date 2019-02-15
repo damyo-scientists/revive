@@ -29,15 +29,13 @@ export default class SceneManager extends PIXI.Container {
     // }
 
     openScene(n) {
-        console.log(this.sceneList);
-        console.log(this.sceneNumber);
         let beforeScene = this.sceneList[this.sceneNumber - 1];
-        console.log(beforeScene);
+
         this.removeChildren();
         this.addChild(this.sceneList[this.sceneNumber]);
         this.addChild(this.sceneChanger);
 
         this.sceneNumber = (this.sceneNumber + 1) % 2;
-        console.log("Res : " + this.sceneNumber);
+
     }
 }

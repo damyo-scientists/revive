@@ -1,4 +1,5 @@
-import Doramong from '../objects/Doramong'
+import NDM from '../objects/NewDM'
+import Facility from '../objects/Facility'
 
 export default class PlanScene extends PIXI.Container {
     constructor() {
@@ -18,13 +19,27 @@ export default class PlanScene extends PIXI.Container {
 
         doraButton.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
 
+        let FC = new Facility();
+        FC.setupName('Lab');
+
+        this.addChild(FC);
+
         for (var i = 0; i < 5; i++) {
 
-            let dm = new Doramong().initialize(this.width * i + 100, 100, doraButton, i);
-            this.addChild(dm);
+            let dm = new NDM();
+            if (i > 0) {
+                dm.makeRandomData();
+                dm.setupSprite(doraButton);
+                dm.face.on('pointerup', this.onDragEnd);
+                this.addChild(dm.face);
+            }
+            console.log(dm.cardData);
 
-            this.createDoramong(Math.floor(this.width * i + 100), 100, doraButton, i);
+
+            //this.createDoramong(Math.floor(this.width * i + 100), 100, doraButton, i);
         }
+
+
     }
 
     onDragStart(event) {
@@ -38,6 +53,7 @@ export default class PlanScene extends PIXI.Container {
         this.dragging = false;
         this.data = null;
 
+        console.log('hi');
     }
 
     onDragMove() {
@@ -59,7 +75,7 @@ export default class PlanScene extends PIXI.Container {
             .on('pointermove', this.onDragMove);
         doramong.x = x;
         doramong.y = y;
-
+        doramong.data = data;
 
         this.addChild(doramong);
     }
