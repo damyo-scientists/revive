@@ -1,11 +1,11 @@
-import BriefStage from './BriefStage'
-import PlanStage from './PlanStage'
+import BriefScene from './BriefScene'
+import PlanScene from './PlanScene'
 
 export default class SceneManager extends PIXI.Container {
     constructor() {
         super();
-        this.plan = new PlanStage();
-        this.brief = new BriefStage();
+        this.plan = new PlanScene();
+        this.brief = new BriefScene();
         this.sceneList = [this.brief, this.plan];
         this.sceneNumber = 0;
 

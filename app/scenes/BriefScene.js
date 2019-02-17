@@ -1,6 +1,6 @@
 import DialogManager from "../managers/DialogManager";
 
-export default class BriefStage extends PIXI.Container {
+export default class BriefScene extends PIXI.Container {
     constructor() {
         super();
         let dialogManager = new DialogManager();

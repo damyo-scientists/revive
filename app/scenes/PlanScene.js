@@ -1,4 +1,4 @@
-export default class PlanStage extends PIXI.Container {
+export default class PlanScene extends PIXI.Container {
     constructor() {
         super();
         let basicText = new PIXI.Text('Basic text in pixi');
@@ -8,7 +8,7 @@ export default class PlanStage extends PIXI.Container {
 
         // basicText.on('pointerdown', (event) => {
         //     this.removeChild();
-        //     this.addChild(PlanStage);
+        //     this.addChild(PlanScene);
         // });
 
         this.addChild(basicText);
