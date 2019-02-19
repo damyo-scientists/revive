@@ -1,46 +1,97 @@
-import NDM from '../objects/NewDM'
-import Facility from '../objects/Facility'
+import PlanCharacter from '../objects/PlanCharacter'
 
 export default class PlanScene extends PIXI.Container {
+
+
     constructor() {
         super();
-        let basicText = new PIXI.Text('Basic text in pixi');
-        basicText.x = 90;
-        basicText.y = 90;
-        //basicText.interactive = true;
 
-        // basicText.on('pointerdown', (event) => {
-        //     this.removeChild();
-        //     this.addChild(PlanScene);
-        // });
-        this.addChild(basicText);
+        // 언리얼의 tick event를 기억하십니까
+        let tictok = PIXI.ticker.shared;
 
+        // 캐릭터용 텍스쳐
         var doraButton = new PIXI.Texture.fromImage('app/assets/doramong.png');
-
         doraButton.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
 
-        let FC = new Facility();
-        FC.setupName('Lab');
+        // 건물용 텍스쳐
+        var fcBackground = new PIXI.Texture.fromImage('app/assets/rabbit.png');
+        fcBackground.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
 
-        this.addChild(FC);
+        // PlanScene에서 관리하는 캐릭터 목록, 시설 목록
+        this.characterList = {};
+        this.facilityList = {};
 
-        for (var i = 0; i < 5; i++) {
-
-            let dm = new NDM();
-            if (i > 0) {
-                dm.makeRandomData();
-                dm.setupSprite(doraButton);
-                dm.face.on('pointerup', this.onDragEnd);
-                this.addChild(dm.face);
-            }
-            console.log(dm.cardData);
+        for (var i = 0; i < 1; i++) {
 
 
-            //this.createDoramong(Math.floor(this.width * i + 100), 100, doraButton, i);
+            let ch = new this.Character(i, doraButton, this);
+
+            //let ch = new PlanCharacter(i, doraButton, this);
+            let fc = new this.Facility(i, fcBackground, this);
+
+            this.addChild(fc.sprite);
+            this.addChild(ch.sprite);
+
+            //틱 이벤트에 Facility의 update 를 할당
+            tictok.add(fc.update, this);
+
+
         }
 
 
     }
+
+
+    // Character 객체
+    Character(id, t, parent) {
+        let self = {
+            id: id,
+            data: "" + Math.floor(10 * Math.random()),
+            sprite: new PIXI.Sprite(t)
+        }
+
+        self.sprite.interactive = true;
+        self.sprite.buttonMode = true;
+        self.sprite.anchor.set(0.5);
+        self.sprite.on('pointerdown', parent.onDragStart)
+            .on('pointerup', parent.onDragEnd)
+            .on('pointerupoutside', parent.onDragEnd)
+            .on('pointermove', parent.onDragMove);
+
+        // PlanScene에서 관리하는 characterList에 등록해줌.
+        parent.characterList[id] = self;
+        return self;
+    }
+
+    Facility(id, t, parent) {
+
+        let self = {
+            id: id,
+            text: new PIXI.Text("Lab"),
+            sprite: new PIXI.Sprite(t)
+        }
+        self.sprite.anchor.set(0.5);
+
+        // temp
+        self.sprite.x = 400;
+        self.sprite.y = 200;
+
+        self.update = function () {
+            for (var i in parent.characterList) {
+                var ch = parent.characterList[i];
+
+
+                if (parent.getDistance(self.sprite, ch.sprite) < 50) {
+                    console.log('inside');
+                }
+            }
+        }
+
+        parent.facilityList[id] = self;
+
+        return self;
+    }
+
 
     onDragStart(event) {
         this.data = event.data;
@@ -64,20 +115,8 @@ export default class PlanScene extends PIXI.Container {
         }
     }
 
-    createDoramong(x, y, t, data) {
-        var doramong = new PIXI.Sprite(t);
-        doramong.interactive = true;
-        doramong.buttonMode = true;
-        doramong.anchor.set(0.5);
-        doramong.on('pointerdown', this.onDragStart)
-            .on('pointerup', this.onDragEnd)
-            .on('pointerupoutside', this.onDragEnd)
-            .on('pointermove', this.onDragMove);
-        doramong.x = x;
-        doramong.y = y;
-        doramong.data = data;
-
-        this.addChild(doramong);
+    getDistance(start, end) {
+        return Math.sqrt(Math.pow(start.x - end.x, 2) + Math.pow(start.y - end.y, 2));
     }
 
 
