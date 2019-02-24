@@ -8,6 +8,7 @@
 
 <script>
     import SceneManager from './scenes/SceneManager';
+    import Game from "./core/Game";
 
     export default {
         name: "App.vue",
@@ -15,6 +16,8 @@
             this.app = new PIXI.Application({
                 antialias: true,
             });
+
+            Game.getInstance(this.$store);
             let sceneManager = new SceneManager();
             this.app.stage.addChild(sceneManager);
             this.$el.appendChild(this.app.view);
@@ -23,7 +26,7 @@
         },
         computed : {
           turn : function () {
-              return this.$store.state.turn
+              return this.$store.state.turn;
           }
         },
         data() {

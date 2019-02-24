@@ -1,6 +1,6 @@
 import DialogManager from "../managers/DialogManager";
 import Button from "../objects/Button";
-import Turn from "../core/Turn";
+import Game from "../core/Game";
 
 export default class BriefScene extends PIXI.Container {
     constructor() {
@@ -11,8 +11,8 @@ export default class BriefScene extends PIXI.Container {
         turnButton.y = 20;
         this.addChild(turnButton);
 
-        turnButton.onClick(function() {
-            Turn.getInstance().nextTurn();
+        turnButton.onClick(function () {
+            Game.getInstance().nextTurn();
         });
 
         let dialogManager = new DialogManager();
