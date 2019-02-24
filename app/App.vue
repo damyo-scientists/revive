@@ -1,6 +1,8 @@
 <template>
-    <div class="stage">
-        <button class="btn btn-primary">Vue UI</button><br/>
+    <div class="stage" id="app">
+        <button class="btn btn-primary">Vue UI</button>
+        <button class="btn btn-secondary" v-model="turn">Turn : {{turn}}</button>
+        <br/>
     </div>
 </template>
 
@@ -14,9 +16,19 @@
                 antialias: true,
             });
             let sceneManager = new SceneManager();
-
             this.app.stage.addChild(sceneManager);
             this.$el.appendChild(this.app.view);
+        },
+        created() {
+        },
+        computed : {
+          turn : function () {
+              return this.$store.state.turn
+          }
+        },
+        data() {
+            return {
+            }
         }
     }
 </script>

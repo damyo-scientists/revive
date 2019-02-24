@@ -18,7 +18,5 @@ export default class Dialog extends PIXI.Container {
         this.dialogText = new PIXI.Text("...게임은 시작되었다.");
         this.dialogText.position.set(80, 60);
         this.addChild(this.dialogText);
-
-
     }
 }
