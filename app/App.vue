@@ -17,7 +17,6 @@
                 antialias: true,
             });
 
-            Game.getInstance(this.$store);
             let sceneManager = new SceneManager();
             this.app.stage.addChild(sceneManager);
             this.$el.appendChild(this.app.view);

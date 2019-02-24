@@ -5,6 +5,7 @@ import BootstrapVue from 'bootstrap-vue';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 import {store} from './core/Store';
+import Game from "./core/Game";
 
 Vue.use(BootstrapVue);
 Vue.config.productionTip = false;
@@ -12,5 +13,8 @@ Vue.config.productionTip = false;
 new Vue({
     el: '#app',
     store,
-    render: h => h(App)
+    render: h => h(App),
+    created: function () {
+        Game.getInstance(this.$store);
+    }
 });
