@@ -3,14 +3,18 @@ import "gown";
 export default class Button extends PIXI.Container {
     constructor() {
         super();
+        this.func = [];
         this.aeonTheme = new GOWN.ThemeParser("app/plugins/gown/themes/assets/aeon_desktop/aeon_desktop.json");
         this.aeonTheme.once(GOWN.Theme.COMPLETE, this.onSkinLoaded, this);
-        this.func = [];
         GOWN.loader.load();
     }
 
     onClick(func) {
-        this.func.push(func);
+        this.func.push(['mousedown', func]);
+    }
+
+    onPointerDown(func) {
+        this.func.push(['pointerdown', func]);
     }
 
     onSkinLoaded() {
@@ -22,6 +26,8 @@ export default class Button extends PIXI.Container {
         this.button.label = "버튼";
         this.addChild(this.button);
 
-        this.button.on('mousedown', this.func[0]);
+        this.func.forEach(event => {
+            this.button.on(event[0], event[1]);
+        });
     }
 }
