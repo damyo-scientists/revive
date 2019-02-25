@@ -1,22 +1,9 @@
-<<<<<<< HEAD
-import Button from "../objects/Button";
-=======
-import PlanCharacter from '../objects/PlanCharacter'
->>>>>>> #9_drag_drop3
-
 export default class PlanScene extends PIXI.Container {
 
 
     constructor() {
         super();
-<<<<<<< HEAD
 
-        let basicText = new PIXI.Text('Basic text in pixi');
-        basicText.x = 90;
-        basicText.y = 90;
-        //basicText.interactive = true;
-=======
->>>>>>> #9_drag_drop3
 
         // 언리얼의 tick event를 기억하십니까
         let tictok = PIXI.ticker.shared;
