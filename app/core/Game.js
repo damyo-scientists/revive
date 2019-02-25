@@ -1,7 +1,12 @@
+const sprites = {};
+const jsons = {};
+const sounds = {};
+
 export default class Game {
     constructor(store) {
         this.currentTurn = 2;
         this.store = store;
+        this.loader = new PIXI.Loader();
     }
 
     static getInstance(store) {
@@ -10,6 +15,10 @@ export default class Game {
             this.instance.co1nstructor = null;
         }
         return this.instance;
+    }
+
+    loadAssets() {
+
     }
 
     getTurn() {
