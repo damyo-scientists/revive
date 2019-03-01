@@ -1,9 +1,21 @@
 <template>
+
     <div class="stage" id="app">
         <button class="btn btn-primary">Vue UI</button>
         <button class="btn btn-secondary" v-model="turn">Turn : {{turn}}</button>
         <br/>
+
+
+        <button class="btn btn-primary">Vue UI</button>
+        <br/>
+        <button class="btn btn-dark" onclick="document.querySelector('body').style.backgroundColor='gray';">Awesome
+            Theme
+        </button>
+        <button class="btn btn-light" onclick="document.querySelector('body').style.backgroundColor='white';">Weirdo
+            Theme
+        </button>
     </div>
+
 </template>
 
 <script>
@@ -23,14 +35,13 @@
         },
         created() {
         },
-        computed : {
-          turn : function () {
-              return this.$store.state.turn;
-          }
+        computed: {
+            turn: function () {
+                return this.$store.state.turn;
+            }
         },
         data() {
-            return {
-            }
+            return {}
         }
     }
 </script>
