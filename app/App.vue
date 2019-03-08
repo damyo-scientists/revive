@@ -19,7 +19,9 @@
 </template>
 
 <script>
-    import SceneManager from './scenes/SceneManager';
+
+    import SM from './scenes/SceneManager'
+    import BriefScene from './scenes/BriefScene';
     import Game from "./core/Game";
 
     export default {
@@ -29,8 +31,11 @@
                 antialias: true,
             });
 
-            let sceneManager = new SceneManager();
-            this.app.stage.addChild(sceneManager);
+            this.sm = new SM();
+            this.sm.app = this.app;
+
+            let briefScene = new BriefScene();
+            this.app.stage.addChild(briefScene);
             this.$el.appendChild(this.app.view);
         },
         created() {

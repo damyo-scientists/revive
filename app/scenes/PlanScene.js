@@ -1,9 +1,28 @@
+import SM from '../scenes/SceneManager'
+import BriefScene from "./BriefScene";
+
+let sm = new SM();
+
 export default class PlanScene extends PIXI.Container {
 
 
     constructor() {
         super();
 
+
+        let changeButtonTexture = new PIXI.Texture.fromImage('app/assets/change.png');
+        changeButtonTexture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
+
+        let asdf = new PIXI.Sprite(changeButtonTexture);
+
+        asdf.scale.x = 0.5;
+        asdf.scale.y = 0.5;
+        asdf.y = 250;
+        asdf.interactive = true;
+        asdf.buttonMode = true;
+
+        asdf.on('pointerdown', this.onClick);
+        this.addChild(asdf);
 
         // 언리얼의 tick event를 기억하십니까
         let tictok = PIXI.ticker.shared;
@@ -118,5 +137,10 @@ export default class PlanScene extends PIXI.Container {
         return Math.sqrt(Math.pow(start.x - end.x, 2) + Math.pow(start.y - end.y, 2));
     }
 
+    onClick() {
+        let bf = new BriefScene();
+
+        sm.goTo(bf);
+    }
 
 }
