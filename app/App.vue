@@ -20,7 +20,7 @@
 
 <script>
     import SceneManager from './scenes/SceneManager';
-    import Game from "./core/Game";
+    import loadAllAssets from "./utils/AssetLoader";
 
     export default {
         name: "App.vue",
@@ -28,6 +28,8 @@
             this.app = new PIXI.Application({
                 antialias: true,
             });
+
+            loadAllAssets();
 
             let sceneManager = new SceneManager();
             this.app.stage.addChild(sceneManager);

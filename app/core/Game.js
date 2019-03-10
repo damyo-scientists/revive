@@ -1,3 +1,5 @@
+import "../utils/AssetLoader"
+
 const sprites = {};
 const jsons = {};
 const sounds = {};
@@ -6,7 +8,7 @@ export default class Game {
     constructor(store) {
         this.currentTurn = 2;
         this.store = store;
-        this.loader = new PIXI.Loader();
+        this.loadAssets();
     }
 
     static getInstance(store) {
@@ -18,7 +20,6 @@ export default class Game {
     }
 
     loadAssets() {
-
     }
 
     getTurn() {

@@ -1,6 +1,6 @@
 const ProvidePlugin = require('webpack').ProvidePlugin;
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const { VueLoaderPlugin } = require('vue-loader')
+const {VueLoaderPlugin} = require('vue-loader')
 var path = require('path');
 
 module.exports = {
@@ -119,6 +119,6 @@ module.exports = {
         alias: {
             'vue$': 'vue/dist/vue.esm.js'
         },
-        extensions: ['*','.js', '.vue',],
+        extensions: ['*', '.js', '.vue',],
     }
 }

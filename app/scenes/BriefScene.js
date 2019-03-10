@@ -8,8 +8,6 @@ export default class BriefScene extends PIXI.Container {
         super();
 
         let turnButton = new Button();
-        turnButton.x = 20;
-        turnButton.y = 20;
         this.addChild(turnButton);
 
         let sound = new Howl({
@@ -17,7 +15,7 @@ export default class BriefScene extends PIXI.Container {
         });
 
         let soundOn = true;
-        turnButton.onClick(function () {
+        turnButton.on('click', function (e) {
             Game.getInstance().nextTurn();
             if (soundOn) {
                 sound.play();
