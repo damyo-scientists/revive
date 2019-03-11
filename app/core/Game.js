@@ -1,12 +1,20 @@
 const sprites = {};
 const jsons = {};
 const sounds = {};
+let instance = null;
 
 export default class Game {
+
     constructor(store) {
         this.currentTurn = 2;
         this.store = store;
-        this.loader = new PIXI.Loader();
+        this.app = null;
+        //this.loader = new PIXI.Loader();
+
+        if (instance)
+            return instance;
+        instance = this;
+
     }
 
     static getInstance(store) {
@@ -30,5 +38,12 @@ export default class Game {
         this.currentTurn += 1;
         this.store.commit('nextTurn');
         console.log('next turn');
+    }
+
+    generateApplication() {
+        this.app = new PIXI.Application({
+
+            antialias: true,
+        });
     }
 }

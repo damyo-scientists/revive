@@ -1,5 +1,6 @@
 import SM from '../scenes/SceneManager'
 import BriefScene from "./BriefScene";
+import Game from '../core/Game'
 
 let sm = new SM();
 
@@ -13,11 +14,16 @@ export default class PlanScene extends PIXI.Container {
         let changeButtonTexture = new PIXI.Texture.fromImage('app/assets/change.png');
         changeButtonTexture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
 
+        // 게임 인스턴스
+        let game = new Game();
+
         let asdf = new PIXI.Sprite(changeButtonTexture);
 
-        asdf.scale.x = 0.5;
-        asdf.scale.y = 0.5;
-        asdf.y = 250;
+        asdf.scale.x = 0.1;
+        asdf.scale.y = 0.1;
+
+        asdf.x = game.app.renderer.width / 2;
+        console.log(asdf.x);
         asdf.interactive = true;
         asdf.buttonMode = true;
 
@@ -39,13 +45,20 @@ export default class PlanScene extends PIXI.Container {
         this.characterList = {};
         this.facilityList = {};
 
-        for (var i = 0; i < 1; i++) {
+        for (var i = 0; i < 5; i++) {
 
 
             let ch = new this.Character(i, doraButton, this);
 
             //let ch = new PlanCharacter(i, doraButton, this);
             let fc = new this.Facility(i, fcBackground, this);
+
+            // 자리 배정
+            fc.sprite.x = game.app.renderer.width * i / 5 + fc.sprite.width / 2;
+            ch.sprite.x = game.app.renderer.width * i / 5 + ch.sprite.width / 2;
+
+            fc.sprite.y = game.app.renderer.height / 10;
+            ch.sprite.y = game.app.renderer.height * 9 / 10;
 
             this.addChild(fc.sprite);
             this.addChild(ch.sprite);
@@ -100,7 +113,7 @@ export default class PlanScene extends PIXI.Container {
 
 
                 if (parent.getDistance(self.sprite, ch.sprite) < 50) {
-                    console.log('inside');
+                    console.log(id);
                 }
             }
         }
