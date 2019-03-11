@@ -42,25 +42,25 @@ export default class BriefScene extends PIXI.Container {
         this.addChild(asdf);
 
 
-        let turnButton = new Button();
-        turnButton.x = 20;
-        turnButton.y = 20;
-        this.addChild(turnButton);
-
-        let sound = new Howl({
-            src: ["app/assets/sounds/bgm_maoudamashii_acoustic51.mp3"]
-        });
-
-        let soundOn = true;
-        turnButton.onClick(function () {
-            Game.getInstance().nextTurn();
-            if (soundOn) {
-                sound.play();
-            } else {
-                sound.stop();
-            }
-            soundOn = !soundOn;
-        });
+        // let turnButton = new Button();
+        // turnButton.x = 20;
+        // turnButton.y = 20;
+        // this.addChild(turnButton);
+        //
+        // let sound = new Howl({
+        //     src: ["app/assets/sounds/bgm_maoudamashii_acoustic51.mp3"]
+        // });
+        //
+        // let soundOn = true;
+        // turnButton.onClick(function () {
+        //     Game.getInstance().nextTurn();
+        //     if (soundOn) {
+        //         sound.play();
+        //     } else {
+        //         sound.stop();
+        //     }
+        //     soundOn = !soundOn;
+        // });
 
         let dialogManager = new DialogManager();
         let dialog = dialogManager.getDialog();
