@@ -7,7 +7,11 @@ export default class BriefScene extends PIXI.Container {
     constructor() {
         super();
 
-        let turnButton = new Button();
+        let turnButton = new Button({
+            text: 'sound',
+            x: 20,
+            y: 30
+        });
         this.addChild(turnButton);
 
         let sound = new Howl({

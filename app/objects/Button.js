@@ -5,7 +5,7 @@ export default class Button extends PIXI.Sprite {
                     y = 0,
                     color = 0xffffff,
                     alpha = 1,
-                    txtValue = 'button',
+                    text = 'button',
                     txtStyle = {},
                     interactive = true,
                     shape = {
@@ -21,7 +21,7 @@ export default class Button extends PIXI.Sprite {
         this.y = y;
         this.color = color;
         this.alpha = alpha;
-        this.txtValue = txtValue;
+        this.text = text;
         this.txtStyle = txtStyle;
         this.interactive = interactive;
         this.shape = shape;
@@ -65,7 +65,7 @@ export default class Button extends PIXI.Sprite {
         this.removeChildren();
 
         text.anchor = new PIXI.Point(0.5, 0.5);
-        text.text = this.txtValue;
+        text.text = this.text;
         text.style = this.txtStyle;
 
         gfx.beginFill(this.color, this.alpha);
