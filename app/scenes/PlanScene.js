@@ -1,6 +1,7 @@
 import SM from '../scenes/SceneManager'
 import BriefScene from "./BriefScene";
 import Game from '../core/Game'
+import PC from '../objects/PlanCharacter'
 
 let sm = new SM();
 
@@ -42,64 +43,67 @@ export default class PlanScene extends PIXI.Container {
         fcBackground.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
 
         // PlanScene에서 관리하는 캐릭터 목록, 시설 목록
-        this.characterList = {};
-        this.facilityList = {};
+        this.characterList = [];
+        this.facilityList = [];
 
         for (var i = 0; i < 5; i++) {
 
 
-            let ch = new this.Character(i, doraButton, this);
+            //let ch = new this.Character(i, doraButton, this);
+            let ch = new PC();
+            ch.setSpriteImage(doraButton);
+
 
             //let ch = new PlanCharacter(i, doraButton, this);
             let fc = new this.Facility(i, fcBackground, this);
 
             // 자리 배정
             fc.sprite.x = game.app.renderer.width * i / 5 + fc.sprite.width / 2;
-            ch.sprite.x = game.app.renderer.width * i / 5 + ch.sprite.width / 2;
+            //ch.sprite.x = game.app.renderer.width * i / 5 + ch.sprite.width / 2;
+            ch.spriteImage.x = game.app.renderer.width * i / 5 + ch.spriteImage.width / 2;
 
             fc.sprite.y = game.app.renderer.height / 10;
-            ch.sprite.y = game.app.renderer.height * 9 / 10;
+            // ch.sprite.y = game.app.renderer.height * 9 / 10;
+            ch.spriteImage.y = game.app.renderer.height * 9 / 10;
+
+            // 데이터 배정
+            // ch.data = game.characterList[i];
+            console.log(ch.spriteImage);
+
+
+            this.characterList[i] = ch;
 
             this.addChild(fc.sprite);
-            this.addChild(ch.sprite);
+            this.addChild(ch.spriteImage);
 
             //틱 이벤트에 Facility의 update 를 할당
             tictok.add(fc.update, this);
 
+            // ch 에 인터렉션을 달아주자
+            ch.spriteImage.on('pointerdown', this.onDragStart)
+                .on('pointerup', this.onDragEnd)
+                .on('pointerupoutside', this.onDragEnd)
+                .on('pointermove', this.onDragMove);
 
+
+        }
+
+        for (let i in this.characterList) {
+            let ch = this.characterList[i];
+            ch.characterName = game.characterList[i];
+            ch.setMentalPoint();
         }
 
 
     }
 
-
-    // Character 객체
-    Character(id, t, parent) {
-        let self = {
-            id: id,
-            data: "" + Math.floor(10 * Math.random()),
-            sprite: new PIXI.Sprite(t)
-        }
-
-        self.sprite.interactive = true;
-        self.sprite.buttonMode = true;
-        self.sprite.anchor.set(0.5);
-        self.sprite.on('pointerdown', parent.onDragStart)
-            .on('pointerup', parent.onDragEnd)
-            .on('pointerupoutside', parent.onDragEnd)
-            .on('pointermove', parent.onDragMove);
-
-        // PlanScene에서 관리하는 characterList에 등록해줌.
-        parent.characterList[id] = self;
-        return self;
-    }
 
     Facility(id, t, parent) {
 
         let self = {
             id: id,
             text: new PIXI.Text("Lab"),
-            sprite: new PIXI.Sprite(t)
+            sprite: new PIXI.Sprite(t),
         }
         self.sprite.anchor.set(0.5);
 
@@ -112,13 +116,14 @@ export default class PlanScene extends PIXI.Container {
                 var ch = parent.characterList[i];
 
 
-                if (parent.getDistance(self.sprite, ch.sprite) < 50) {
-                    console.log(id);
+                if (parent.getDistance(self.sprite, ch.spriteImage) < 50) {
+                    console.log(self.id + ' ' + ch.characterName);
                 }
             }
         }
 
         parent.facilityList[id] = self;
+
 
         return self;
     }
