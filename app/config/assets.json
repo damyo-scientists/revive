@@ -1,13 +1,10 @@
 {
-  "assets" : {
-    "sprite" : {
-
+  "assets": {
+    "sprite": {
     },
-    "json" : {
-
+    "json": {
     },
-    "sound" : {
-      
+    "sound": {
     }
   }
 }
