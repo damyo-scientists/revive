@@ -3,12 +3,26 @@ import "../utils/AssetLoader"
 const sprites = {};
 const jsons = {};
 const sounds = {};
+let instance = null;
+
 
 export default class Game {
+
     constructor(store) {
         this.currentTurn = 2;
         this.store = store;
+        this.app = null;
+        this.characterList = [];
+        //this.loader = new PIXI.Loader();
+
+
+        if (instance)
+            return instance;
+        instance = this;
+
+
         this.loadAssets();
+
     }
 
     static getInstance(store) {
@@ -18,6 +32,7 @@ export default class Game {
         }
         return this.instance;
     }
+
 
     loadAssets() {
     }
@@ -31,5 +46,21 @@ export default class Game {
         this.currentTurn += 1;
         this.store.commit('nextTurn');
         console.log('next turn');
+    }
+
+    setChracterStatus() {
+        this.characterList = ['Janitor',
+            'Scientist',
+            'Teacher',
+            'Soldier',
+            'Programmer'
+        ]
+    }
+
+    generateApplication() {
+        this.app = new PIXI.Application({
+
+            antialias: true,
+        });
     }
 }

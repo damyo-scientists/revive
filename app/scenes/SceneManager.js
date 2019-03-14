@@ -1,41 +1,30 @@
-import BriefScene from './BriefScene'
-import PlanScene from './PlanScene'
+let instance = null;
 
-export default class SceneManager extends PIXI.Container {
+export default class SceneManager {
+
+
+    set app(value) {
+        this._app = value;
+    }
+
+    get app() {
+        return this._app;
+    }
+
     constructor() {
-        super();
-        this.plan = new PlanScene();
-        this.brief = new BriefScene();
-        this.sceneList = [this.brief, this.plan];
-        this.sceneNumber = 0;
+        if (instance)
+            return instance;
 
-        this.sceneChanger = new PIXI.Sprite.fromImage('app/assets/original.png');
-        this.sceneChanger.x = 280;
-        this.sceneChanger.y = 400;
-        this.sceneChanger.interactive = true;
-        this.sceneChanger.buttonMode = true;
-        var self = this;
-        this.sceneChanger.on('pointerdown', function () {
-            self.openScene(this.sceneNumber)
-        });
-        this.addChild(this.sceneChanger);
+
+        instance = this;
+
+
     };
 
-    // startBrief() {
-    //     this.sceneNumber = 1;
-    //     this.removeChildren();
-    //     this.addChild(this.brief);
-    //
-    // }
-
-    openScene(n) {
-        let beforeScene = this.sceneList[this.sceneNumber - 1];
-
-        this.removeChildren();
-        this.addChild(this.sceneList[this.sceneNumber]);
-        this.addChild(this.sceneChanger);
-
-        this.sceneNumber = (this.sceneNumber + 1) % 2;
-
+    goTo(sceneName) {
+        this._app.stage.removeChildren();
+        this._app.stage.addChild(sceneName);
     }
+
 }
+
