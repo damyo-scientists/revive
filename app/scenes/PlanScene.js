@@ -35,11 +35,15 @@ export default class PlanScene extends PIXI.Container {
         let tictok = PIXI.ticker.shared;
 
         // 캐릭터용 텍스쳐
-        var doraButton = new PIXI.Texture.fromImage('app/assets/doramong.png');
+        var doraButton = new PIXI.Texture.from('app/assets/doramong.png');
         doraButton.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
 
+        console.log("진짜 길이", doraButton.baseTexture.realWidth);
+        console.log("가짜 길이", doraButton.baseTexture.width);
+        console.log("크기 설정", doraButton.baseTexture.scaleMode);
+
         // 건물용 텍스쳐
-        var fcBackground = new PIXI.Texture.fromImage('app/assets/rabbit.png');
+        var fcBackground = new PIXI.Texture.from('app/assets/rabbit.png');
         fcBackground.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
 
         // PlanScene에서 관리하는 캐릭터 목록, 시설 목록
@@ -74,7 +78,7 @@ export default class PlanScene extends PIXI.Container {
             this.characterList[i] = ch;
 
             this.addChild(fc.sprite);
-            this.addChild(ch.spriteImage);
+            this.addChild(ch);
 
             //틱 이벤트에 Facility의 update 를 할당
             tictok.add(fc.update, this);
@@ -91,7 +95,7 @@ export default class PlanScene extends PIXI.Container {
         for (let i in this.characterList) {
             let ch = this.characterList[i];
             ch.characterName = game.characterList[i];
-            ch.setMentalPoint();
+
         }
 
 
@@ -117,7 +121,7 @@ export default class PlanScene extends PIXI.Container {
 
 
                 if (parent.getDistance(self.sprite, ch.spriteImage) < 50) {
-                    console.log(self.id + ' ' + ch.characterName);
+                    console.log(self.id + ' ' + ch.spriteImage.width);
                 }
             }
         }
