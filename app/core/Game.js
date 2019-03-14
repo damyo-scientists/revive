@@ -1,9 +1,10 @@
+import "../utils/AssetLoader"
+
 const sprites = {};
 const jsons = {};
 const sounds = {};
 let instance = null;
 
-import CH from '../objects/PlanCharacter'
 
 export default class Game {
 
@@ -20,6 +21,8 @@ export default class Game {
         instance = this;
 
 
+        this.loadAssets();
+
     }
 
     static getInstance(store) {
@@ -32,7 +35,6 @@ export default class Game {
 
 
     loadAssets() {
-
     }
 
     getTurn() {

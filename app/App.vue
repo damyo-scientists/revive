@@ -26,6 +26,10 @@
     import BriefScene from './scenes/BriefScene';
     import Game from "./core/Game";
 
+    import SceneManager from './scenes/SceneManager';
+    import loadAllAssets from "./utils/AssetLoader";
+
+
     export default {
         name: "App.vue",
         mounted() {
@@ -71,6 +75,9 @@
             let briefScene = new BriefScene();
             game.app.stage.addChild(briefScene);
             this.$el.appendChild(game.app.view);
+
+            loadAllAssets();
+
         },
         created() {
         },

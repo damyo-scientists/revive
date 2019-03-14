@@ -62,6 +62,7 @@ export default class BriefScene extends PIXI.Container {
         //     soundOn = !soundOn;
         // });
 
+
         let dialogManager = new DialogManager();
         let dialog = dialogManager.getDialog();
         dialog.x = 30;
