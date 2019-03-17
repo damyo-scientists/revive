@@ -1,80 +1,73 @@
 import DialogManager from "../managers/DialogManager";
-import SM from "../scenes/SceneManager"
+import SceneManager from "../scenes/SceneManager"
 import Button from "../objects/Button";
 import Game from "../core/Game";
 import {Howl, Howler} from 'howler';
 import PlanScene from "./PlanScene";
 
-// 전역으로 생성시켜야 undefined가 안됨. constructor에서 this.sm 으로 할경우에 onclick 함수에서 this.sm을 읽을 때 undefined 인 거시에요.
-let sm = new SM();
-
 export default class BriefScene extends PIXI.Container {
     constructor() {
         super();
+        this.init();
+        this.showNextTurnButton();
+        this.showSceneSign();
+        this.showDialog();
+    }
 
+    init() {
+        this.sceneManager = new SceneManager();
+        this.dialogManager = new DialogManager();
+    }
 
-        // SceneManager.instance();
-        // let nextSceneButton = new Button();
-        // nextSceneButton.x = 20;
-        // nextSceneButton.y = 60;
-        // this.addChild(nextSceneButton);
-        //
-        // nextSceneButton.onClick(function () {
-        //     SceneManager.goTo(PlanScene);
-        // })
-
-
-        console.log(this.sm);
-
-        let nextTurnButtonTexture = new PIXI.Texture.fromImage('app/assets/change.png');
-        nextTurnButtonTexture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
-
-
-        let asdf = new PIXI.Sprite(nextTurnButtonTexture);
-
-        asdf.scale.x = 0.5;
-        asdf.scale.y = 0.5;
-        asdf.y = 250;
-        asdf.interactive = true;
-        asdf.buttonMode = true;
-
-        asdf.on('pointerdown', this.onClick);
-        this.addChild(asdf);
-
-
-        // let turnButton = new Button();
-        // turnButton.x = 20;
-        // turnButton.y = 20;
-        // this.addChild(turnButton);
-        //
-        // let sound = new Howl({
-        //     src: ["app/assets/sounds/bgm_maoudamashii_acoustic51.mp3"]
-        // });
-        //
-        // let soundOn = true;
-        // turnButton.onClick(function () {
-        //     Game.getInstance().nextTurn();
-        //     if (soundOn) {
-        //         sound.play();
-        //     } else {
-        //         sound.stop();
-        //     }
-        //     soundOn = !soundOn;
-        // });
-
-
-        let dialogManager = new DialogManager();
-        let dialog = dialogManager.getDialog();
+    showDialog() {
+        let dialog = this.dialogManager.getDialog();
         dialog.x = 30;
         dialog.y = 60;
         this.addChild(dialog);
-
     }
 
-    onClick() {
+    showNextTurnButton() {
+        let nextTurnButtonTexture = new PIXI.Texture.fromImage('app/assets/change.png');
+        nextTurnButtonTexture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
+        let nextTurnButton = new PIXI.Sprite(nextTurnButtonTexture);
 
-        let planScene = new PlanScene();
-        console.log(planScene);
-        sm.goTo(planScene);
+        nextTurnButton.scale.x = 0.5;
+        nextTurnButton.scale.y = 0.5;
+        nextTurnButton.y = 250;
+        nextTurnButton.interactive = true;
+        nextTurnButton.buttonMode = true;
+
+        let self = this;
+        nextTurnButton.on('pointerdown', () => {
+            let planScene = new PlanScene();
+            console.log(planScene);
+            self.sceneManager.goTo(planScene);
+        });
+        this.addChild(nextTurnButton);
+    }
+
+    showSceneSign() {
+        let sceneDetailButton = new Button({
+            text: 'Brief Scene',
+            width: 300
+        });
+
+        this.addChild(sceneDetailButton);
+
+        let sound = new Howl({
+            src: ["app/assets/sounds/bgm_maoudamashii_acoustic51.mp3"]
+        });
+
+        let soundOn = true;
+        sceneDetailButton.on('click', function () {
+            Game.getInstance().nextTurn();
+            if (soundOn) {
+                sound.play();
+            } else {
+                sound.stop();
+            }
+            soundOn = !soundOn;
+        });
+
     }
 }

@@ -2,6 +2,7 @@ import SM from '../scenes/SceneManager'
 import BriefScene from "./BriefScene";
 import Game from '../core/Game'
 import PC from '../objects/PlanCharacter'
+import Button from "../objects/Button";
 
 let sm = new SM();
 
@@ -10,7 +11,7 @@ export default class PlanScene extends PIXI.Container {
 
     constructor() {
         super();
-
+        this.showSceneSign();
 
         let changeButtonTexture = new PIXI.Texture.fromImage('app/assets/change.png');
         changeButtonTexture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
@@ -18,18 +19,18 @@ export default class PlanScene extends PIXI.Container {
         // 게임 인스턴스
         let game = new Game();
 
-        let asdf = new PIXI.Sprite(changeButtonTexture);
+        let changeButton = new PIXI.Sprite(changeButtonTexture);
 
-        asdf.scale.x = 0.1;
-        asdf.scale.y = 0.1;
+        changeButton.scale.x = 0.1;
+        changeButton.scale.y = 0.1;
 
-        asdf.x = game.app.renderer.width / 2;
-        console.log(asdf.x);
-        asdf.interactive = true;
-        asdf.buttonMode = true;
+        changeButton.x = game.app.renderer.width / 2;
+        console.log(changeButton.x);
+        changeButton.interactive = true;
+        changeButton.buttonMode = true;
 
-        asdf.on('pointerdown', this.onClick);
-        this.addChild(asdf);
+        changeButton.on('pointerdown', this.onClick);
+        this.addChild(changeButton);
 
         // 언리얼의 tick event를 기억하십니까
         let tictok = PIXI.ticker.shared;
@@ -163,6 +164,16 @@ export default class PlanScene extends PIXI.Container {
         let bf = new BriefScene();
 
         sm.goTo(bf);
+    }
+
+
+    showSceneSign() {
+        let sceneDetailButton = new Button({
+            text: 'Plan Scene',
+            width: 300
+        });
+
+        this.addChild(sceneDetailButton);
     }
 
 }
