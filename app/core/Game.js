@@ -9,30 +9,18 @@ let instance = null;
 export default class Game {
 
     constructor(store) {
+        if (Game.instance)
+            return Game.instance;
+        Game.instance = this;
+
         this.currentTurn = 2;
         this.store = store;
         this.app = null;
         this.characterList = [];
         //this.loader = new PIXI.Loader();
 
-
-        if (instance)
-            return instance;
-        instance = this;
-
-
         this.loadAssets();
-
     }
-
-    static getInstance(store) {
-        if (typeof this.instance == "undefined") {
-            this.instance = new Game(store);
-            this.instance.co1nstructor = null;
-        }
-        return this.instance;
-    }
-
 
     loadAssets() {
     }
