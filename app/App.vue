@@ -9,11 +9,6 @@
         <button class="btn btn-light" onclick="document.querySelector('body').style.backgroundColor='white';">Weirdo
             Theme
         </button>
-        <br/>
-
-
-        <button class="btn btn-primary">Vue UI</button>
-        <br/>
 
     </div>
 
