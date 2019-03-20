@@ -1,5 +1,3 @@
-let instance = null;
-
 export default class SceneManager {
 
 
@@ -12,13 +10,11 @@ export default class SceneManager {
     }
 
     constructor() {
-        if (instance)
-            return instance;
+        if (SceneManager.instance)
+            return SceneManager.instance;
 
 
-        instance = this;
-
-
+        SceneManager.instance = this;
     };
 
     goTo(sceneName) {
