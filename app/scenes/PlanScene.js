@@ -1,4 +1,4 @@
-import SM from '../scenes/SceneManager'
+import SM from '../managers/SceneManager'
 import BriefScene from "./BriefScene";
 import Game from '../core/Game'
 import PC from '../objects/PlanCharacter'

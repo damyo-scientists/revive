@@ -22,11 +22,11 @@
 
 <script>
 
-    import SM from './scenes/SceneManager'
+    import SM from './managers/SceneManager'
     import BriefScene from './scenes/BriefScene';
     import Game from "./core/Game";
 
-    import SceneManager from './scenes/SceneManager';
+    import SceneManager from './managers/SceneManager';
     import loadAllAssets from "./utils/AssetLoader";
 
 

@@ -1,5 +1,5 @@
 import DialogManager from "../managers/DialogManager";
-import SceneManager from "../scenes/SceneManager"
+import SceneManager from "../managers/SceneManager"
 import Button from "../objects/Button";
 import Game from "../core/Game";
 import {Howl, Howler} from 'howler';
@@ -44,6 +44,8 @@ export default class BriefScene extends PIXI.Container {
             self.sceneManager.goTo(planScene);
         });
         this.addChild(nextTurnButton);
+
+        console.log(new DialogManager());
     }
 
     showSceneSign() {
