@@ -6,7 +6,7 @@ var path = require('path');
 module.exports = {
     entry: [
         // import basic styles all over the application
-        './styles/main.scss',
+        './app/assets/styles/main.scss',
         // set our main.js as the entry point
         // to the PixiJS application
         './app/main',
