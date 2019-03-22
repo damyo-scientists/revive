@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --progress --inline --hot --mode development",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --require @babel/register --recursive ./test"
   },
   "repository": {
     "type": "git",
@@ -38,6 +38,7 @@
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "howler": "^2.1.1",
     "jquery": "^3.1.1",
+    "mocha": "^6.0.2",
     "node-sass": "^4.11.0",
     "pixi.js": "^4.2.2",
     "postcss-loader": "^3.0.0",
@@ -59,6 +60,7 @@
     "@babel/cli": "^7.2.3",
     "@babel/core": "^7.2.2",
     "@babel/preset-env": "^7.3.1",
+    "@babel/register": "^7.4.0",
     "queue": "^6.0.1"
   }
 }
