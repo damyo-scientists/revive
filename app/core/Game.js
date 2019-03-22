@@ -1,4 +1,4 @@
-import "../utils/AssetLoader"
+import "../utils/AssetLoader";
 
 const sprites = {};
 const jsons = {};

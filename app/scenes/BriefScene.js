@@ -4,17 +4,18 @@ import Button from "../objects/Button";
 import Game from "../core/Game";
 import {Howl, Howler} from 'howler';
 import PlanScene from "./PlanScene";
+import DialogTrigger from "../triggers/DialogTrigger";
 
 export default class BriefScene extends PIXI.Container {
     constructor() {
         super();
-        this.init();
+        this.initializeVariables();
         this.showNextTurnButton();
         this.showSceneSign();
         this.showDialog();
     }
 
-    init() {
+    initializeVariables() {
         this.sceneManager = new SceneManager();
         this.dialogManager = new DialogManager();
     }
@@ -24,6 +25,9 @@ export default class BriefScene extends PIXI.Container {
         dialog.x = 30;
         dialog.y = 60;
         this.addChild(dialog);
+
+        let dialogTrigger = new DialogTrigger();
+        dialogTrigger.tiggerDialog();
     }
 
     showNextTurnButton() {

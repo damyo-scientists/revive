@@ -1,6 +1,24 @@
 export default class Dialog extends PIXI.Container {
+    get name() {
+        return this._name;
+    }
+
+    set name(value) {
+        this._name = value;
+    }
+
+    get sentences() {
+        return this._sentences;
+    }
+
+    set sentences(value) {
+        this._sentences = value;
+    }
+
     constructor() {
         super();
+        this._sentences = null;
+        this._name = null;
         this.dialogBox = new PIXI.Graphics;
         this.dialogBox2 = new PIXI.Graphics;
 
