@@ -5,8 +5,9 @@ export default class RenpyParser {
     constructor() {
         this.characters = {};
         this.defines = {};
-        this.blocks = {};
+        this.blocks = [];
         this.defines = {};
+        this.labels = {};
         this.mode = 'COMMAND';
     }
 
@@ -81,6 +82,9 @@ export default class RenpyParser {
                 }
                 break;
             case 'label':
+                let labelKey = args[1].replace(":", "");
+                this.labels[labelKey] = this.blocks.length;
+                break;
             case 'scene':
             case 'jump':
             case 'show':
