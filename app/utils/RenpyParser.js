@@ -1,10 +1,10 @@
 import RenpyCommand from "../objects/renpy/RenpyCommand";
 import RenpyCharacter from "../objects/renpy/RenpyCharacter";
-import RenpyObject from "../objects/renpy/RenpyObject";
+import Renpy from "../objects/renpy/Renpy";
 
 export default class RenpyParser {
     constructor() {
-        this.defines = {
+        this.config = {
             characters: [],
             images: []
         };
@@ -25,15 +25,15 @@ export default class RenpyParser {
             }
 
             if (RenpyParser._isIndentedLine(line)) {
-                this._followModeRules(line);
+                this._followMode(line);
             } else { // not indented line
-                this._setByNewMode(line);
+                this._setNewMode(line);
             }
         }
-        return new RenpyObject(this.defines, this.commands);
+        return new Renpy(this.config, this.commands);
     }
 
-    _followModeRules(line) {
+    _followMode(line) {
         line = line.trim();
         // indented line follows before mode
         if (this.mode === 'COMMAND') {
@@ -43,7 +43,7 @@ export default class RenpyParser {
         }
     }
 
-    _setByNewMode(line) {
+    _setNewMode(line) {
         line = line.trim();
         // find new mode
         if (this._isMenuModeBefore()) {
@@ -60,20 +60,20 @@ export default class RenpyParser {
             this.currentMenu = new RenpyCommand('menu');
         } else if (RenpyParser._isInitLine(line)) {
             this.mode = 'INIT';
-            this._parseInit(line);
+            this._parseConfig(line);
         }
     }
 
     _parseCommand(line) {
         let args = line.split(" ");
-        let command = args[0];
-        if (Object.keys(this.defines.characters).includes(command)) {
+        let type = args[0];
+        if (Object.keys(this.config.characters).includes(type)) {
             let i = line.indexOf(" ");
             let say = line.slice(i + 1);
-            return new RenpyCommand(command, say);
+            return new RenpyCommand(type, say);
         } else {
             let targetArgs = args.splice(args, 1);
-            return new RenpyCommand(command, ...targetArgs);
+            return new RenpyCommand(type, ...targetArgs);
         }
     }
 
@@ -85,10 +85,10 @@ export default class RenpyParser {
         }
     }
 
-    _parseInit(line) {
+    _parseConfig(line) {
         let args = line.split(" ");
-        let init = args[0];
-        switch (init) {
+        let type = args[0];
+        switch (type) {
             case 'define':
                 if (args[3].startsWith('Character')) {
                     let characterDef = args[1];
@@ -110,10 +110,10 @@ export default class RenpyParser {
                     } else {
                         params = [param];
                     }
-                    this.defines.characters[characterDef] = new RenpyCharacter(...params);
+                    this.config.characters[characterDef] = new RenpyCharacter(...params);
                 } else {
                     let defKey = args[1];
-                    this.defines[defKey] = args[3];
+                    this.config[defKey] = args[3];
                 }
                 break;
             case 'image':

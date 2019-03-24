@@ -1,48 +1,53 @@
 import Dialog from "../objects/dialog/Dialog";
 import 'queue';
 import * as queue from "queue";
+import RenpyParser from "../utils/RenpyParser";
 
 export default class DialogManager {
-    get sentences() {
-        return this._sentences;
-    }
-
-    set sentences(value) {
-        this._sentences = value;
-    }
-
     getDialog() {
         return new Dialog();
     }
 
     constructor() {
-        if (DialogManager.instance)
+        if (DialogManager.instance) {
             return DialogManager.instance;
+        }
 
         DialogManager.instance = this;
-        this.sentences = queue();
+        this.label = '';
+        this.labelIdx = 0;
     }
 
-    startDialog(dialog) {
-        console.log('starting conversation with' + dialog.name);
-        this.sentences.end();
-
-        let self = this;
-        dialog.sentences.forEach(function (sentence) {
-            self.sentences.push(sentence);
-        });
-
-        this.displayNextSentence();
+    init(scenario) {
+        let data = PIXI.loader.resources[scenario].data;
+        const parser = new RenpyParser();
+        let renpyModule = parser.parseRenpyFile(data);
+        this.commands = renpyModule.commands;
+        this.config = renpyModule.config;
+        this.label = 'start';
+        this.labelIdx = 0;
     }
 
-    displayNextSentence() {
-        if (this.sentences.length == 0) {
+    showNextDialog() {
+        let command = this.commands[this.label][this.labelIdx];
+        console.log('starting conversation with' + this.label + ' label');
+        if (command.type === 'return') {
             this.endDialog();
             return;
         }
 
-        let sentence = this.sentences.pop();
-        console.log(sentence);
+        let dialog = this.makeDialog(command);
+        return dialog;
+    }
+
+    makeDialog(command) {
+        switch (command.type) {
+            case 'say':
+                break;
+            default:
+                break;
+        }
+        return new Dialog();
     }
 
     endDialog() {

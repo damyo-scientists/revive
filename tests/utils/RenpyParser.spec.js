@@ -14,15 +14,15 @@ describe('Parse Test', function () {
         let file = "define narration = Character()"
         let renpyObject = parser.parseRenpyFile(file);
 
-        assert.notEqual(renpyObject.defines.characters.narration, undefined);
-        assert.equal(renpyObject.defines.characters.narration.name, "");
-        assert.equal(renpyObject.defines.characters.narration.color, "#FFFFFF");
+        assert.notEqual(renpyObject.config.characters.narration, undefined);
+        assert.equal(renpyObject.config.characters.narration.name, "");
+        assert.equal(renpyObject.config.characters.narration.color, "#FFFFFF");
 
         let file2 = "define velmont = Character('벨몽', color=\"#11d7ff\")";
         let renpyObject2 = parser.parseRenpyFile(file2);
-        assert.notEqual(renpyObject.defines.characters.narration, undefined);
-        assert.equal(renpyObject.defines.characters.velmont.name, "벨몽");
-        assert.equal(renpyObject.defines.characters.velmont.color, "#11d7ff");
+        assert.notEqual(renpyObject.config.characters.narration, undefined);
+        assert.equal(renpyObject.config.characters.velmont.name, "벨몽");
+        assert.equal(renpyObject.config.characters.velmont.color, "#11d7ff");
     });
 
     it('define label mix', function () {
@@ -31,9 +31,9 @@ describe('Parse Test', function () {
         let renpyObject = parser.parseRenpyFile(file);
 
         assert.notEqual(parser.commands.prologue1, undefined);
-        assert.notEqual(renpyObject.defines.characters.narration, undefined);
-        assert.equal(renpyObject.defines.characters.narration.name, "");
-        assert.equal(renpyObject.defines.characters.narration.color, "#FFFFFF");
+        assert.notEqual(renpyObject.config.characters.narration, undefined);
+        assert.equal(renpyObject.config.characters.narration.name, "");
+        assert.equal(renpyObject.config.characters.narration.color, "#FFFFFF");
         console.log("ash", renpyObject.commands.prologue1[0]);
         assert.equal(renpyObject.commands.prologue1[0].target[0], "\"몸을 흔드는 부드러운 손길이 느껴져, [playername]은 선잠이 깼다.\"");
     })

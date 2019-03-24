@@ -7,16 +7,16 @@ export default class RenpyCommand {
         this._target = value;
     }
 
-    get command() {
-        return this._command;
+    get type() {
+        return this._type;
     }
 
-    set command(value) {
-        this._command = value;
+    set type(value) {
+        this._type = value;
     }
 
-    constructor(command, ...args) {
-        this._command = command;
+    constructor(type, ...args) {
+        this._type = type;
         if (typeof args !== "undefined") {
             this._target = args;
         } else {

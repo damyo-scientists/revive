@@ -8,11 +8,8 @@ export default function loadAllAssets() {
         loadData(data.sound);
         loadData(data.image);
         const file = path.join('app/assets/rpy/', 'script.rpy');
-        PIXI.loader.add("rpy", file).load((loader) => {
-            let data2 = loader.resources['rpy'].data;
-            const parser = new RenpyParser();
-            const blocks = parser.parseRenpyFile(data2);
-            console.log(blocks);
+        PIXI.loader.add("rpy", file).load(() => {
+            console.log('load renpy');
         })
     });
 

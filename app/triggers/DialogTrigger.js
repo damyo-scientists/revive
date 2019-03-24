@@ -18,7 +18,7 @@ export default class DialogTrigger {
         let dialogManager = new DialogManager();
         this.dialog = new Dialog();
         this.dialog.name = 'super mario';
-        this.dialog.sentences = ['안녕하세요', '핸녕하세요'];
+        this.dialog.dialogQueue = ['안녕하세요', '핸녕하세요'];
         dialogManager.startDialog(this.dialog);
     }
 }
