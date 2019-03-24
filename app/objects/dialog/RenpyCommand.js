@@ -1,4 +1,4 @@
-export default class RpyCommand {
+export default class RenpyCommand {
     get target() {
         return this._target;
     }
@@ -17,6 +17,10 @@ export default class RpyCommand {
 
     constructor(command, ...args) {
         this._command = command;
-        this._target = args;
+        if (typeof args !== "undefined") {
+            this._target = args;
+        } else {
+            this._target = {};
+        }
     }
 }

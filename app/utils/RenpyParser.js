@@ -1,103 +1,149 @@
-import RpyCommand from "../objects/dialog/RpyCommand";
-import RpyCharacter from "../objects/dialog/RpyCharacter";
+import RenpyCommand from "../objects/dialog/RenpyCommand";
+import RenpyCharacter from "../objects/dialog/RenpyCharacter";
+import RenpyObject from "../objects/dialog/RenpyObject";
 
 export default class RenpyParser {
     constructor() {
-        this.characters = {};
-        this.defines = {};
-        this.blocks = [];
-        this.defines = {};
-        this.labels = {};
-        this.mode = 'COMMAND';
+        this.defines = {
+            characters: [],
+            images: []
+        };
+        this.commands = [];
+        this.mode = 'COMMAND'; // ['COMMAND', 'MENU', 'INIT']
+        this.currentMenu = null;
+        this.currentMenuSelection = '';
+        this.currentLabel = '';
     }
 
-    parseContent(file) {
+    parseRenpyFile(file) {
         let lines = file.split('\r\n');
-        this.blocks = [];
-        this.characters = {};
-        this.defines = {};
 
         for (let i = 0; i < lines.length; i++) {
             let line = lines[i];
-            if (line.trim().startsWith('#') || line.trim() === "") {
+            if (RenpyParser._isUselessLine(line)) {
                 continue;
             }
 
-            if (line.startsWith('    ')) {
-                line = line.trim();
-                if (this.mode === 'COMMAND') {
-                    this.parseCommand(line);
-                } else if (this.mode === 'MENU') {
-                    this.parseMenu(line);
-                }
-            } else {
-                line = line.trim();
-                if (line.startsWith('label') || line.startsWith('define')) {
-                    this.mode = 'COMMAND';
-                    this.parseCommand(line);
-                } else if (line.startsWith('menu')) {
-                    this.mode = 'MENU';
-                    this.parseMenu(line);
-                }
+            if (RenpyParser._isIndentedLine(line)) {
+                this._followModeRules(line);
+            } else { // not indented line
+                this._setByNewMode(line);
             }
-
-
         }
-        return this.blocks;
+        return new RenpyObject(this.defines, this.commands);
     }
 
-    parseMenu(line) {
-
+    _followModeRules(line) {
+        line = line.trim();
+        // indented line follows before mode
+        if (this.mode === 'COMMAND') {
+            this.commands[this.currentLabel].push(this._parseCommand(line));
+        } else if (this.mode === 'MENU') {
+            this._parseMenu(line);
+        }
     }
 
-    parseCommand(line) {
+    _setByNewMode(line) {
+        line = line.trim();
+        // find new mode
+        if (this._isMenuModeBefore()) {
+            this.endMenuMode();
+        }
+
+        if (RenpyParser._isLabelLine(line)) {
+            this.mode = 'COMMAND';
+            let labelKey = line.split(" ")[1].replace(":", "");
+            this.commands[labelKey] = [];
+            this.currentLabel = labelKey;
+        } else if (line.startsWith('menu')) {
+            this.mode = 'MENU';
+            this.currentMenu = new RenpyCommand('menu');
+        } else if (RenpyParser._isInitLine(line)) {
+            this.mode = 'INIT';
+            this._parseInit(line);
+        }
+    }
+
+    _parseCommand(line) {
         let args = line.split(" ");
         let command = args[0];
-        // console.log("커맨드 :", args[0]);
-        // console.log("아규먼트", args);
-
-        console.log("캐릭리스트", this.characters);
-        if (Object.keys(this.characters).includes(command)) {
+        if (Object.keys(this.defines.characters).includes(command)) {
             let i = line.indexOf(" ");
             let say = line.slice(i + 1);
-            this.blocks.push(new RpyCommand({'command': 'say', 'target': [say]}));
-            return;
+            return new RenpyCommand({'command': 'say', 'target': [say]});
+        } else {
+            let targetArgs = args.splice(args, 1);
+            return new RenpyCommand(command, ...targetArgs);
         }
+    }
 
-        switch (command) {
+    _parseMenu(line) {
+        if (RenpyParser._isQuotedLine()) {
+            this.currentMenuSelection = line.split('"').replace(":", "");
+        } else {
+            this.currentMenu.target[this.currentMenuSelection] = this._parseCommand(line);
+        }
+    }
+
+    _parseInit(line) {
+        let args = line.split(" ");
+        let init = args[0];
+        switch (init) {
             case 'define':
                 if (args[3].startsWith('Character')) {
                     let characterDef = args[1];
                     console.log("캐릭정의 - " + characterDef);
-                    let params = args[3].split('(')[1].split(')');
-                    //console.log("charic param : " + params);
+                    console.log("args[3]", args[3]);
+                    let parseLeft = args[3].split('(');
+                    let params;
+                    if (parseLeft[1] === ')') {
+                        params = "''";
+                    } else {
+                        params = parseLeft[1].split(')')[0];
+                    }
+                    console.log("charic param : " + params);
                     if (params.indexOf(", ") >= 0) {
                         params = params.split(", ");
                     }
-                    let character = new RpyCharacter(...params);
-                    this.characters[characterDef] = character;
+                    this.defines.characters[characterDef] = new RenpyCharacter(...params);
                 } else {
                     let defKey = args[1];
                     this.defines[defKey] = args[3];
                 }
                 break;
-            case 'label':
-                let labelKey = args[1].replace(":", "");
-                this.labels[labelKey] = this.blocks.length;
-                break;
-            case 'scene':
-            case 'jump':
-            case 'show':
-            case 'hide':
             case 'image':
-                let targetArgs = args.splice(args, 1);
-                this.blocks.push(new RpyCommand(command, ...targetArgs));
-                break;
-            case 'return':
-                break;
-            default:
-                console.log('알 수 없는 명령어입니다. - ' + command);
                 break;
         }
+    }
+
+    static _isInitLine(line) {
+        return line.startsWith('image') || line.startsWith('define');
+    }
+
+    static _isLabelLine(line) {
+        return line.startsWith('label');
+    }
+
+    static _isUselessLine(line) {
+        return line.trim().startsWith('#') || line.trim() === "";
+    }
+
+    static _isQuotedLine(line) {
+        return line.startsWith('"');
+    }
+
+    static _isIndentedLine(line) {
+        return line.startsWith('    ');
+    }
+
+
+    _isMenuModeBefore() {
+        return this.mode === 'MENU';
+    }
+
+    endMenuMode() {
+        this.commands.push(this.currentMenu);
+        this.currentMenu = null;
+        this.currentMenuSelection = '';
     }
 }

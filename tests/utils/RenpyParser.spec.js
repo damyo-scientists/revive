@@ -5,15 +5,16 @@ describe('Parse Test', function () {
     it('label should be assigned', function () {
         const parser = new RenpyParser();
         let file = "label prologue1:";
-        parser.parseCommand(file);
-
-        assert.equal(parser.labels.prologue1, 0);
+        parser.parseRenpyFile(file);
+        assert.notEqual(parser.commands.prologue1, undefined);
     });
     it('define should be assigned', function () {
         const parser = new RenpyParser();
         let file = "define narration = Character()"
-        parser.parseCommand(file);
+        parser.parseRenpyFile(file);
 
-        assert.notEqual(parser.defines.narration, undefined);
+        assert.notEqual(parser.defines.characters.narration, undefined);
+        assert.equal(parser.defines.characters.narration.name, "");
+        assert.equal(parser.defines.characters.narration.color, "#FFFFFF");
     });
 });

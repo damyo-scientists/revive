@@ -1,4 +1,4 @@
-export default class RpyCharacter {
+export default class RenpyCharacter {
     get color() {
         return this._color;
     }
@@ -19,8 +19,14 @@ export default class RpyCharacter {
         this._name = name.split("'")[1];
         console.log("이름 : " + this.name);
         if (typeof color !== "undefined") {
-            this._color = color.split('"')[1];
-            console.log("컬러 : " + this.color);
+            if (color.indexOf('"') > 0) {
+                this._color = color.split('"')[1];
+                console.log("컬러 : " + this.color);
+            } else {
+                this._color = "#FFFFFF";
+            }
+        } else {
+            this._color = "#FFFFFF";
         }
     }
 }

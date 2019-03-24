@@ -11,7 +11,7 @@ export default function loadAllAssets() {
         PIXI.loader.add("rpy", file).load((loader) => {
             let data2 = loader.resources['rpy'].data;
             const parser = new RenpyParser();
-            const blocks = parser.parseContent(data2);
+            const blocks = parser.parseRenpyFile(data2);
             console.log(blocks);
         })
     });
