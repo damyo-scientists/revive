@@ -1,6 +1,6 @@
-import RenpyCommand from "../objects/dialog/RenpyCommand";
-import RenpyCharacter from "../objects/dialog/RenpyCharacter";
-import RenpyObject from "../objects/dialog/RenpyObject";
+import RenpyCommand from "../objects/renpy/RenpyCommand";
+import RenpyCharacter from "../objects/renpy/RenpyCharacter";
+import RenpyObject from "../objects/renpy/RenpyObject";
 
 export default class RenpyParser {
     constructor() {
@@ -70,7 +70,7 @@ export default class RenpyParser {
         if (Object.keys(this.defines.characters).includes(command)) {
             let i = line.indexOf(" ");
             let say = line.slice(i + 1);
-            return new RenpyCommand({'command': 'say', 'target': [say]});
+            return new RenpyCommand(command, say);
         } else {
             let targetArgs = args.splice(args, 1);
             return new RenpyCommand(command, ...targetArgs);
