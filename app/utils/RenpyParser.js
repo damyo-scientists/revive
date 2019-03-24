@@ -95,15 +95,20 @@ export default class RenpyParser {
                     console.log("캐릭정의 - " + characterDef);
                     console.log("args[3]", args[3]);
                     let parseLeft = args[3].split('(');
-                    let params;
+                    let param;
                     if (parseLeft[1] === ')') {
-                        params = "''";
+                        param = "''";
                     } else {
-                        params = parseLeft[1].split(')')[0];
+                        param = parseLeft[1].split(')')[0];
                     }
-                    console.log("charic param : " + params);
-                    if (params.indexOf(", ") >= 0) {
-                        params = params.split(", ");
+                    console.log("charic param : " + param);
+                    let params = [];
+                    if (param.indexOf(",") >= 0) {
+                        console.log("args[4]", args[4]);
+                        console.log("color", args[4].split('"')[1]);
+                        params = [param.split(",")[0], args[4].split('"')[1]];
+                    } else {
+                        params = [param];
                     }
                     this.defines.characters[characterDef] = new RenpyCharacter(...params);
                 } else {

@@ -18,13 +18,9 @@ export default class RenpyCharacter {
     constructor(name, color) {
         this._name = name.split("'")[1];
         console.log("이름 : " + this.name);
-        if (typeof color !== "undefined") {
-            if (color.indexOf('"') > 0) {
-                this._color = color.split('"')[1];
-                console.log("컬러 : " + this.color);
-            } else {
-                this._color = "#FFFFFF";
-            }
+        if (typeof color !== "undefined" && color !== "'") {
+            this._color = color;
+            console.log("컬러 : " + this.color);
         } else {
             this._color = "#FFFFFF";
         }
