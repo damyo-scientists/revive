@@ -17,7 +17,6 @@ export default class RenpyParser {
 
     parseRenpyFile(file) {
         let lines = file.split('\r\n');
-
         for (let i = 0; i < lines.length; i++) {
             let line = lines[i];
             if (RenpyParser._isUselessLine(line)) {
@@ -29,6 +28,9 @@ export default class RenpyParser {
             } else { // not indented line
                 this._setNewMode(line);
             }
+        }
+        if (this._isMenuModeBefore()) {
+            this.endMenuMode();
         }
         return new Renpy(this.config, this.commands);
     }
@@ -78,8 +80,8 @@ export default class RenpyParser {
     }
 
     _parseMenu(line) {
-        if (RenpyParser._isQuotedLine()) {
-            this.currentMenuSelection = line.split('"').replace(":", "");
+        if (RenpyParser._isQuotedLine(line)) {
+            this.currentMenuSelection = line.replace(":", "");
         } else {
             this.currentMenu.target[this.currentMenuSelection] = this._parseCommand(line);
         }
@@ -147,7 +149,7 @@ export default class RenpyParser {
     }
 
     endMenuMode() {
-        this.commands.push(this.currentMenu);
+        this.commands[this.currentLabel].push(this.currentMenu);
         this.currentMenu = null;
         this.currentMenuSelection = '';
     }

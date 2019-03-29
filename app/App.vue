@@ -17,12 +17,11 @@
 
 <script>
 
-    import SM from './managers/SceneManager'
+    import 'babel-polyfill';
     import BriefScene from './scenes/BriefScene';
     import Game from "./core/Game";
-
     import SceneManager from './managers/SceneManager';
-    import loadAllAssets from "./utils/AssetLoader";
+    import AssetManager from "./managers/AssetManager";
 
 
     export default {
@@ -64,15 +63,15 @@
             }
 
 
-            this.sm = new SM();
-            this.sm.app = game.app;
+            this.sceneManager = new SceneManager();
+            this.sceneManager.app = game.app;
 
-            let briefScene = new BriefScene();
-            game.app.stage.addChild(briefScene);
-            this.$el.appendChild(game.app.view);
-
-            loadAllAssets();
-
+            let assetManager = new AssetManager();
+            assetManager.loadAllAssets(() => {
+                let briefScene = new BriefScene();
+                game.app.stage.addChild(briefScene);
+                this.$el.appendChild(game.app.view);
+            });
         },
         created() {
         },

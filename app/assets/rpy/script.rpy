@@ -1,4 +1,4 @@
-# 이 파일에 게임 스크립트를 입력합니다.
+﻿# 이 파일에 게임 스크립트를 입력합니다.
 
 # image 문을 사용해 이미지를 정의합니다.
 # image eileen happy = "eileen_happy.png"
@@ -65,7 +65,7 @@ label start:
 #################################
 # JUMP STATEMENT FOR DEVELOPMENT#
 
-jump day1_night_room
+    jump day1_night_room
 
 #      JUMP STATEMENT END       #
 #################################

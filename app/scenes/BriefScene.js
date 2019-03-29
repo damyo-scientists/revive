@@ -4,7 +4,6 @@ import Button from "../objects/Button";
 import Game from "../core/Game";
 import {Howl, Howler} from 'howler';
 import PlanScene from "./PlanScene";
-import DialogTrigger from "../triggers/DialogTrigger";
 
 export default class BriefScene extends PIXI.Container {
     constructor() {
@@ -21,13 +20,11 @@ export default class BriefScene extends PIXI.Container {
     }
 
     showDialog() {
-        let dialog = this.dialogManager.getDialog();
+        this.dialogManager.init('rpy');
+        let dialog = this.dialogManager.showNextDialog();
         dialog.x = 30;
         dialog.y = 60;
         this.addChild(dialog);
-
-        let dialogTrigger = new DialogTrigger();
-        dialogTrigger.tiggerDialog();
     }
 
     showNextTurnButton() {

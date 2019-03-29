@@ -4,10 +4,6 @@ import * as queue from "queue";
 import RenpyParser from "../utils/RenpyParser";
 
 export default class DialogManager {
-    getDialog() {
-        return new Dialog();
-    }
-
     constructor() {
         if (DialogManager.instance) {
             return DialogManager.instance;
@@ -29,8 +25,10 @@ export default class DialogManager {
     }
 
     showNextDialog() {
+        console.log(this.commands);
         let command = this.commands[this.label][this.labelIdx];
         console.log('starting conversation with' + this.label + ' label');
+        console.log(command);
         if (command.type === 'return') {
             this.endDialog();
             return;
