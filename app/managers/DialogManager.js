@@ -37,6 +37,8 @@ export default class DialogManager {
         } else if (command.type === 'jump') {
             this.changeLabel(command.target[0]);
             return this.showNextDialog();
+        } else if (Object.keys(this.config.characters).includes(command.type)) {
+            return new Dialog({say: command.type + " : " + command.target[0]});
         }
 
         let dialog = this.makeDialog(command);
@@ -53,10 +55,15 @@ export default class DialogManager {
             case 'narration':
                 return new Dialog({say: command.target[0]})
                 break;
-            case 'jump':
-                break;
             case 'scene':
                 return new Dialog({say: '씬변경 : ' + command.target[0] + command.target[1]});
+                break;
+            case 'show':
+                return new Dialog({say: 'show 이벤트 : ' + command.target.join(', ')});
+                break;
+            case 'hide':
+                return new Dialog({say: 'hide 이벤트 :' + command.target[0]});
+                break;
             default:
                 break;
         }

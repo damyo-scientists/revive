@@ -106,7 +106,6 @@ export default class RenpyParser {
                     console.log("charic param : " + param);
                     let params = [];
                     if (param.indexOf(",") >= 0) {
-                        console.log("args[4]", args[4]);
                         console.log("color", args[4].split('"')[1]);
                         params = [param.split(",")[0], args[4].split('"')[1]];
                     } else {
