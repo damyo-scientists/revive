@@ -20,6 +20,8 @@ export default class AssetManager {
                     callback();
                 });
             });
+        } else {
+            callback();
         }
     }
 

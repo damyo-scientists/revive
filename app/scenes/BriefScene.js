@@ -17,13 +17,19 @@ export default class BriefScene extends PIXI.Container {
     initializeVariables() {
         this.sceneManager = new SceneManager();
         this.dialogManager = new DialogManager();
+        this.dialogManager.init('rpy');
     }
 
-    showDialog() {
-        this.dialogManager.init('rpy');
-        let dialog = this.dialogManager.showNextDialog();
+    showDialog(dialog) {
+        if (typeof dialog === 'undefined') {
+            dialog = this.dialogManager.showNextDialog();
+        }
         dialog.x = 30;
         dialog.y = 60;
+        dialog.dialogFrame.on('pointerdown', () => {
+            this.removeChild(dialog);
+            this.showDialog(this.dialogManager.showNextDialog());
+        });
         this.addChild(dialog);
     }
 
@@ -34,7 +40,7 @@ export default class BriefScene extends PIXI.Container {
 
         nextTurnButton.scale.x = 0.5;
         nextTurnButton.scale.y = 0.5;
-        nextTurnButton.y = 250;
+        nextTurnButton.y = 300;
         nextTurnButton.interactive = true;
         nextTurnButton.buttonMode = true;
 

@@ -74,8 +74,8 @@ export default class RenpyParser {
             let say = line.slice(i + 1);
             return new RenpyCommand(type, say);
         } else {
-            let targetArgs = args.splice(args, 1);
-            return new RenpyCommand(type, ...targetArgs);
+            args.splice(args, 1);
+            return new RenpyCommand(type, ...args);
         }
     }
 
