@@ -1,6 +1,5 @@
 import Dialog from "../objects/dialog/Dialog";
 import 'queue';
-import * as queue from "queue";
 import RenpyParser from "../utils/RenpyParser";
 
 export default class DialogManager {
@@ -11,7 +10,7 @@ export default class DialogManager {
 
         DialogManager.instance = this;
         this.label = '';
-        this.labelIdx = 0;
+        this.commandIdx = 0;
     }
 
     init(scenario) {
@@ -20,24 +19,30 @@ export default class DialogManager {
         let renpyModule = parser.parseRenpyFile(data);
         this.commands = renpyModule.commands;
         this.config = renpyModule.config;
-        this.label = 'start';
+        this.labels = renpyModule.labels;
         this.labelIdx = 0;
+        this.commandIdx = 0;
     }
 
     showNextDialog() {
-        let command = this.commands[this.label][this.labelIdx++];
+        let command = this.commands[this.labels[this.labelIdx]][this.commandIdx++];
         console.log(command);
-        if (this.labelIdx == 0) {
+        if (typeof command === "undefined") {
+            this.labelIdx += 1;
+            this.commandIdx = 0;
+            command = this.commands[this.labels[this.labelIdx]][this.commandIdx++];
+        }
+        if (this.commandIdx == 1) {
             console.log('starting conversation with' + this.label + ' label');
         }
-        console.log(command);
         if (command.type === 'return') {
-            this.endDialog();
-            return;
+            return this.endDialog();
         } else if (command.type === 'jump') {
             this.changeLabel(command.target[0]);
             return this.showNextDialog();
         } else if (Object.keys(this.config.characters).includes(command.type)) {
+            return new Dialog({say: command.type + " : " + command.target[0]});
+        } else if (Object.keys(this.config).includes(command.type)) {
             return new Dialog({say: command.type + " : " + command.target[0]});
         }
 
@@ -46,8 +51,8 @@ export default class DialogManager {
     }
 
     changeLabel(label) {
-        this.label = label;
-        this.labelIdx = 0;
+        this.labelIdx = this.labels.indexOf(label);
+        this.commandIdx = 0;
     }
 
     makeDialog(command) {
@@ -64,6 +69,8 @@ export default class DialogManager {
             case 'hide':
                 return new Dialog({say: 'hide 이벤트 :' + command.target[0]});
                 break;
+            case 'menu':
+                return new Dialog({say: 'menu 이벤트 : ' + Object.keys(command.target).join(", ")});
             default:
                 break;
         }
@@ -72,5 +79,6 @@ export default class DialogManager {
 
     endDialog() {
         console.log('end of conversation');
+        return false;
     }
 }

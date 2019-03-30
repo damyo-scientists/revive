@@ -1,13 +1,14 @@
-import SM from '../managers/SceneManager'
+import SceneManager from '../managers/SceneManager'
 import BriefScene from "./BriefScene";
 import Game from '../core/Game'
-import PC from '../objects/PlanCharacter'
+import PlanCharacter from '../objects/PlanCharacter'
 import Button from "../objects/Button";
 
 
 export default class PlanScene extends PIXI.Container {
     constructor() {
         super();
+        this.sceneManager = new SceneManager();
         this.showSceneSign();
         let changeButtonTexture = new PIXI.Texture.fromImage('app/assets/change.png');
         changeButtonTexture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
@@ -51,7 +52,7 @@ export default class PlanScene extends PIXI.Container {
 
 
             //let ch = new this.Character(i, doraButton, this);
-            let ch = new PC();
+            let ch = new PlanCharacter();
             ch.setSpriteImage(doraButton);
 
 
@@ -158,7 +159,8 @@ export default class PlanScene extends PIXI.Container {
 
     onClick() {
         let bf = new BriefScene();
-        this.sceneManager.goTo(bf);
+        let sceneManager = new SceneManager();
+        sceneManager.goTo(bf);
     }
 
 

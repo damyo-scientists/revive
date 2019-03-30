@@ -23,6 +23,11 @@ export default class BriefScene extends PIXI.Container {
     showDialog(dialog) {
         if (typeof dialog === 'undefined') {
             dialog = this.dialogManager.showNextDialog();
+        } else if (dialog === false) {
+            this.removeChildren();
+            console.log("대화 종료!");
+            new SceneManager().goTo(new PlanScene());
+            return;
         }
         dialog.x = 30;
         dialog.y = 60;
@@ -52,7 +57,6 @@ export default class BriefScene extends PIXI.Container {
         });
         this.addChild(nextTurnButton);
 
-        console.log(new DialogManager());
     }
 
     showSceneSign() {

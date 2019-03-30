@@ -8,6 +8,7 @@ export default class RenpyParser {
             characters: [],
             images: []
         };
+        this.labels = [];
         this.commands = [];
         this.mode = 'COMMAND'; // ['COMMAND', 'MENU', 'INIT']
         this.currentMenu = null;
@@ -32,7 +33,7 @@ export default class RenpyParser {
         if (this._isMenuModeBefore()) {
             this.endMenuMode();
         }
-        return new Renpy(this.config, this.commands);
+        return new Renpy(this.config, this.labels, this.commands);
     }
 
     _followMode(line) {
@@ -55,6 +56,7 @@ export default class RenpyParser {
         if (RenpyParser._isLabelLine(line)) {
             this.mode = 'COMMAND';
             let labelKey = line.split(" ")[1].replace(":", "");
+            this.labels.push(labelKey);
             this.commands[labelKey] = [];
             this.currentLabel = labelKey;
         } else if (line.startsWith('menu')) {
@@ -69,7 +71,7 @@ export default class RenpyParser {
     _parseCommand(line) {
         let args = line.split(" ");
         let type = args[0];
-        if (Object.keys(this.config.characters).includes(type)) {
+        if (Object.keys(this.config.characters).includes(type) || Object.keys(this.config).includes(type)) {
             let i = line.indexOf(" ");
             let say = line.slice(i + 1);
             return new RenpyCommand(type, say);
