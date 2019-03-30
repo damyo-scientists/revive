@@ -42,7 +42,6 @@
     "node-sass": "^4.11.0",
     "pixi.js": "^4.2.2",
     "postcss-loader": "^3.0.0",
-    "renpy-translate-utils": "^1.1.0",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.13.2",
     "util.promisify": "^1.0.0",
