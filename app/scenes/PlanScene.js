@@ -1,41 +1,38 @@
-import SM from '../scenes/SceneManager'
+import SceneManager from '../scenes/SceneManager'
 import BriefScene from "./BriefScene";
 import Game from '../core/Game'
 import PC from '../objects/PlanCharacter'
 
-let sm = new SM();
 
 export default class PlanScene extends PIXI.Container {
-
-
     constructor() {
         super();
 
-
+        this.sceneManager = new SceneManager();
         let changeButtonTexture = new PIXI.Texture.fromImage('app/assets/change.png');
         changeButtonTexture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
 
         // 게임 인스턴스
         let game = new Game();
 
-        let asdf = new PIXI.Sprite(changeButtonTexture);
+        let changeButton = new PIXI.Sprite(changeButtonTexture);
 
-        asdf.scale.x = 0.1;
-        asdf.scale.y = 0.1;
+        changeButton.scale.x = 0.1;
+        changeButton.scale.y = 0.1;
 
-        asdf.x = game.app.renderer.width / 2;
-        console.log(asdf.x);
-        asdf.interactive = true;
-        asdf.buttonMode = true;
+        changeButton.x = game.app.renderer.width / 2;
+        console.log(changeButton.x);
+        changeButton.interactive = true;
+        changeButton.buttonMode = true;
 
-        asdf.on('pointerdown', this.onClick);
-        this.addChild(asdf);
+        changeButton.on('pointerdown', this.onClick);
+        this.addChild(changeButton);
 
         // 언리얼의 tick event를 기억하십니까
         let tictok = PIXI.ticker.shared;
 
         // 캐릭터용 텍스쳐
-        var doraButton = new PIXI.Texture.from('app/assets/doramong.png');
+        var doraButton = new PIXI.Sprite(PIXI.loader.resources['doramong'].texture);
         doraButton.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
 
         console.log("진짜 길이", doraButton.baseTexture.realWidth);
@@ -161,8 +158,7 @@ export default class PlanScene extends PIXI.Container {
 
     onClick() {
         let bf = new BriefScene();
-
-        sm.goTo(bf);
+        this.sceneManager.goTo(bf);
     }
 
 }

@@ -15,6 +15,6 @@ new Vue({
     store,
     render: h => h(App),
     created: function () {
-        Game.getInstance(this.$store);
+        new Game(this.$store);
     }
 });

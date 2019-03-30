@@ -3,13 +3,15 @@ export default function loadAllAssets() {
         let data = loader.resources['assetsConfig'].data;
         loadData(data.theme);
         loadData(data.sound);
-        loadData(data.image);
+        loadData(data.sprites);
     });
 
 }
 
 function loadData(data) {
     for (let key in data) {
+        console.log("key", key);
+        console.log("data[key]", data[key]);
         PIXI.loader.add(key, data[key]);
     }
 }
