@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --progress --inline --hot --mode development",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --require @babel/register --recursive ./tests"
   },
   "repository": {
     "type": "git",
@@ -26,6 +26,7 @@
   "homepage": "https://github.com/giotiskl/simple_pixi_boilerplate#readme",
   "dependencies": {
     "@babel/plugin-transform-runtime": "^7.2.0",
+    "@babel/polyfill": "^7.4.0",
     "@babel/preset-react": "^7.0.0",
     "@fortawesome/fontawesome-free": "^5.7.0",
     "autoprefixer": "^6.5.3",
@@ -33,14 +34,18 @@
     "bootstrap": "^4.2.1",
     "bootstrap-vue": "^2.0.0-rc.11",
     "css-loader": "^0.26.0",
+    "es6-promisify": "^6.0.1",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "howler": "^2.1.1",
     "jquery": "^3.1.1",
+    "mocha": "^6.0.2",
     "node-sass": "^4.11.0",
     "pixi.js": "^4.2.2",
     "postcss-loader": "^3.0.0",
+    "renpy-translate-utils": "^1.1.0",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.13.2",
+    "util.promisify": "^1.0.0",
     "vue": "^2.6.2",
     "vue-loader": "^15.6.2",
     "vue-pixi": "^0.1.1",
@@ -54,6 +59,8 @@
   "devDependencies": {
     "@babel/cli": "^7.2.3",
     "@babel/core": "^7.2.2",
-    "@babel/preset-env": "^7.3.1"
+    "@babel/preset-env": "^7.3.1",
+    "@babel/register": "^7.4.0",
+    "queue": "^6.0.1"
   }
 }

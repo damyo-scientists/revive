@@ -1,14 +1,14 @@
-import SceneManager from '../scenes/SceneManager'
+import SM from '../managers/SceneManager'
 import BriefScene from "./BriefScene";
 import Game from '../core/Game'
 import PC from '../objects/PlanCharacter'
+import Button from "../objects/Button";
 
 
 export default class PlanScene extends PIXI.Container {
     constructor() {
         super();
-
-        this.sceneManager = new SceneManager();
+        this.showSceneSign();
         let changeButtonTexture = new PIXI.Texture.fromImage('app/assets/change.png');
         changeButtonTexture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
 
@@ -32,7 +32,7 @@ export default class PlanScene extends PIXI.Container {
         let tictok = PIXI.ticker.shared;
 
         // 캐릭터용 텍스쳐
-        var doraButton = new PIXI.Sprite(PIXI.loader.resources['doramong'].texture);
+        var doraButton = PIXI.loader.resources['doramong'].texture;
         doraButton.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
 
         console.log("진짜 길이", doraButton.baseTexture.realWidth);
@@ -159,6 +159,16 @@ export default class PlanScene extends PIXI.Container {
     onClick() {
         let bf = new BriefScene();
         this.sceneManager.goTo(bf);
+    }
+
+
+    showSceneSign() {
+        let sceneDetailButton = new Button({
+            text: 'Plan Scene',
+            width: 300
+        });
+
+        this.addChild(sceneDetailButton);
     }
 
 }
