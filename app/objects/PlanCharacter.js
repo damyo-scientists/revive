@@ -12,6 +12,9 @@ export default class PlanCharacter extends PIXI.Container {
         this.outerMentalBar = new PIXI.Graphics();
         this.innerMentalBar = new PIXI.Graphics();
 
+        this.initialPositionX = 0;
+        this.initialPositionY = 0;
+
     }
 
     setSpriteImage(t) {
@@ -25,6 +28,16 @@ export default class PlanCharacter extends PIXI.Container {
         this.addChild(this.spriteImage);
 
 
+    }
+
+    setInitialpoint(x, y) {
+        this.initialPositionX = x;
+        this.initialPositionY = y;
+    }
+
+    returnToInitialPoint() {
+        this.spriteImage.x = this.initialPositionX;
+        this.spriteImage.y = this.initialPositionY;
     }
 
     setMentalPoint(a = 1) {
