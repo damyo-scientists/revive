@@ -12,6 +12,7 @@ export default class PlanCharacter extends PIXI.Container {
         this.outerMentalBar = new PIXI.Graphics();
         this.innerMentalBar = new PIXI.Graphics();
 
+
     }
 
     setSpriteImage(t) {

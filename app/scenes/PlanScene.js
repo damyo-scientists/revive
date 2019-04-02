@@ -1,10 +1,11 @@
-import SM from '../scenes/SceneManager'
+import SceneManager from '../scenes/SceneManager'
 import BriefScene from "./BriefScene";
 import Game from '../core/Game'
-import PC from '../objects/PlanCharacter'
+import PlanCharacter from '../objects/PlanCharacter'
+import Facility from "../objects/Facility";
 import Button from "../objects/Button";
 
-let sm = new SM();
+let sceneManager = new SceneManager();
 
 export default class PlanScene extends PIXI.Container {
 
@@ -13,6 +14,7 @@ export default class PlanScene extends PIXI.Container {
         super();
         this.showSceneSign();
 
+
         let changeButtonTexture = new PIXI.Texture.fromImage('app/assets/change.png');
         changeButtonTexture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
 
@@ -20,124 +22,150 @@ export default class PlanScene extends PIXI.Container {
         let game = new Game();
 
         let changeButton = new PIXI.Sprite(changeButtonTexture);
-
-        changeButton.scale.x = 0.1;
-        changeButton.scale.y = 0.1;
-
-        changeButton.x = game.app.renderer.width / 2;
-        console.log(changeButton.x);
-        changeButton.interactive = true;
-        changeButton.buttonMode = true;
-
-        changeButton.on('pointerdown', this.onClick);
-        this.addChild(changeButton);
-
-        // 언리얼의 tick event를 기억하십니까
-        let tictok = PIXI.ticker.shared;
+        this.addSceneChangerButton(changeButton);
 
         // 캐릭터용 텍스쳐
         var doraButton = new PIXI.Texture.from('app/assets/doramong.png');
         doraButton.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
 
-        console.log("진짜 길이", doraButton.baseTexture.realWidth);
-        console.log("가짜 길이", doraButton.baseTexture.width);
-        console.log("크기 설정", doraButton.baseTexture.scaleMode);
-
         // 건물용 텍스쳐
-        var fcBackground = new PIXI.Texture.from('app/assets/rabbit.png');
-        fcBackground.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
+        var facilityTexture = new PIXI.Texture.from('app/assets/rabbit.png');
+        facilityTexture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
 
         // PlanScene에서 관리하는 캐릭터 목록, 시설 목록
         this.characterList = [];
         this.facilityList = [];
 
+
+        // 캐릭터 생성, 건물 생성
         for (var i = 0; i < 5; i++) {
 
 
             //let ch = new this.Character(i, doraButton, this);
-            let ch = new PC();
-            ch.setSpriteImage(doraButton);
+            let character = new PlanCharacter();
+            character.setSpriteImage(doraButton);
 
 
-            //let ch = new PlanCharacter(i, doraButton, this);
-            let fc = new this.Facility(i, fcBackground, this);
+            //let character = new PlanCharacter(i, doraButton, this);
+            //let fc = new this.Facility(i, facilityTexture, this);
+            let facility = new Facility();
+            facility.setupFacility(facilityTexture, "Lab");
+            facility.id = i;
+
+            this.facilityList[i] = facility;
 
             // 자리 배정
-            fc.sprite.x = game.app.renderer.width * i / 5 + fc.sprite.width / 2;
+            facility.spriteImage.x = 1600 * i / 5 + facility.spriteImage.width / 2;
             //ch.sprite.x = game.app.renderer.width * i / 5 + ch.sprite.width / 2;
-            ch.spriteImage.x = game.app.renderer.width * i / 5 + ch.spriteImage.width / 2;
+            character.spriteImage.x = 1600 * i / 5 + character.spriteImage.width / 2;
 
-            fc.sprite.y = game.app.renderer.height / 10;
+            facility.spriteImage.y = game.app.renderer.height / 10;
             // ch.sprite.y = game.app.renderer.height * 9 / 10;
-            ch.spriteImage.y = game.app.renderer.height * 9 / 10;
+            character.spriteImage.y = game.app.renderer.height * 9 / 10;
 
             // 데이터 배정
             // ch.data = game.characterList[i];
-            console.log(ch.spriteImage);
 
 
-            this.characterList[i] = ch;
+            this.characterList[i] = character;
 
-            this.addChild(fc.sprite);
-            this.addChild(ch);
+
+            this.addChild(facility);
+
+            this.addChild(character);
+
+            console.log(facility.spriteImage);
+            // console.log("공장의 z index: " + facility.spriteImage.zOrder);
+            // console.log("캐릭터의 z index: " + character.spriteImage.zOrder);
 
             //틱 이벤트에 Facility의 update 를 할당
-            tictok.add(fc.update, this);
+            // tictok.add(fc.update, this);
+            //tictok.add(this.update(facility));
+
 
             // ch 에 인터렉션을 달아주자
-            ch.spriteImage.on('pointerdown', this.onDragStart)
+            character.spriteImage.on('pointerdown', this.onDragStart)
                 .on('pointerup', this.onDragEnd)
                 .on('pointerupoutside', this.onDragEnd)
                 .on('pointermove', this.onDragMove);
 
+            facility.spriteImage.on('pointerover', this.facilityPointerOver)
+                .on('pointerout', this.facilityPointerOut);
 
         }
 
         for (let i in this.characterList) {
-            let ch = this.characterList[i];
-            ch.characterName = game.characterList[i];
+            let character = this.characterList[i];
+            character.characterName = game.characterList[i];
 
         }
+
+
+        this.selectedCharacter = null;
+    }
+
+
+    // Facility(id, t, parent) {
+    //
+    //     let self = {
+    //         id: id,
+    //         text: new PIXI.Text("Lab"),
+    //         sprite: new PIXI.Sprite(t),
+    //     }
+    //     self.sprite.anchor.set(0.5);
+    //
+    //     // temp
+    //     self.sprite.x = 400;
+    //     self.sprite.y = 200;
+    //
+    //     self.update = function () {
+    //         for (var i in parent.characterList) {
+    //             var ch = parent.characterList[i];
+    //
+    //
+    //             if (parent.getDistance(self.sprite, ch.spriteImage) < 50) {
+    //                 console.log(self.id + ' ' + ch.spriteImage.width);
+    //             }
+    //         }
+    //     }
+    //
+    //     parent.facilityList[id] = self;
+    //
+    //
+    //     return self;
+    // }
+
+    // update(facility) {
+    //     for (let i in this.characterList) {
+    //         let character = this.characterList[i];
+    //
+    //         console.log(facility.id);
+    //         if (this.getDistance(facility.spriteImage, character.spriteImage) < 50) {
+    //             console.log(facility.id + " " + character.characterName);
+    //         }
+    //     }
+    // }
+
+    // 마우스가 들어오면 정보창 보여줌
+    facilityPointerOver(event) {
+
+        let facility = event.target.parent;
+        facility.informationBox.visible = true;
 
 
     }
 
-
-    Facility(id, t, parent) {
-
-        let self = {
-            id: id,
-            text: new PIXI.Text("Lab"),
-            sprite: new PIXI.Sprite(t),
-        }
-        self.sprite.anchor.set(0.5);
-
-        // temp
-        self.sprite.x = 400;
-        self.sprite.y = 200;
-
-        self.update = function () {
-            for (var i in parent.characterList) {
-                var ch = parent.characterList[i];
-
-
-                if (parent.getDistance(self.sprite, ch.spriteImage) < 50) {
-                    console.log(self.id + ' ' + ch.spriteImage.width);
-                }
-            }
-        }
-
-        parent.facilityList[id] = self;
-
-
-        return self;
+    // 나갈때 불 끄십시오
+    facilityPointerOut(event) {
+        this.parent.informationBox.visible = false;
     }
-
 
     onDragStart(event) {
         this.data = event.data;
         this.alpha = 0.5;
         this.dragging = true;
+        this.selectedCharacter = event.target.parent;
+        console.log(this.selectedCharacter.characterName);
     }
 
     onDragEnd() {
@@ -163,7 +191,7 @@ export default class PlanScene extends PIXI.Container {
     onClick() {
         let bf = new BriefScene();
 
-        sm.goTo(bf);
+        sceneManager.goTo(bf);
     }
 
 
@@ -174,6 +202,20 @@ export default class PlanScene extends PIXI.Container {
         });
 
         this.addChild(sceneDetailButton);
+    }
+
+    addSceneChangerButton(changeButton) {
+        changeButton.scale.x = 0.1;
+        changeButton.scale.y = 0.1;
+
+        changeButton.x = 50;
+        changeButton.y = 400;
+
+        changeButton.interactive = true;
+        changeButton.buttonMode = true;
+
+        changeButton.on('pointerdown', this.onClick);
+        this.addChild(changeButton);
     }
 
 }

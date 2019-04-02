@@ -1,46 +1,33 @@
 export default class Facility extends PIXI.Container {
     constructor() {
         super();
-
-        this.box = new PIXI.Graphics;
-
-        //e3ecfc
-        this.box.beginFill(0xe3ecfc);
-        this.box.drawRect(0, 0, 200, 350);
-        this.box.endFill();
-        this.box.position.set(0, 200);
-        this.box.interactive = true;
-        this.addChild(this.box);
-
-
+        this.id = 0;
         this.name = new PIXI.Text();
-        this.name.anchor.set(0.5, 0.5);
-        this.name.position.set((this.box.x + this.box.width) / 2);
-        this.box.addChild(this.name);
-
-
-        this.cardData;
+        this.expectedStamina = 1;
+        this.spriteImage = new PIXI.Sprite();
+        this.spriteImage.anchor.set(0.5);
+        this.informationBox = new PIXI.Graphics();
     }
 
-    setupName(a) {
-
-        this.name.text = a;
+    setupFacility(texture, name) {
+        this.spriteImage.texture = texture;
+        this.spriteImage.interactive = true;
+        this.name.text = name;
         this.name.style = {fill: 0xff1010, fontsize: 24, align: 'center'}
+        this.addChild(this.spriteImage);
+        // 위치를 맞추자
+        this.spriteImage.addChild(this.name);
+        this.spriteImage.addChild(this.informationBox);
 
-        // this.name(a, {fontsize: 24, align: 'center'});
-        return this;
-    }
+        // 정보창도 그려주자
+        this.informationBox.lineStyle(2, 0xFF00FF, 1);
+        this.informationBox.beginFill(0x650A5A, 0.25);
+        this.informationBox.drawRoundedRect(0, 0, 100, 100, 16);
+        this.informationBox.endFill();
+        this.informationBox.visible = false;
 
-    setupData(dm) {
-        
-        if (isinbox) {
-            console.log(dm.cardData);
+
         }
 
-        return this;
-    }
 
-    clickCheck() {
-        console.log('hi');
-    }
 }
