@@ -7,13 +7,15 @@ export default class Facility extends PIXI.Container {
         this.spriteImage = new PIXI.Sprite();
         this.spriteImage.anchor.set(0.5);
         this.informationBox = new PIXI.Graphics();
+
+        this.resource = 0;
     }
 
     setupFacility(texture, name) {
         this.spriteImage.texture = texture;
         this.spriteImage.interactive = true;
         this.name.text = name;
-        this.name.style = {fill: 0xff1010, fontsize: 24, align: 'center'}
+        this.name.style = {fill: 0xf442d4, fontSize: 60, align: 'right'};
         this.addChild(this.spriteImage);
         // 위치를 맞추자
         this.spriteImage.addChild(this.name);
@@ -29,6 +31,7 @@ export default class Facility extends PIXI.Container {
 
     }
 
+    // 범위안인지 쳌
     checkCollision(start, end) {
         let isInside = false;
         if (Math.sqrt(Math.pow(start.x - end.x, 2) + Math.pow(start.y - end.y, 2)) < 50) {
@@ -38,7 +41,6 @@ export default class Facility extends PIXI.Container {
     }
 
 
-    // 이 안에서 하면 작동이 1회성으로만 됨.
     setupInteraction() {
         // () 이거 붙이면 한번만 실행됨으로 리스너 달아줄때는 주의하도록 하자
         this.spriteImage.on('pointerover', this.facilityPointerOver)

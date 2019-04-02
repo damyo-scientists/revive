@@ -7,6 +7,9 @@ export default class PlanCharacter extends PIXI.Container {
         this.characterName = "anonymous";
         this.id = 0;
         this.data = [];
+        this.resource = 0;
+
+        // Visual 관련
         this.spriteImage = new PIXI.Sprite();
         this.mentalBar = new PIXI.Container();
         this.outerMentalBar = new PIXI.Graphics();
@@ -15,6 +18,9 @@ export default class PlanCharacter extends PIXI.Container {
         this.initialPositionX = 0;
         this.initialPositionY = 0;
 
+
+        // 로직 관련
+        this.isDeployed = false;
     }
 
     setSpriteImage(t) {
@@ -30,6 +36,17 @@ export default class PlanCharacter extends PIXI.Container {
 
     }
 
+    deployed(resource) {
+        this.isDeployed = true;
+        this.resource = resource;
+        console.log(resource);
+    }
+
+    undeployed() {
+        this.isDeployed = false;
+        this.resource = 0;
+    }
+
     setInitialpoint(x, y) {
         this.initialPositionX = x;
         this.initialPositionY = y;
@@ -39,6 +56,7 @@ export default class PlanCharacter extends PIXI.Container {
         this.spriteImage.x = this.initialPositionX;
         this.spriteImage.y = this.initialPositionY;
     }
+
 
     setMentalPoint(a = 1) {
         // 멘탈바 배경

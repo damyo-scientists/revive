@@ -4,6 +4,7 @@ import Game from '../core/Game'
 import PlanCharacter from '../objects/PlanCharacter'
 import Button from "../objects/Button";
 import Facility from "../objects/Facility";
+import ResultScene from "./ResultScene";
 
 
 export default class PlanScene extends PIXI.Container {
@@ -47,6 +48,30 @@ export default class PlanScene extends PIXI.Container {
         this.characterList = [];
         this.facilityList = [];
 
+
+        for (var i = 0; i < 5; i++) {
+
+
+            let facility = new Facility();
+            facility.setupFacility(facilityTexture, "Lab");
+            facility.id = i;
+
+
+            // 자리 배정
+            facility.spriteImage.x = game.app.renderer.width * i / 5 + facility.spriteImage.width / 2;
+
+            facility.spriteImage.y = game.app.renderer.height / 10;
+            this.facilityList[i] = facility;
+            facility.setupInteraction();
+
+
+            // 자원 배정 (나중에 여기는 외부에서 시트로 받거나 란듐으로 돌리거나
+            facility.resource = i + 1;
+
+            this.addChild(facility);
+
+        }
+
         for (var i = 0; i < 5; i++) {
 
 
@@ -56,18 +81,18 @@ export default class PlanScene extends PIXI.Container {
 
 
             //let ch = new PlanCharacter(i, doraButton, this);
-            let facility = new Facility();
-            facility.setupFacility(facilityTexture, "Lab");
-            facility.id = i;
+            // let facility = new Facility();
+            // facility.setupFacility(facilityTexture, "Lab");
+            // facility.id = i;
 
             //let fc = new this.Facility(i, facilityTexture, this);
 
             // 자리 배정
-            facility.spriteImage.x = game.app.renderer.width * i / 5 + facility.spriteImage.width / 2;
+            //facility.spriteImage.x = game.app.renderer.width * i / 5 + facility.spriteImage.width / 2;
             //ch.sprite.x = game.app.renderer.width * i / 5 + ch.sprite.width / 2;
             ch.spriteImage.x = game.app.renderer.width * i / 5 + ch.spriteImage.width / 2;
 
-            facility.spriteImage.y = game.app.renderer.height / 10;
+            //facility.spriteImage.y = game.app.renderer.height / 10;
             // ch.sprite.y = game.app.renderer.height * 9 / 10;
             ch.spriteImage.y = game.app.renderer.height * 9 / 10;
 
@@ -79,10 +104,10 @@ export default class PlanScene extends PIXI.Container {
             ch.setInitialpoint(ch.spriteImage.x, ch.spriteImage.y);
 
             this.characterList[i] = ch;
-            this.facilityList[i] = facility;
-            facility.setupInteraction();
+            //this.facilityList[i] = facility;
+            //facility.setupInteraction();
 
-            this.addChild(facility);
+            //this.addChild(facility);
             this.addChild(ch);
 
             //틱 이벤트에 Facility의 update 를 할당
@@ -109,37 +134,6 @@ export default class PlanScene extends PIXI.Container {
     }
 
 
-    // Facility(id, t, parent) {
-    //
-    //     let self = {
-    //         id: id,
-    //         text: new PIXI.Text("Lab"),
-    //         sprite: new PIXI.Sprite(t),
-    //     }
-    //     self.sprite.anchor.set(0.5);
-    //
-    //     // temp
-    //     self.sprite.x = 400;
-    //     self.sprite.y = 200;
-    //
-    //     self.update = function () {
-    //         for (var i in parent.characterList) {
-    //             var ch = parent.characterList[i];
-    //
-    //
-    //             if (parent.getDistance(self.sprite, ch.spriteImage) < 50) {
-    //                 console.log(self.id + ' ' + ch.spriteImage.width);
-    //             }
-    //         }
-    //     }
-    //
-    //     parent.facilityList[id] = self;
-    //
-    //
-    //     return self;
-    // }
-
-
     onDragStart(event) {
         this.data = event.data;
         this.alpha = 0.5;
@@ -160,7 +154,12 @@ export default class PlanScene extends PIXI.Container {
         for (let i in facilityList) {
             if (facilityList[i].checkCollision(this, facilityList[i].spriteImage)) {
                 isInside = true;
-                console.log('inside');
+                console.log(this.parent);
+
+
+                // 캐릭터에게 건물에 적용된 자원만큼 배정한다.
+                this.parent.deployed(facilityList[i].resource);
+
             }
 
 
@@ -169,6 +168,7 @@ export default class PlanScene extends PIXI.Container {
         // 일하지 않을 거면 돌아가시오
         if (isInside == false) {
             this.parent.returnToInitialPoint();
+            this.parent.undeployed();
         }
 
 
@@ -190,9 +190,34 @@ export default class PlanScene extends PIXI.Container {
     }
 
     onClick() {
-        let bf = new BriefScene();
+        let resultScene = new ResultScene();
         let sceneManager = new SceneManager();
-        sceneManager.goTo(bf);
+
+        // 정산에 보내기 위해 Game에 저장
+
+        let resourcePoint = 0;
+
+        for (let i in this.parent.characterList) {
+
+            if (this.parent.characterList[i].isDeployed) {
+
+                resourcePoint += this.parent.characterList[i].resource;
+
+                this.parent.characterList[i].undeployed();
+            }
+        }
+
+        console.log("whole point is " + resourcePoint);
+        let game = new Game();
+
+        game.addResource(resourcePoint);
+
+
+        // 넘어가서 ResultScene에서 부르게 되면 계산이 한 박자 늦게 적용된다.
+        resultScene.displayResult();
+
+
+        sceneManager.goTo(resultScene);
     }
 
 
