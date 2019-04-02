@@ -9,11 +9,6 @@
         <button class="btn btn-light" onclick="document.querySelector('body').style.backgroundColor='white';">Weirdo
             Theme
         </button>
-        <br/>
-
-
-        <button class="btn btn-primary">Vue UI</button>
-        <br/>
 
     </div>
 
@@ -22,12 +17,11 @@
 
 <script>
 
-    import SM from './scenes/SceneManager'
+    import 'babel-polyfill';
     import BriefScene from './scenes/BriefScene';
     import Game from "./core/Game";
-
-    import SceneManager from './scenes/SceneManager';
-    import loadAllAssets from "./utils/AssetLoader";
+    import SceneManager from './managers/SceneManager';
+    import AssetManager from "./managers/AssetManager";
 
 
     export default {
@@ -69,15 +63,15 @@
             }
 
 
-            this.sm = new SM();
-            this.sm.app = game.app;
+            this.sceneManager = new SceneManager();
+            this.sceneManager.app = game.app;
 
-            let briefScene = new BriefScene();
-            game.app.stage.addChild(briefScene);
-            this.$el.appendChild(game.app.view);
-
-            loadAllAssets();
-
+            let assetManager = new AssetManager();
+            assetManager.loadAllAssets(() => {
+                let briefScene = new BriefScene();
+                game.app.stage.addChild(briefScene);
+                this.$el.appendChild(game.app.view);
+            });
         },
         created() {
         },

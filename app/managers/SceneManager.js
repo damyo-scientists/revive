@@ -1,6 +1,4 @@
 export default class SceneManager {
-
-
     set app(value) {
         this._app = value;
     }
@@ -12,7 +10,6 @@ export default class SceneManager {
     constructor() {
         if (SceneManager.instance)
             return SceneManager.instance;
-
 
         SceneManager.instance = this;
     };

@@ -1,6 +1,7 @@
 {
   "assets": {
-    "sprite": {
+    "sprites": {
+      "doramong": "app/assets/sprites/doramong.png"
     },
     "json": {
     },

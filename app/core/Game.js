@@ -1,5 +1,3 @@
-import "../utils/AssetLoader"
-
 const sprites = {};
 const jsons = {};
 const sounds = {};
@@ -19,10 +17,6 @@ export default class Game {
         this.characterList = [];
         //this.loader = new PIXI.Loader();
 
-        this.loadAssets();
-    }
-
-    loadAssets() {
     }
 
     getTurn() {
