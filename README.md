@@ -9,7 +9,7 @@ To set this project up and running simply clone this repo and then:
 * run ````npm run start```` to launch the webpack dev server with hot reloading.
 
 # Developer
-* Main Designer : Jisu Kim
+* Main Designer : Jisoo Kim
 * UI/System Designer : Byeori Shin
 * Server Developer : Daehoon Kim
 * Client Developer : Hong Suk Yoo
