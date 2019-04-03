@@ -1,4 +1,4 @@
-![게임메인이미지](app/assets/sprites/revive.png)
+<img src="https://github.com/urine-scientists/revive/blob/master/app/assets/sprites/revive_sm.jpg?raw=true" width="320" height="400">
 
 # About revive
 Revive is pixijs, vue, mongodb based web story game. 😘
