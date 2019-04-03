@@ -18,6 +18,10 @@ export default class Facility extends PIXI.Container {
         this.name.position.set((this.box.x + this.box.width) / 2);
         this.box.addChild(this.name);
 
+        this.on('scroll', (event) => {
+           console.log("scroll!");
+        });
+
 
         this.cardData;
     }
