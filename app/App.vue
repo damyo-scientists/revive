@@ -43,6 +43,7 @@
             game.setChracterStatus();
             game.app.renderer = PIXI.autoDetectRenderer(screen.availWidth, screen.availHeight);
 
+
             function resize(app) {
                 if (window.innerWidth / window.innerHeight >= ratio) {
                     var w = window.innerHeight * ratio;

@@ -16,11 +16,16 @@ export default class Game {
         this.app = null;
         this.characterList = [];
         //this.loader = new PIXI.Loader();
+        this.resource = 0;
 
     }
 
     getTurn() {
         return this.currentTurn;
+    }
+
+    addResource(point) {
+        this.resource += point;
     }
 
     nextTurn() {
