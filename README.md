@@ -1,4 +1,4 @@
-![게임메인이미지](app/assets/sprites/revive.png)
+![게임메인이미지](app/assets/sprites/revive.png){: width="400" height="600"}
 
 # About revive
 Revive is pixijs, vue, mongodb based web story game. 😘
