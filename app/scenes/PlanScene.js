@@ -31,8 +31,39 @@ export default class PlanScene extends PIXI.Container {
         changeButton.on('pointerdown', this.onClick);
         this.addChild(changeButton);
 
-        // 언리얼의 tick event를 기억하십니까
-        let tictok = PIXI.ticker.shared;
+
+        let changeButton2 = new PIXI.Sprite(changeButtonTexture);
+
+        changeButton2.scale.x = 0.1;
+        changeButton2.scale.y = 0.1;
+
+        changeButton2.x = 100;
+        changeButton2.y = 400;
+        // console.log(changeButton.x);
+        changeButton2.interactive = true;
+        changeButton2.buttonMode = true;
+
+        changeButton2.on('pointerdown', this.scrollUp);
+        this.addChild(changeButton2);
+
+        this.changeButton = changeButton2;
+
+
+        let changeButton3 = new PIXI.Sprite(changeButtonTexture);
+
+        changeButton3.scale.x = 0.1;
+        changeButton3.scale.y = 0.1;
+
+        changeButton3.x = 100;
+        changeButton3.y = 500;
+        // console.log(changeButton.x);
+        changeButton3.interactive = true;
+        changeButton3.buttonMode = true;
+
+        changeButton3.visible = true;
+        changeButton3.on('pointerdown', this.scrollDown);
+        this.addChild(changeButton3);
+
 
         // 캐릭터용 텍스쳐
         var doraButton = PIXI.loader.resources['doramong'].texture;
@@ -75,12 +106,12 @@ export default class PlanScene extends PIXI.Container {
         for (var i = 0; i < 5; i++) {
 
 
-            //let ch = new this.Character(i, doraButton, this);
-            let ch = new PlanCharacter();
-            ch.setSpriteImage(doraButton);
+            //let planCharacter = new this.Character(i, doraButton, this);
+            let planCharacter = new PlanCharacter();
+            planCharacter.setSpriteImage(doraButton);
 
 
-            //let ch = new PlanCharacter(i, doraButton, this);
+            //let planCharacter = new PlanCharacter(i, doraButton, this);
             // let facility = new Facility();
             // facility.setupFacility(facilityTexture, "Lab");
             // facility.id = i;
@@ -89,35 +120,36 @@ export default class PlanScene extends PIXI.Container {
 
             // 자리 배정
             //facility.spriteImage.x = game.app.renderer.width * i / 5 + facility.spriteImage.width / 2;
-            //ch.sprite.x = game.app.renderer.width * i / 5 + ch.sprite.width / 2;
-            ch.spriteImage.x = game.app.renderer.width * i / 5 + ch.spriteImage.width / 2;
+            //planCharacter.sprite.x = game.app.renderer.width * i / 5 + planCharacter.sprite.width / 2;
+            planCharacter.spriteImage.x = game.app.renderer.width * i / 5 + planCharacter.spriteImage.width / 2;
 
             //facility.spriteImage.y = game.app.renderer.height / 10;
-            // ch.sprite.y = game.app.renderer.height * 9 / 10;
-            ch.spriteImage.y = game.app.renderer.height * 9 / 10;
+            // planCharacter.sprite.y = game.app.renderer.height * 9 / 10;
+            planCharacter.spriteImage.y = game.app.renderer.height * 9 / 10;
 
             // 데이터 배정
-            // ch.data = game.characterList[i];
-            //console.log(ch.spriteImage);
+            // planCharacter.data = game.characterList[i];
+            //console.log(planCharacter.spriteImage);
 
             // 초기 값 저장, 돌아오는 용도
-            ch.setInitialpoint(ch.spriteImage.x, ch.spriteImage.y);
+            planCharacter.setInitialpoint(planCharacter.spriteImage.x, planCharacter.spriteImage.y);
 
-            this.characterList[i] = ch;
+            this.characterList[i] = planCharacter;
             //this.facilityList[i] = facility;
             //facility.setupInteraction();
 
             //this.addChild(facility);
-            this.addChild(ch);
+            this.addChild(planCharacter);
 
             //틱 이벤트에 Facility의 update 를 할당
             //tictok.add(fc.update, this);
 
-            // ch 에 인터렉션을 달아주자
-            ch.spriteImage.on('pointerdown', this.onDragStart)
+            // planCharacter 에 인터렉션을 달아주자
+            planCharacter.spriteImage.on('pointerdown', this.onDragStart)
                 .on('pointerup', this.onDragEnd)
                 .on('pointerupoutside', this.onDragEnd)
-                .on('pointermove', this.onDragMove);
+                .on('pointermove', this.onDragMove)
+
 
             //facility.spriteImage.on('pointerover',this.facilityPointerOver)
 
@@ -125,12 +157,85 @@ export default class PlanScene extends PIXI.Container {
         }
 
         for (let i in this.characterList) {
-            let ch = this.characterList[i];
-            ch.characterName = game.characterList[i];
+            let planCharacter = this.characterList[i];
+            planCharacter.characterName = game.characterList[i];
 
         }
 
 
+        this.isCharacterMenu = false;
+    }
+
+
+    // 지금 가장 큰 문제는 ticker.add를 통해 누적된 걸 지울 수 없다는 점이다.
+    scrollUp() {
+
+
+        let ticker = PIXI.ticker.shared;
+        let game = new Game();
+
+
+        // 지우는 함수지만 예상한대로 지워지지가 않는다.
+        ticker.destroy();
+
+        ticker.add(() => {
+
+
+            for (let i in this.parent.characterList) {
+                if (this.parent.characterList[i].isDeployed == false && this.parent.characterList[i].spriteImage.y > 70) {
+                    this.parent.characterList[i].spriteImage.y -= 25;
+                    this.parent.characterList[i].spriteImage.interactive = false;
+                } else if (this.parent.characterList[i].spriteImage.y <= 70) {
+
+                }
+
+            }
+
+            this.parent.isCharacterMenu = false;
+
+
+        });
+
+
+        console.log(this.parent.isCharacterMenu);
+    }
+
+    scrollDown() {
+
+        let ticker = PIXI.ticker.shared;
+        let game = new Game();
+
+
+        ticker.destroy();
+        // 여기에 들어가면 반복하게 됨으로 올라갔다가 내려갔다가를 반복하게 된다. 분리가 필요할 듯
+        ticker.add(() => {
+
+
+            for (let i in this.parent.characterList) {
+                if (this.parent.characterList[i].isDeployed == false && this.parent.characterList[i].spriteImage.y < game.app.renderer.height * 9 / 10) {
+                    this.parent.characterList[i].spriteImage.y += 25;
+                    this.parent.characterList[i].spriteImage.interactive = true;
+                }
+
+            }
+            this.parent.isCharacterMenu = false;
+
+
+        });
+
+        console.log(ticker);
+
+    }
+
+
+    characterAnimation() {
+        // for (let i in this.parent.characterList) {
+        //     if (this.parent.characterList[i].isDeployed == false && this.parent.characterList[i].spriteImage.y > 50) {
+        //         this.parent.characterList[i].spriteImage.y -= 1;
+        //     }
+        //
+        // }
+        console.log("What?>");
     }
 
 
