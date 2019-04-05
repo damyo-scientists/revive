@@ -30,40 +30,7 @@ export default class PlanScene extends PIXI.Container {
 
         changeButton.on('pointerdown', this.onClick);
         this.addChild(changeButton);
-
-
-        let changeButton2 = new PIXI.Sprite(changeButtonTexture);
-
-        changeButton2.scale.x = 0.1;
-        changeButton2.scale.y = 0.1;
-
-        changeButton2.x = 100;
-        changeButton2.y = 400;
-        // console.log(changeButton.x);
-        changeButton2.interactive = true;
-        changeButton2.buttonMode = true;
-
-        changeButton2.on('pointerdown', this.scrollUp);
-        this.addChild(changeButton2);
-
-        this.changeButton = changeButton2;
-
-
-        let changeButton3 = new PIXI.Sprite(changeButtonTexture);
-
-        changeButton3.scale.x = 0.1;
-        changeButton3.scale.y = 0.1;
-
-        changeButton3.x = 100;
-        changeButton3.y = 500;
-        // console.log(changeButton.x);
-        changeButton3.interactive = true;
-        changeButton3.buttonMode = true;
-
-        changeButton3.visible = true;
-        changeButton3.on('pointerdown', this.scrollDown);
-        this.addChild(changeButton3);
-
+        
 
         // 캐릭터용 텍스쳐
         var doraButton = PIXI.loader.resources['doramong'].texture;
@@ -193,18 +160,32 @@ export default class PlanScene extends PIXI.Container {
                 }
             }
         })
+
+
+        // mousewheel 이벤트는 자스로 해결해야한다
+        game.app.view.addEventListener('mousewheel', (event) => {
+
+
+            if (event.deltaY < 0) {
+                this.scrollUp();
+            } else if (event.deltaY > 0) {
+                this.scrollDown();
+            }
+
+        })
+
     }
 
 
     // 지금 가장 큰 문제는 ticker.add를 통해 누적된 걸 지울 수 없다는 점이다.
     scrollUp() {
 
-
-        this.parent.characterScrollIndex = -1;
+        // this.parent 는 다른 요소에 붙일 때 사용
+        this.characterScrollIndex = -1;
 
         // 올렸을 때는 만질 수 없게 막자
-        for (let i in this.parent.characterList) {
-            this.parent.characterList[i].spriteImage.interactive = false;
+        for (let i in this.characterList) {
+            this.characterList[i].spriteImage.interactive = false;
         }
 
     }
@@ -212,11 +193,12 @@ export default class PlanScene extends PIXI.Container {
 
     scrollDown() {
 
-        this.parent.characterScrollIndex = 1;
+
+        this.characterScrollIndex = 1;
 
         // 내리면 다시 상호작용 가능
-        for (let i in this.parent.characterList) {
-            this.parent.characterList[i].spriteImage.interactive = true;
+        for (let i in this.characterList) {
+            this.characterList[i].spriteImage.interactive = true;
         }
     }
 
