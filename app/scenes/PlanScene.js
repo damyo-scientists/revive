@@ -162,8 +162,37 @@ export default class PlanScene extends PIXI.Container {
 
         }
 
+        this.characterScrollIndex = 0;
 
         this.isCharacterMenu = false;
+
+
+        //ticker
+
+        let ticker = PIXI.ticker.shared;
+        ticker.add(() => {
+            console.log(this.characterScrollIndex);
+            for (let i in this.characterList) {
+
+                // 버튼에 들어온 입력 값에 따라 보는게 맞다. 한곳에 다 넣을 려고했지만, ticker가 시간 함수기 때문에 정확한 값으로 딱 알맞지않아서 값이 범위를 넘어가면 처리하기 곤란해짐.
+                if (this.characterScrollIndex < 0) {
+                    if (this.characterList[i].isDeployed == false && this.characterList[i].spriteImage.y >= 100) {
+                        this.characterList[i].spriteImage.y += this.characterScrollIndex * 25;
+                    } else if (this.characterList[i].isDeployed == false) {
+                        this.characterScrollIndex = 0;
+                    }
+                }
+
+                if (this.characterScrollIndex > 0) {
+                    //this.characterList[i].spriteImage.y <= game.app.renderer.height * 9 / 10
+                    if (this.characterList[i].isDeployed == false && this.characterList[i].spriteImage.y <= game.app.renderer.height * 9 / 10) {
+                        this.characterList[i].spriteImage.y += this.characterScrollIndex * 25;
+                    } else if (this.characterList[i].isDeployed == false) {
+                        this.characterScrollIndex = 0;
+                    }
+                }
+            }
+        })
     }
 
 
@@ -171,60 +200,24 @@ export default class PlanScene extends PIXI.Container {
     scrollUp() {
 
 
-        let ticker = PIXI.ticker.shared;
-        let game = new Game();
+        this.parent.characterScrollIndex = -1;
 
+        // 올렸을 때는 만질 수 없게 막자
+        for (let i in this.parent.characterList) {
+            this.parent.characterList[i].spriteImage.interactive = false;
+        }
 
-        // 지우는 함수지만 예상한대로 지워지지가 않는다.
-        ticker.destroy();
-
-        ticker.add(() => {
-
-
-            for (let i in this.parent.characterList) {
-                if (this.parent.characterList[i].isDeployed == false && this.parent.characterList[i].spriteImage.y > 70) {
-                    this.parent.characterList[i].spriteImage.y -= 25;
-                    this.parent.characterList[i].spriteImage.interactive = false;
-                } else if (this.parent.characterList[i].spriteImage.y <= 70) {
-
-                }
-
-            }
-
-            this.parent.isCharacterMenu = false;
-
-
-        });
-
-
-        console.log(this.parent.isCharacterMenu);
     }
+
 
     scrollDown() {
 
-        let ticker = PIXI.ticker.shared;
-        let game = new Game();
+        this.parent.characterScrollIndex = 1;
 
-
-        ticker.destroy();
-        // 여기에 들어가면 반복하게 됨으로 올라갔다가 내려갔다가를 반복하게 된다. 분리가 필요할 듯
-        ticker.add(() => {
-
-
-            for (let i in this.parent.characterList) {
-                if (this.parent.characterList[i].isDeployed == false && this.parent.characterList[i].spriteImage.y < game.app.renderer.height * 9 / 10) {
-                    this.parent.characterList[i].spriteImage.y += 25;
-                    this.parent.characterList[i].spriteImage.interactive = true;
-                }
-
-            }
-            this.parent.isCharacterMenu = false;
-
-
-        });
-
-        console.log(ticker);
-
+        // 내리면 다시 상호작용 가능
+        for (let i in this.parent.characterList) {
+            this.parent.characterList[i].spriteImage.interactive = true;
+        }
     }
 
 
