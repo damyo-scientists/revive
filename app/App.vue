@@ -40,7 +40,7 @@
 
             var game = new Game();
             game.generateApplication();
-            game.setChracterStatus();
+            //game.setChracterStatus();
             game.app.renderer = PIXI.autoDetectRenderer(screen.availWidth, screen.availHeight);
 
 

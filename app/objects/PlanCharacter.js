@@ -3,10 +3,12 @@ export default class PlanCharacter extends PIXI.Container {
 
     constructor() {
         super();
-        this.mentalPoint = 10;
+        this.mentalPoint = 0;
+        this.maxMentalPoint = 10.0;
+        this.tempMentalPoint = 0;
         this.characterName = "anonymous";
         this.id = 0;
-        this.data = [];
+        this.data = null;
         this.resource = 0;
 
         // Visual 관련
@@ -23,6 +25,16 @@ export default class PlanCharacter extends PIXI.Container {
         this.isDeployed = false;
     }
 
+    setData() {
+        this.characterName = this.data.name;
+        this.mentalPoint = this.data.mentalPoint;
+
+        // 이거 포인터처럼 작동하나??
+        this.tempMentalPoint = this.data.mentalPoint;
+        this.setMentalPoint(this.mentalPoint / this.maxMentalPoint);
+        this.spriteImage.addChild(this.mentalBar);
+    }
+
     setSpriteImage(t) {
         this.spriteImage.texture = t;
         this.spriteImage.interactive = true;
@@ -30,21 +42,32 @@ export default class PlanCharacter extends PIXI.Container {
 
         this.spriteImage.anchor.set(0.5);
 
-        this.setMentalPoint(0.5);
         this.addChild(this.spriteImage);
 
 
     }
 
-    deployed(resource) {
+    deployed(resource, requiredMentalPoint) {
         this.isDeployed = true;
         this.resource = resource;
-        console.log(resource);
+        this.tempMentalPoint = this.mentalPoint - requiredMentalPoint;
+
+        // 넘겨주기 용 데이터
+        this.data.mentalPoint = this.tempMentalPoint;
+        // 임시 보여주기
+        this.setMentalPoint(this.tempMentalPoint / this.maxMentalPoint);
+
+
     }
 
     undeployed() {
         this.isDeployed = false;
+
         this.resource = 0;
+        this.tempMentalPoint = this.mentalPoint;
+        // 넘겨주기용 데이터
+        this.data.mentalPoint = this.tempMentalPoint;
+        this.setMentalPoint(this.tempMentalPoint / this.maxMentalPoint);
     }
 
     setInitialpoint(x, y) {
@@ -58,28 +81,35 @@ export default class PlanCharacter extends PIXI.Container {
     }
 
 
-    setMentalPoint(a = 1) {
+    setMentalPoint(a = 1.0) {
         // 멘탈바 배경
         //this.mentalBar.removeChildren();
         // 현재 아래 주석처리된 코드가 안되므로 이걸로 대체
-        this.spriteImage.removeChildren();
 
+
+        this.mentalBar.removeChildren();
+
+
+        // new 로 만들지 않으면 어째서인지 부를때마다 계속해서 생성한다. ex) 150, 150*0.9 ... 이런식으로 덧씌워진다.
+        this.outerMentalBar = new PIXI.Graphics();
         this.outerMentalBar.beginFill(0xb2b2b2);
-        this.outerMentalBar.drawRect(0, 0, 150, 8);
+        this.outerMentalBar.drawRect(0, 0, 150, 10);
         this.outerMentalBar.endFill();
-        this.outerMentalBar.zOrder = 10;
         this.mentalBar.addChild(this.outerMentalBar);
 
         // 멘탈바 게이지
+        this.innerMentalBar = new PIXI.Graphics();
         this.innerMentalBar.beginFill(0xff6dd8);
         this.innerMentalBar.drawRect(0, 0, 150 * a, 8);
         this.innerMentalBar.endFill();
-        this.innerMentalBar.zOrder = 11;
+
+
         this.mentalBar.addChild(this.innerMentalBar);
-        this.mentalBar.zOrder = 1;
+        // this.mentalBar.zOrder = 1;
         // 이 부분은 아예 저 부분을 읽지를 못해서 에러가 뜸. 머훈찬스가 필요.
         //if (!this.spriteImage.getChildAt(0))
-        this.spriteImage.addChild(this.mentalBar);
+        // this.spriteImage.addChild(this.mentalBar);
+
 
     }
 }

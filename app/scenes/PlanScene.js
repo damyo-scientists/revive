@@ -11,6 +11,20 @@ export default class PlanScene extends PIXI.Container {
     constructor() {
         super();
 
+        // 경고용 메시지
+        let style = new PIXI.TextStyle({
+            fontSize: 36,
+            fill: '#ffffff'
+        });
+
+        this.alertText = new PIXI.Text("멘탈 바사삭이다 이말이야", style);
+        this.alertText.x = 400;
+        this.alertText.y = 500;
+        this.alertText.alpha = 0;
+
+        this.addChild(this.alertText);
+
+
         this.showSceneSign();
         let changeButtonTexture = new PIXI.Texture.fromImage('app/assets/change.png');
         changeButtonTexture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
@@ -18,19 +32,19 @@ export default class PlanScene extends PIXI.Container {
         // 게임 인스턴스
         let game = new Game();
 
+
         let changeButton = new PIXI.Sprite(changeButtonTexture);
 
         changeButton.scale.x = 0.1;
         changeButton.scale.y = 0.1;
 
         changeButton.x = game.app.renderer.width / 2;
-        // console.log(changeButton.x);
         changeButton.interactive = true;
         changeButton.buttonMode = true;
 
         changeButton.on('pointerdown', this.onClick);
         this.addChild(changeButton);
-        
+
 
         // 캐릭터용 텍스쳐
         var doraButton = PIXI.loader.resources['doramong'].texture;
@@ -77,39 +91,16 @@ export default class PlanScene extends PIXI.Container {
             let planCharacter = new PlanCharacter();
             planCharacter.setSpriteImage(doraButton);
 
-
-            //let planCharacter = new PlanCharacter(i, doraButton, this);
-            // let facility = new Facility();
-            // facility.setupFacility(facilityTexture, "Lab");
-            // facility.id = i;
-
-            //let fc = new this.Facility(i, facilityTexture, this);
-
             // 자리 배정
-            //facility.spriteImage.x = game.app.renderer.width * i / 5 + facility.spriteImage.width / 2;
-            //planCharacter.sprite.x = game.app.renderer.width * i / 5 + planCharacter.sprite.width / 2;
             planCharacter.spriteImage.x = game.app.renderer.width * i / 5 + planCharacter.spriteImage.width / 2;
-
-            //facility.spriteImage.y = game.app.renderer.height / 10;
-            // planCharacter.sprite.y = game.app.renderer.height * 9 / 10;
             planCharacter.spriteImage.y = game.app.renderer.height * 9 / 10;
-
-            // 데이터 배정
-            // planCharacter.data = game.characterList[i];
-            //console.log(planCharacter.spriteImage);
 
             // 초기 값 저장, 돌아오는 용도
             planCharacter.setInitialpoint(planCharacter.spriteImage.x, planCharacter.spriteImage.y);
 
+            // PlanCharacter가 관리하는 리스트에 할당
             this.characterList[i] = planCharacter;
-            //this.facilityList[i] = facility;
-            //facility.setupInteraction();
-
-            //this.addChild(facility);
             this.addChild(planCharacter);
-
-            //틱 이벤트에 Facility의 update 를 할당
-            //tictok.add(fc.update, this);
 
             // planCharacter 에 인터렉션을 달아주자
             planCharacter.spriteImage.on('pointerdown', this.onDragStart)
@@ -117,16 +108,13 @@ export default class PlanScene extends PIXI.Container {
                 .on('pointerupoutside', this.onDragEnd)
                 .on('pointermove', this.onDragMove)
 
-
-            //facility.spriteImage.on('pointerover',this.facilityPointerOver)
-
-
         }
 
+        // Game 한테서 정보를 받아서 적용시키자
         for (let i in this.characterList) {
             let planCharacter = this.characterList[i];
-            planCharacter.characterName = game.characterList[i];
-
+            planCharacter.data = game.characterList[i];
+            planCharacter.setData();
         }
 
         this.characterScrollIndex = 0;
@@ -138,7 +126,14 @@ export default class PlanScene extends PIXI.Container {
 
         let ticker = PIXI.ticker.shared;
         ticker.add(() => {
-            console.log(this.characterScrollIndex);
+
+            // 경고용 틱 이벤트
+            if (this.alertText.alpha >= 0) {
+                this.alertText.alpha -= 0.015;
+            }
+
+
+            // 스크롤용 틱 이벤트
             for (let i in this.characterList) {
 
                 // 버튼에 들어온 입력 값에 따라 보는게 맞다. 한곳에 다 넣을 려고했지만, ticker가 시간 함수기 때문에 정확한 값으로 딱 알맞지않아서 값이 범위를 넘어가면 처리하기 곤란해짐.
@@ -203,21 +198,11 @@ export default class PlanScene extends PIXI.Container {
     }
 
 
-    characterAnimation() {
-        // for (let i in this.parent.characterList) {
-        //     if (this.parent.characterList[i].isDeployed == false && this.parent.characterList[i].spriteImage.y > 50) {
-        //         this.parent.characterList[i].spriteImage.y -= 1;
-        //     }
-        //
-        // }
-        console.log("What?>");
-    }
-
-
     onDragStart(event) {
         this.data = event.data;
         this.alpha = 0.5;
 
+        console.log(this.parent.characterName);
 
         this.dragging = true;
     }
@@ -234,12 +219,17 @@ export default class PlanScene extends PIXI.Container {
         for (let i in facilityList) {
             if (facilityList[i].checkCollision(this, facilityList[i].spriteImage)) {
                 isInside = true;
-                console.log(this.parent);
 
 
                 // 캐릭터에게 건물에 적용된 자원만큼 배정한다.
-                this.parent.deployed(facilityList[i].resource);
+                this.parent.deployed(facilityList[i].resource, facilityList[i].requiredMentalPoint);
 
+                // 만약 멘탈포인트가 부족하다면 나가자
+                if (this.parent.tempMentalPoint < 0) {
+                    isInside = false;
+                    // this.parent.parent -> PlanScene
+                    this.parent.parent.alertText.alpha = 1;
+                }
             }
 
 
@@ -272,7 +262,7 @@ export default class PlanScene extends PIXI.Container {
     onClick() {
         let resultScene = new ResultScene();
         let sceneManager = new SceneManager();
-
+        let game = new Game();
         // 정산에 보내기 위해 Game에 저장
 
         let resourcePoint = 0;
@@ -281,14 +271,22 @@ export default class PlanScene extends PIXI.Container {
 
             if (this.parent.characterList[i].isDeployed) {
 
+                // 자원 값 넘겨주기
                 resourcePoint += this.parent.characterList[i].resource;
 
+                // 멘탈 포인트 값 념겨주기 인데 안넘겨줘도 되네..?
+                //let planCharacter = this.parent.characterList[i];
+
+                game.setChracterStatus(i);
+
+
+                //상태복귀
                 this.parent.characterList[i].undeployed();
             }
         }
 
         console.log("whole point is " + resourcePoint);
-        let game = new Game();
+
 
         game.addResource(resourcePoint);
 
