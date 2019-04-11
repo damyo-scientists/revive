@@ -102,13 +102,7 @@ export default class PlanCharacter extends PIXI.Container {
         this.innerMentalBar.beginFill(0xff6dd8);
         this.innerMentalBar.drawRect(0, 0, 150 * a, 8);
         this.innerMentalBar.endFill();
-
-
         this.mentalBar.addChild(this.innerMentalBar);
-        // this.mentalBar.zOrder = 1;
-        // 이 부분은 아예 저 부분을 읽지를 못해서 에러가 뜸. 머훈찬스가 필요.
-        //if (!this.spriteImage.getChildAt(0))
-        // this.spriteImage.addChild(this.mentalBar);
 
 
     }

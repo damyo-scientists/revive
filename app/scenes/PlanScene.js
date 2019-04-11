@@ -123,7 +123,6 @@ export default class PlanScene extends PIXI.Container {
 
 
         //ticker
-
         let ticker = PIXI.ticker.shared;
         ticker.add(() => {
 
@@ -143,16 +142,16 @@ export default class PlanScene extends PIXI.Container {
                     } else if (this.characterList[i].isDeployed == false) {
                         this.characterScrollIndex = 0;
                     }
-                }
+            }
 
-                if (this.characterScrollIndex > 0) {
-                    //this.characterList[i].spriteImage.y <= game.app.renderer.height * 9 / 10
-                    if (this.characterList[i].isDeployed == false && this.characterList[i].spriteImage.y <= game.app.renderer.height * 9 / 10) {
-                        this.characterList[i].spriteImage.y += this.characterScrollIndex * 25;
-                    } else if (this.characterList[i].isDeployed == false) {
-                        this.characterScrollIndex = 0;
-                    }
+            if (this.characterScrollIndex > 0) {
+                //this.characterList[i].spriteImage.y <= game.app.renderer.height * 9 / 10
+                if (this.characterList[i].isDeployed == false && this.characterList[i].spriteImage.y <= game.app.renderer.height * 9 / 10) {
+                    this.characterList[i].spriteImage.y += this.characterScrollIndex * 25;
+                } else if (this.characterList[i].isDeployed == false) {
+                    this.characterScrollIndex = 0;
                 }
+            }
             }
         })
 
