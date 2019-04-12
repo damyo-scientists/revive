@@ -1,6 +1,6 @@
 {
   "name": "revive",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "revive",
   "main": "index.js",
   "scripts": {

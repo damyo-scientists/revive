@@ -3,7 +3,7 @@ export default class Facility extends PIXI.Container {
         super();
         this.id = 0;
         this.name = new PIXI.Text();
-        this.expectedStamina = 1;
+        this.requiredMentalPoint = 2;
         this.spriteImage = new PIXI.Sprite();
         this.spriteImage.anchor.set(0.5);
         this.informationBox = new PIXI.Graphics();
