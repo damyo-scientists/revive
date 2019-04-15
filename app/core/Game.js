@@ -1,23 +1,31 @@
-const sprites = {};
-const jsons = {};
-const sounds = {};
-let instance = null;
-
+const axios = require('axios');
 
 export default class Game {
-
     constructor(store) {
         if (Game.instance)
             return Game.instance;
         Game.instance = this;
 
-        this.currentTurn = 2;
+        var config = {
+            headers: {'Access-Control-Allow-Origin': '*'}
+        };
+
+        axios.get('http://localhost:4040/api/games', config)
+            .then(function (response) {
+                // handle success
+                console.log("game", response.data);
+            });
+
+        this.setInitialInfo(store);
+    }
+
+    setInitialInfo(store) {
+        this.currentTurn = 0;
         this.store = store;
         this.app = null;
         this.characterList = [];
         //this.loader = new PIXI.Loader();
         this.resource = 0;
-
     }
 
     getTurn() {
@@ -46,7 +54,6 @@ export default class Game {
 
     generateApplication() {
         this.app = new PIXI.Application({
-
             antialias: true,
         });
     }

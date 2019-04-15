@@ -17,7 +17,7 @@
 
 <script>
 
-    import 'babel-polyfill';
+    import '@babel/polyfill';
     import BriefScene from './scenes/BriefScene';
     import Game from "./core/Game";
     import SceneManager from './managers/SceneManager';
