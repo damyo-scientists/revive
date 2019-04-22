@@ -11,7 +11,8 @@ export default class Game {
             return Game.instance;
         Game.instance = this;
 
-        this.currentTurn = 2;
+        this.currentTurn = 1;
+        this.maxTurn = 2;
         this.store = store;
         this.app = null;
         this.characterList = [{name: 'Janitor', mentalPoint: 5},
@@ -36,6 +37,18 @@ export default class Game {
         //this.loader = new PIXI.Loader();
         this.resource = 0;
 
+        this.eventList = [{
+            text: '파란약을 드시길 바랍니다. 빨간약을 먹을 시에는 피곤할 거에요.',
+            required: 2,
+            confirmResult: 1,
+            cancelResult: -1
+        }, {
+            text: '이 스토리까지 들키다니, 여기까지 오느라 수고했네. 빨간약을 먹게',
+            required: 0,
+            confirmResult: 1,
+            cancelResult: -1
+        }];
+
     }
 
     getTurn() {
@@ -49,7 +62,11 @@ export default class Game {
 
     nextTurn() {
         // go next Game
-        this.currentTurn += 1;
+
+
+        if (this.currentTurn < this.maxTurn) {
+            this.currentTurn += 1;
+        }
         this.store.commit('nextTurn');
         console.log('next turn');
     }

@@ -67,6 +67,9 @@ export default class ResultScene extends PIXI.Container {
             let briefScene = new BriefScene();
             console.log(briefScene);
             self.sceneManager.goTo(briefScene);
+
+            // 턴도 넘기자
+            this.game.nextTurn();
         });
         this.addChild(nextTurnButton);
 

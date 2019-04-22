@@ -5,6 +5,7 @@ import PlanCharacter from '../objects/PlanCharacter'
 import Button from "../objects/Button";
 import Facility from "../objects/Facility";
 import ResultScene from "./ResultScene";
+import Event from "../objects/Event";
 
 
 export default class PlanScene extends PIXI.Container {
@@ -45,13 +46,15 @@ export default class PlanScene extends PIXI.Container {
         changeButton.on('pointerdown', this.onClick);
         this.addChild(changeButton);
 
-
-        // 캐릭터용 텍스쳐
+        //// 텍스쳐 로딩 ////
         var doraButton = PIXI.loader.resources['doramong'].texture;
         doraButton.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
 
+        let confirmButton = PIXI.loader.resources['confirm'].texture;
+        confirmButton.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
+        let cancelButton = PIXI.loader.resources['cancel'].texture;
+        cancelButton.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
 
-        // 건물용 텍스쳐
         var facilityTexture = new PIXI.Texture.from('app/assets/rabbit.png');
         facilityTexture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
 
@@ -142,16 +145,16 @@ export default class PlanScene extends PIXI.Container {
                     } else if (this.characterList[i].isDeployed == false) {
                         this.characterScrollIndex = 0;
                     }
-            }
-
-            if (this.characterScrollIndex > 0) {
-                //this.characterList[i].spriteImage.y <= game.app.renderer.height * 9 / 10
-                if (this.characterList[i].isDeployed == false && this.characterList[i].spriteImage.y <= game.app.renderer.height * 9 / 10) {
-                    this.characterList[i].spriteImage.y += this.characterScrollIndex * 25;
-                } else if (this.characterList[i].isDeployed == false) {
-                    this.characterScrollIndex = 0;
                 }
-            }
+
+                if (this.characterScrollIndex > 0) {
+                    //this.characterList[i].spriteImage.y <= game.app.renderer.height * 9 / 10
+                    if (this.characterList[i].isDeployed == false && this.characterList[i].spriteImage.y <= game.app.renderer.height * 9 / 10) {
+                        this.characterList[i].spriteImage.y += this.characterScrollIndex * 25;
+                    } else if (this.characterList[i].isDeployed == false) {
+                        this.characterScrollIndex = 0;
+                    }
+                }
             }
         })
 
@@ -168,6 +171,18 @@ export default class PlanScene extends PIXI.Container {
 
         })
 
+
+        // 사건
+        let event = new Event();
+
+
+        event.setupData(confirmButton, cancelButton);
+        event.eventBox.x = game.app.renderer.width / 2;
+        event.eventBox.y = game.app.renderer.height / 2;
+
+        event.pivot.x = event.eventBox.width / 2;
+        event.pivot.y = event.eventBox.height / 2;
+        this.addChild(event);
     }
 
 
