@@ -10,6 +10,8 @@ export default class ResultScene extends PIXI.Container {
 
         // 나중에 이미지로 대체할지도(?)
         this.displayText = new PIXI.Text();
+        this.betterResourceText = new PIXI.Text();
+
         this.displayWindow = new PIXI.Graphics();
         this.displayWindow.lineStyle(2, 0xFF00FF, 1);
         this.displayWindow.beginFill(0x650A5A, 0.25);
@@ -65,7 +67,7 @@ export default class ResultScene extends PIXI.Container {
         let self = this;
         nextTurnButton.on('pointerdown', () => {
             let briefScene = new BriefScene();
-            console.log(briefScene);
+
             self.sceneManager.goTo(briefScene);
 
             // 턴도 넘기자
@@ -76,12 +78,18 @@ export default class ResultScene extends PIXI.Container {
     }
 
     displayResult() {
-        let game = new Game();
-        console.log("this is from RESULT SCENE, resource point is " + game.resource);
+
+
         this.displayText.text = this.game.resource;
         this.displayText.style = {fill: 0xf442d4, fontSize: 150, align: 'left'};
 
+        this.betterResourceText.text = "더 좋은 자원 ^^ : " + this.game.betterResource;
+        this.betterResourceText.style = {fill: 0x42f48f, fontSize: 130, align: 'left'};
+        this.betterResourceText.y = 150;
+
+
         this.addChild(this.displayText);
+        this.addChild(this.betterResourceText);
     }
 
 

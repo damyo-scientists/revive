@@ -8,6 +8,10 @@ export default class Facility extends PIXI.Container {
         this.spriteImage.anchor.set(0.5);
         this.informationBox = new PIXI.Graphics();
 
+
+        this.category = "normal";
+
+        this.data = null;
         this.resource = 0;
     }
 
@@ -45,6 +49,13 @@ export default class Facility extends PIXI.Container {
         // () 이거 붙이면 한번만 실행됨으로 리스너 달아줄때는 주의하도록 하자
         this.spriteImage.on('pointerover', this.facilityPointerOver)
             .on('pointerout', this.facilityPointerOut)
+    }
+
+    setupData(data) {
+        this.resource = data.resource;
+        this.category = data.category;
+        this.name = data.name;
+        console.log(data);
     }
 
 

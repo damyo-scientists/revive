@@ -80,8 +80,8 @@ export default class PlanScene extends PIXI.Container {
             facility.setupInteraction();
 
 
-            // 자원 배정 (나중에 여기는 외부에서 시트로 받거나 란듐으로 돌리거나
-            facility.resource = i + 1;
+            // // 자원 배정 (나중에 여기는 외부에서 시트로 받거나 란듐으로 돌리거나
+            // facility.resource = i + 1;
 
             this.addChild(facility);
 
@@ -119,6 +119,12 @@ export default class PlanScene extends PIXI.Container {
             planCharacter.data = game.characterList[i];
             planCharacter.setData();
         }
+        for (let i in this.facilityList) {
+            let facility = this.facilityList[i];
+            facility.setupData(game.facilityList[i]);
+
+        }
+
 
         this.characterScrollIndex = 0;
 
@@ -235,8 +241,8 @@ export default class PlanScene extends PIXI.Container {
                 isInside = true;
 
 
-                // 캐릭터에게 건물에 적용된 자원만큼 배정한다.
-                this.parent.deployed(facilityList[i].resource, facilityList[i].requiredMentalPoint);
+                // 캐릭터에게 어느 건물에 들어왔는지 알려준다.
+                this.parent.deployed(facilityList[i]);
 
                 // 만약 멘탈포인트가 부족하다면 나가자
                 if (this.parent.tempMentalPoint < 0) {
@@ -286,7 +292,33 @@ export default class PlanScene extends PIXI.Container {
             if (this.parent.characterList[i].isDeployed) {
 
                 // 자원 값 넘겨주기
-                resourcePoint += this.parent.characterList[i].resource;
+
+
+                switch (this.parent.characterList[i].category) {
+                    case 'research':
+
+                        // 일단은 지금은 전부 다 바꾸자 새로운 자원으로
+                        let tempResource = parseInt(game.resource / 3);
+                        let tempRemainder = game.resource % 3;
+
+                        game.betterResource += tempResource;
+                        game.resource = tempRemainder;
+
+                        console.log(tempResource);
+                        console.log(tempRemainder);
+
+                        break;
+
+                    case 'normal':
+                        resourcePoint += this.parent.characterList[i].resource;
+
+                        break;
+
+
+                }
+
+
+                // 잠깐 임시방편
 
                 // 멘탈 포인트 값 념겨주기 인데 안넘겨줘도 되네..?
                 //let planCharacter = this.parent.characterList[i];
@@ -299,7 +331,7 @@ export default class PlanScene extends PIXI.Container {
             }
         }
 
-        console.log("whole point is " + resourcePoint);
+        // console.log("whole point is " + resourcePoint);
 
 
         game.addResource(resourcePoint);

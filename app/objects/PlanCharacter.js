@@ -3,6 +3,8 @@ export default class PlanCharacter extends PIXI.Container {
 
     constructor() {
         super();
+
+        // 정보 관련
         this.mentalPoint = 0;
         this.maxMentalPoint = 10.0;
         this.tempMentalPoint = 0;
@@ -10,6 +12,8 @@ export default class PlanCharacter extends PIXI.Container {
         this.id = 0;
         this.data = null;
         this.resource = 0;
+        this.betterResource = 0;
+        this.category = null;
 
         // Visual 관련
         this.spriteImage = new PIXI.Sprite();
@@ -23,6 +27,7 @@ export default class PlanCharacter extends PIXI.Container {
 
         // 로직 관련
         this.isDeployed = false;
+
     }
 
     setData() {
@@ -47,24 +52,45 @@ export default class PlanCharacter extends PIXI.Container {
 
     }
 
-    deployed(resource, requiredMentalPoint) {
+    // 건물의 역할에 따라서 할 일을 정하자.
+    deployed(facility) {
+
         this.isDeployed = true;
-        this.resource = resource;
-        this.tempMentalPoint = this.mentalPoint - requiredMentalPoint;
 
-        // 넘겨주기 용 데이터
-        this.data.mentalPoint = this.tempMentalPoint;
-        // 임시 보여주기
-        this.setMentalPoint(this.tempMentalPoint / this.maxMentalPoint);
+        switch (facility.category) {
+            case 'normal': {
+
+                this.resource = facility.resource;
+                this.tempMentalPoint = this.mentalPoint - facility.requiredMentalPoint;
+
+                // 넘겨주기 용 데이터
+                this.data.mentalPoint = this.tempMentalPoint;
+                // 임시 보여주기
+                this.setMentalPoint(this.tempMentalPoint / this.maxMentalPoint);
 
 
+                break;
+            }
+
+            case 'research': {
+
+                break;
+            }
+
+
+        }
+        this.category = facility.category;
+
+        console.log(this.category);
     }
 
     undeployed() {
         this.isDeployed = false;
 
         this.resource = 0;
+        this.betterResource = 0;
         this.tempMentalPoint = this.mentalPoint;
+        this.category = null;
         // 넘겨주기용 데이터
         this.data.mentalPoint = this.tempMentalPoint;
         this.setMentalPoint(this.tempMentalPoint / this.maxMentalPoint);

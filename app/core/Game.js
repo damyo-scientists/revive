@@ -15,6 +15,10 @@ export default class Game {
         this.maxTurn = 2;
         this.store = store;
         this.app = null;
+        this.resource = 0;
+        this.betterResource = 0;
+
+
         this.characterList = [{name: 'Janitor', mentalPoint: 5},
             {
                 name: 'Scientist',
@@ -35,7 +39,7 @@ export default class Game {
 
         ]
         //this.loader = new PIXI.Loader();
-        this.resource = 0;
+
 
         this.eventList = [{
             text: '파란약을 드시길 바랍니다. 빨간약을 먹을 시에는 피곤할 거에요.',
@@ -48,6 +52,28 @@ export default class Game {
             confirmResult: 1,
             cancelResult: -1
         }];
+
+        this.facilityList = [{
+            name: 'Lab',
+            category: 'normal',
+            resource: 5
+        }, {
+            name: 'Lab',
+            category: 'normal',
+            resource: 4
+        }, {
+            name: 'Lab',
+            category: 'normal',
+            resource: 3
+        }, {
+            name: 'Lab',
+            category: 'normal',
+            resource: 2
+        }, {
+            name: 'Lab',
+            category: 'research',
+            resource: 1
+        }]
 
     }
 
