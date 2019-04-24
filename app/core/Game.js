@@ -33,7 +33,7 @@ export default class Game {
                 mentalPoint: 5
             }
 
-        ]
+        ];
         //this.loader = new PIXI.Loader();
         this.resource = 0;
 
