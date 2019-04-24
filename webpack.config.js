@@ -7,6 +7,7 @@ module.exports = {
     entry: [
         // import basic styles all over the application
         './app/assets/styles/main.scss',
+        'babel-polyfill',
         // set our main.js as the entry point
         // to the PixiJS application
         './app/main',
