@@ -4,11 +4,17 @@ import App from './App.vue';
 import BootstrapVue from 'bootstrap-vue';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
-Vue.use(BootstrapVue);
+import {store} from './core/Store';
+import Game from "./core/Game";
 
+Vue.use(BootstrapVue);
 Vue.config.productionTip = false;
 
 new Vue({
     el: '#app',
-    render: h => h(App)
-})
+    store,
+    render: h => h(App),
+    created: function () {
+        new Game(this.$store);
+    }
+});

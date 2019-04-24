@@ -1,12 +1,12 @@
 const ProvidePlugin = require('webpack').ProvidePlugin;
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const { VueLoaderPlugin } = require('vue-loader')
+const {VueLoaderPlugin} = require('vue-loader')
 var path = require('path');
 
 module.exports = {
     entry: [
         // import basic styles all over the application
-        './styles/main.scss',
+        './app/assets/styles/main.scss',
         // set our main.js as the entry point
         // to the PixiJS application
         './app/main',
@@ -74,7 +74,7 @@ module.exports = {
                 options: {
                     loaders: {
                         // Since sass-loader (weirdly) has SCSS as its default parse mode, we map
-                        // the "scss" and "sass" values for the lang attribute to the right configs here.
+                        // the "scss" and "sass" values for the lang attribute to the right config here.
                         // other preprocessors should work out of the box, no loader config like this necessary.
                         'scss': [
                             'vue-style-loader',
@@ -119,6 +119,6 @@ module.exports = {
         alias: {
             'vue$': 'vue/dist/vue.esm.js'
         },
-        extensions: ['*','.js', '.vue',],
+        extensions: ['*', '.js', '.vue',],
     }
 }
