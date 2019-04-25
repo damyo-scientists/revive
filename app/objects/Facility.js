@@ -55,7 +55,7 @@ export default class Facility extends PIXI.Container {
         this.resource = data.resource;
         this.category = data.category;
         this.name = data.name;
-        console.log(data);
+        
     }
 
 

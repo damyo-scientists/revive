@@ -6,32 +6,25 @@ import Button from "../objects/Button";
 import Facility from "../objects/Facility";
 import ResultScene from "./ResultScene";
 import Event from "../objects/Event";
+import AlertText from "../objects/dialog/AlertText";
 
 
 export default class PlanScene extends PIXI.Container {
     constructor() {
         super();
 
+        // 게임 인스턴스
+        let game = new Game();
+
         // 경고용 메시지
-        let style = new PIXI.TextStyle({
-            fontSize: 36,
-            fill: '#ffffff'
-        });
 
-        this.alertText = new PIXI.Text("멘탈 바사삭이다 이말이야", style);
-        this.alertText.x = 400;
-        this.alertText.y = 500;
-        this.alertText.alpha = 0;
-
+        this.alertText = new AlertText(game, "멘탈이 부족하당.... ㅠㅅ ㅠ");
         this.addChild(this.alertText);
 
 
         this.showSceneSign();
         let changeButtonTexture = new PIXI.Texture.fromImage('app/assets/change.png');
         changeButtonTexture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
-
-        // 게임 인스턴스
-        let game = new Game();
 
 
         let changeButton = new PIXI.Sprite(changeButtonTexture);

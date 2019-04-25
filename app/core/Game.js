@@ -22,7 +22,7 @@ export default class Game {
         this.characterList = [{name: 'Janitor', mentalPoint: 5},
             {
                 name: 'Scientist',
-                mentalPoint: 5
+                mentalPoint: 1
             },
             {
                 name: 'Teacher',
