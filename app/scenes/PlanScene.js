@@ -61,12 +61,8 @@ export default class PlanScene extends PIXI.Container {
 
         for (var i = 0; i < 5; i++) {
             let planCharacter = new PlanCharacter();
-            planCharacter.setSpriteImage(doraButton);
-            // 자리 배정
-            planCharacter.spriteImage.x = game.app.renderer.width * i / 5 + planCharacter.spriteImage.width / 2;
-            planCharacter.spriteImage.y = game.app.renderer.height * 9 / 10;
-            // 초기 값 저장, 돌아오는 용도
-            planCharacter.setInitialpoint(planCharacter.spriteImage.x, planCharacter.spriteImage.y);
+            planCharacter.id = i;
+            planCharacter.setCharacterData(game, doraButton);
             // PlanCharacter가 관리하는 리스트에 할당
             this.characterList[i] = planCharacter;
             this.addChild(planCharacter);
@@ -77,13 +73,6 @@ export default class PlanScene extends PIXI.Container {
                 .on('pointermove', this.onDragMove)
 
         }
-        // Game 한테서 정보를 받아서 적용시키자
-        for (let i in this.characterList) {
-            let planCharacter = this.characterList[i];
-            planCharacter.data = game.characterList[i];
-            planCharacter.setData();
-        }
-
 
         this.characterScrollIndex = 0;
 

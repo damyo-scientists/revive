@@ -31,6 +31,7 @@ export default class PlanCharacter extends PIXI.Container {
     }
 
     setData() {
+
         this.characterName = this.data.name;
         this.mentalPoint = this.data.mentalPoint;
 
@@ -40,12 +41,22 @@ export default class PlanCharacter extends PIXI.Container {
         this.spriteImage.addChild(this.mentalBar);
     }
 
-    setSpriteImage(t) {
+    setCharacterData(game, t) {
+        // Data
+        this.data = game.characterList[this.id];
+        this.setData();
+
+        // Visual
         this.spriteImage.texture = t;
         this.spriteImage.interactive = true;
         this.spriteImage.buttonMode = true;
-
         this.spriteImage.anchor.set(0.5);
+        this.spriteImage.x = game.app.renderer.width * (this.id / 5) + this.spriteImage.width / 2;
+        this.spriteImage.y = game.app.renderer.height * 9 / 10;
+
+        // save initial point, for return purpose
+        this.setInitialpoint(this.spriteImage.x, this.spriteImage.y);
+
 
         this.addChild(this.spriteImage);
 
