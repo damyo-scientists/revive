@@ -58,19 +58,19 @@ export default class Game {
             category: 'normal',
             resource: 5
         }, {
-            name: 'Lab',
+            name: 'Storage',
             category: 'normal',
             resource: 4
         }, {
-            name: 'Lab',
+            name: 'Server',
             category: 'normal',
             resource: 3
         }, {
-            name: 'Lab',
+            name: 'Jail',
             category: 'normal',
             resource: 2
         }, {
-            name: 'Lab',
+            name: 'Archive',
             category: 'research',
             resource: 1
         }]

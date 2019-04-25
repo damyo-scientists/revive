@@ -2,7 +2,12 @@ export default class Facility extends PIXI.Container {
     constructor() {
         super();
         this.id = 0;
-        this.name = new PIXI.Text();
+        let style = new PIXI.TextStyle({
+            fontSize: 36,
+            fill: '#ffffff',
+            align: 'center'
+        });
+        this.name = new PIXI.Text('say', style);
         this.requiredMentalPoint = 2;
         this.spriteImage = new PIXI.Sprite();
         this.spriteImage.anchor.set(0.5);
@@ -15,13 +20,15 @@ export default class Facility extends PIXI.Container {
         this.resource = 0;
     }
 
-    setupFacility(texture, name) {
+    setupFacility(game, texture) {
         this.spriteImage.texture = texture;
         this.spriteImage.interactive = true;
-        this.name.text = name;
-        this.name.style = {fill: 0xf442d4, fontSize: 60, align: 'right'};
+        this.setupData(game.facilityList[this.id]);
         this.addChild(this.spriteImage);
         // 위치를 맞추자
+        this.spriteImage.x = game.app.renderer.width * (this.id / 5) + this.spriteImage.width / 2;
+        this.spriteImage.y = game.app.renderer.height / 10;
+
         this.spriteImage.addChild(this.name);
         this.spriteImage.addChild(this.informationBox);
 
@@ -54,8 +61,9 @@ export default class Facility extends PIXI.Container {
     setupData(data) {
         this.resource = data.resource;
         this.category = data.category;
-        this.name = data.name;
-        
+        this.name.text = data.name;
+
+
     }
 
 

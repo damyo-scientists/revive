@@ -51,46 +51,25 @@ export default class PlanScene extends PIXI.Container {
 
 
         for (var i = 0; i < 5; i++) {
-
-
             let facility = new Facility();
-            facility.setupFacility(facilityTexture, "Lab");
             facility.id = i;
-
-
-            // 자리 배정
-            facility.spriteImage.x = game.app.renderer.width * i / 5 + facility.spriteImage.width / 2;
-
-            facility.spriteImage.y = game.app.renderer.height / 10;
+            facility.setupFacility(game, facilityTexture);
             this.facilityList[i] = facility;
             facility.setupInteraction();
-
-
-            // // 자원 배정 (나중에 여기는 외부에서 시트로 받거나 란듐으로 돌리거나
-            // facility.resource = i + 1;
-
             this.addChild(facility);
-
         }
 
         for (var i = 0; i < 5; i++) {
-
-
-            //let planCharacter = new this.Character(i, doraButton, this);
             let planCharacter = new PlanCharacter();
             planCharacter.setSpriteImage(doraButton);
-
             // 자리 배정
             planCharacter.spriteImage.x = game.app.renderer.width * i / 5 + planCharacter.spriteImage.width / 2;
             planCharacter.spriteImage.y = game.app.renderer.height * 9 / 10;
-
             // 초기 값 저장, 돌아오는 용도
             planCharacter.setInitialpoint(planCharacter.spriteImage.x, planCharacter.spriteImage.y);
-
             // PlanCharacter가 관리하는 리스트에 할당
             this.characterList[i] = planCharacter;
             this.addChild(planCharacter);
-
             // planCharacter 에 인터렉션을 달아주자
             planCharacter.spriteImage.on('pointerdown', this.onDragStart)
                 .on('pointerup', this.onDragEnd)
@@ -98,17 +77,11 @@ export default class PlanScene extends PIXI.Container {
                 .on('pointermove', this.onDragMove)
 
         }
-
         // Game 한테서 정보를 받아서 적용시키자
         for (let i in this.characterList) {
             let planCharacter = this.characterList[i];
             planCharacter.data = game.characterList[i];
             planCharacter.setData();
-        }
-        for (let i in this.facilityList) {
-            let facility = this.facilityList[i];
-            facility.setupData(game.facilityList[i]);
-
         }
 
 
