@@ -4,6 +4,7 @@ import Button from "../objects/Button";
 import Game from "../core/Game";
 import {Howl, Howler} from 'howler';
 import PlanScene from "./PlanScene";
+import SceneChangeButton from "../objects/interface/SceneChangeButton";
 
 export default class BriefScene extends PIXI.Container {
     constructor() {
@@ -39,23 +40,17 @@ export default class BriefScene extends PIXI.Container {
     }
 
     showNextTurnButton() {
-        let nextTurnButtonTexture = new PIXI.Texture.fromImage('app/assets/change.png');
-        nextTurnButtonTexture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
-        let nextTurnButton = new PIXI.Sprite(nextTurnButtonTexture);
-
-        nextTurnButton.scale.x = 0.5;
-        nextTurnButton.scale.y = 0.5;
-        nextTurnButton.y = 300;
-        nextTurnButton.interactive = true;
-        nextTurnButton.buttonMode = true;
-
+        let sceneChangeTexture = PIXI.loader.resources['next'].texture;
+        sceneChangeTexture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
+        let game = new Game();
+        let sceneChangeButton = new SceneChangeButton(game, sceneChangeTexture);
         let self = this;
-        nextTurnButton.on('pointerdown', () => {
+        sceneChangeButton.on('pointerdown', () => {
             let planScene = new PlanScene();
             console.log(planScene);
             self.sceneManager.goTo(planScene);
         });
-        this.addChild(nextTurnButton);
+        this.addChild(sceneChangeButton);
 
     }
 

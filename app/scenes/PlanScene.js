@@ -7,6 +7,7 @@ import Facility from "../objects/Facility";
 import ResultScene from "./ResultScene";
 import Event from "../objects/Event";
 import AlertText from "../objects/dialog/AlertText";
+import SceneChangeButton from "../objects/interface/SceneChangeButton";
 
 
 export default class PlanScene extends PIXI.Container {
@@ -17,27 +18,19 @@ export default class PlanScene extends PIXI.Container {
         let game = new Game();
 
         // 경고용 메시지
-
         this.alertText = new AlertText(game, "멘탈이 부족하당.... ㅠㅅ ㅠ");
         this.addChild(this.alertText);
 
 
         this.showSceneSign();
-        let changeButtonTexture = new PIXI.Texture.fromImage('app/assets/change.png');
-        changeButtonTexture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
+        let sceneChangeTexture = PIXI.loader.resources['next'].texture;
+        sceneChangeTexture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
 
 
-        let changeButton = new PIXI.Sprite(changeButtonTexture);
+        let sceneChangeButton = new SceneChangeButton(game, sceneChangeTexture);
 
-        changeButton.scale.x = 0.1;
-        changeButton.scale.y = 0.1;
-
-        changeButton.x = game.app.renderer.width / 2;
-        changeButton.interactive = true;
-        changeButton.buttonMode = true;
-
-        changeButton.on('pointerdown', this.onClick);
-        this.addChild(changeButton);
+        sceneChangeButton.on('pointerdown', this.onClick);
+        this.addChild(sceneChangeButton);
 
         //// 텍스쳐 로딩 ////
         var doraButton = PIXI.loader.resources['doramong'].texture;
