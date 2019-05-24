@@ -10,11 +10,11 @@ export default class Game {
             headers: {'Access-Control-Allow-Origin': '*'}
         };
 
-        axios.get('http://localhost:4040/api/games', config)
-            .then(function (response) {
-                // handle success
-                console.log("game", response.data);
-            });
+        // axios.get('http://119.196.38.174:4040/api/games', config)
+        //     .then(function (response) {
+        //         // handle success
+        //         console.log("game", response.data);
+        //     });
 
         this.setInitialInfo(store);
     }
