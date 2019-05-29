@@ -50,9 +50,11 @@
     "vue": "^2.6.2",
     "vue-loader": "^15.6.2",
     "vue-pixi": "^0.1.1",
+    "vue-router": "^3.0.6",
     "vue-style-loader": "^4.1.2",
     "vue-template-compiler": "^2.6.2",
     "vuex": "^3.1.0",
+    "vuex-router-sync": "^5.0.0",
     "webpack": "^4.29.1",
     "webpack-cli": "^3.2.3",
     "webpack-dev-server": "^3.1.14"
