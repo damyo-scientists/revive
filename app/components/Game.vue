@@ -23,7 +23,7 @@
 
 
     export default {
-        name: "App.vue",
+        name: "Game.vue",
         mounted() {
             // this.app = new PIXI.Application({
             //
@@ -38,7 +38,6 @@
 
             var game = new Game();
             game.generateApplication();
-            game.setChracterStatus();
             game.app.renderer = PIXI.autoDetectRenderer(screen.availWidth, screen.availHeight);
 
 

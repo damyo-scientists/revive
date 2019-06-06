@@ -1,7 +1,9 @@
 {
   "assets": {
     "sprites": {
-      "doramong": "app/assets/sprites/doramong.png"
+      "doramong": "app/assets/sprites/doramong.png",
+      "confirm": "app/assets/sprites/confirm.png",
+      "cancel": "app/assets/sprites/cancel.png"
     },
     "json": {
     },

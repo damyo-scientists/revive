@@ -1,10 +1,12 @@
 {
   "name": "revive",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "revive",
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --progress --inline --hot --mode development",
+    "production": "webpack-dev-server --progress --mode production",
+    "publish": "webpack --progress --mode production",
     "test": "mocha --require @babel/register --recursive ./tests"
   },
   "repository": {
