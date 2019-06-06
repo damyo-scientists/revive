@@ -6,6 +6,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css';
 import {store} from './core/Store';
 import Game from "./core/Game";
 import App from './App';
+import "@babel/polyfill";
 //import Api from "./utils/Api";
 import routes from './routes';
 import VueRouter from "vue-router";
