@@ -18,7 +18,7 @@
 <script>
   import axios from 'axios';
 
-  const API_URL = 'http://revive-laravel-server.xyz/api';
+  const API_URL = 'http://revive-api.hbpz.pw/api';
 
   export default {
     data() {
@@ -44,7 +44,7 @@
             alert(login.response.data.message);
           }
         } catch (error) {
-          alert(error.message);
+          alert(error.response.data.message);
           console.log(error.message);
         }
       }
