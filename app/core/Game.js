@@ -1,5 +1,5 @@
 const axios = require('axios');
-
+const API_URL = 'http://revive-api.hbpz.pw/api';
 export default class Game {
   constructor(store) {
     if (Game.instance)

@@ -16,9 +16,7 @@
 </template>
 
 <script>
-  import axios from 'axios';
-
-  const API_URL = 'http://revive-api.hbpz.pw/api';
+  import {signIn} from '../core/Api';
 
   export default {
     data() {
@@ -31,10 +29,7 @@
     methods: {
       async onSubmit(evt) {
         try {
-          let login = await axios.post(API_URL + '/sign-in', {
-              'user_id': this.userId,
-              'password': this.password
-          });
+          let login = await signIn(this.userId, this.password);
           console.log(login);
           if (login.status == 200) {
             this.$router.push({
