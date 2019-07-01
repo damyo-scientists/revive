@@ -76,4 +76,8 @@ export default class Facility extends PIXI.Container {
     }
 
 
+    FacilityWork() {
+
+    }
+
 }

@@ -15,6 +15,7 @@ export default class Game {
         this.maxTurn = 2;
         this.store = store;
         this.app = null;
+        this.progress = 0;
         this.resource = 0;
         this.betterResource = 0;
 
@@ -79,6 +80,10 @@ export default class Game {
 
     getTurn() {
         return this.currentTurn;
+    }
+
+    addProgress(point) {
+        this.progress += point;
     }
 
     addResource(point) {

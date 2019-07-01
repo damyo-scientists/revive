@@ -21,6 +21,9 @@ export default class PlanCharacter extends PIXI.Container {
         this.outerMentalBar = new PIXI.Graphics();
         this.innerMentalBar = new PIXI.Graphics();
 
+        this.outerHealthBar = new PIXI.Graphics();
+        this.innnerHealthBar = new PIXI.Graphics();
+
         this.initialPositionX = 0;
         this.initialPositionY = 0;
 
