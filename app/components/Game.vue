@@ -20,6 +20,7 @@
   import Game from "../core/Game";
   import SceneManager from '../managers/SceneManager';
   import AssetManager from "../managers/AssetManager";
+  import StartScene from "../scenes/StartScene";
 
 
   export default {
@@ -40,14 +41,15 @@
       game.generateApplication();
       game.app.renderer = PIXI.autoDetectRenderer(screen.availWidth, screen.availHeight);
 
+      var w, h;
 
       function resize(app) {
         if (window.innerWidth / window.innerHeight >= ratio) {
-          var w = window.innerHeight * ratio;
-          var h = window.innerHeight;
+          w = window.innerHeight * ratio;
+          h = window.innerHeight;
         } else {
-          var w = window.innerWidth;
-          var h = window.innerWidth / ratio;
+          w = window.innerWidth;
+          h = window.innerWidth / ratio;
         }
 
         app.renderer.view.style.width = w + 'px';
@@ -58,7 +60,7 @@
 
       window.onresize = function (event) {
         resize(game.app);
-      }
+      };
 
 
       this.sceneManager = new SceneManager();
@@ -66,8 +68,8 @@
 
       let assetManager = new AssetManager();
       assetManager.loadAllAssets(() => {
-        let briefScene = new BriefScene();
-        game.app.stage.addChild(briefScene);
+        let startScene = new StartScene();
+        game.app.stage.addChild(startScene);
         this.$el.appendChild(game.app.view);
       });
     },

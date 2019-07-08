@@ -6,81 +6,81 @@ import {Howl, Howler} from 'howler';
 import PlanScene from "./PlanScene";
 
 export default class BriefScene extends PIXI.Container {
-    constructor() {
-        super();
-        this.initializeVariables();
-        this.showNextTurnButton();
-        this.showSceneSign();
-        this.showDialog();
+  constructor() {
+    super();
+    this.initializeVariables();
+    this.showNextTurnButton();
+    this.showSceneSign();
+    this.showDialog();
+  }
+
+  initializeVariables() {
+    this.sceneManager = new SceneManager();
+    this.dialogManager = new DialogManager();
+    this.dialogManager.init('rpy');
+  }
+
+  showDialog(dialog) {
+    if (typeof dialog === 'undefined') {
+      dialog = this.dialogManager.showNextDialog();
+    } else if (dialog === false) {
+      this.removeChildren();
+      console.log("대화 종료!");
+      new SceneManager().goTo(new PlanScene());
+      return;
     }
+    dialog.x = 30;
+    dialog.y = 60;
+    dialog.dialogFrame.on('pointerdown', () => {
+      this.removeChild(dialog);
+      this.showDialog(this.dialogManager.showNextDialog());
+    });
+    this.addChild(dialog);
+  }
 
-    initializeVariables() {
-        this.sceneManager = new SceneManager();
-        this.dialogManager = new DialogManager();
-        this.dialogManager.init('rpy');
-    }
+  showNextTurnButton() {
+    let nextTurnButtonTexture = new PIXI.Texture.fromImage('app/assets/change.png');
+    nextTurnButtonTexture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
+    let nextTurnButton = new PIXI.Sprite(nextTurnButtonTexture);
 
-    showDialog(dialog) {
-        if (typeof dialog === 'undefined') {
-            dialog = this.dialogManager.showNextDialog();
-        } else if (dialog === false) {
-            this.removeChildren();
-            console.log("대화 종료!");
-            new SceneManager().goTo(new PlanScene());
-            return;
-        }
-        dialog.x = 30;
-        dialog.y = 60;
-        dialog.dialogFrame.on('pointerdown', () => {
-            this.removeChild(dialog);
-            this.showDialog(this.dialogManager.showNextDialog());
-        });
-        this.addChild(dialog);
-    }
+    nextTurnButton.scale.x = 0.5;
+    nextTurnButton.scale.y = 0.5;
+    nextTurnButton.y = 300;
+    nextTurnButton.interactive = true;
+    nextTurnButton.buttonMode = true;
 
-    showNextTurnButton() {
-        let nextTurnButtonTexture = new PIXI.Texture.fromImage('app/assets/change.png');
-        nextTurnButtonTexture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
-        let nextTurnButton = new PIXI.Sprite(nextTurnButtonTexture);
+    let self = this;
+    nextTurnButton.on('pointerdown', () => {
+      let planScene = new PlanScene();
+      console.log(planScene);
+      self.sceneManager.goTo(planScene);
+    });
+    this.addChild(nextTurnButton);
 
-        nextTurnButton.scale.x = 0.5;
-        nextTurnButton.scale.y = 0.5;
-        nextTurnButton.y = 300;
-        nextTurnButton.interactive = true;
-        nextTurnButton.buttonMode = true;
+  }
 
-        let self = this;
-        nextTurnButton.on('pointerdown', () => {
-            let planScene = new PlanScene();
-            console.log(planScene);
-            self.sceneManager.goTo(planScene);
-        });
-        this.addChild(nextTurnButton);
+  showSceneSign() {
+    let sceneDetailButton = new Button({
+      text: 'Brief Scene',
+      width: 300
+    });
 
-    }
+    this.addChild(sceneDetailButton);
 
-    showSceneSign() {
-        let sceneDetailButton = new Button({
-            text: 'Brief Scene',
-            width: 300
-        });
+    let sound = new Howl({
+      src: ["app/assets/sounds/bgm_maoudamashii_acoustic51.mp3"]
+    });
 
-        this.addChild(sceneDetailButton);
+    let soundOn = true;
+    sceneDetailButton.on('click', function () {
+      Game.getInstance().nextTurn();
+      if (soundOn) {
+        sound.play();
+      } else {
+        sound.stop();
+      }
+      soundOn = !soundOn;
+    });
 
-        let sound = new Howl({
-            src: ["app/assets/sounds/bgm_maoudamashii_acoustic51.mp3"]
-        });
-
-        let soundOn = true;
-        sceneDetailButton.on('click', function () {
-            Game.getInstance().nextTurn();
-            if (soundOn) {
-                sound.play();
-            } else {
-                sound.stop();
-            }
-            soundOn = !soundOn;
-        });
-
-    }
+  }
 }

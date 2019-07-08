@@ -19,6 +19,13 @@ export default class Game {
     this.setInitialInfo(store);
   }
 
+  toJSON() {
+    return Object.getOwnPropertyNames(this).reduce((a, b) => {
+      a[b] = this[b];
+      return a;
+    }, {});
+  }
+
   setInitialInfo(store) {
     this.currentTurn = 1;
     this.maxTurn = 2;

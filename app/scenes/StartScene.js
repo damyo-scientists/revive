@@ -1,14 +1,10 @@
-import Button from "../objects/Button";
-import {Howl} from "howler";
-import Game from "../core/Game";
 import BriefScene from "./BriefScene";
 import SceneManager from "../managers/SceneManager";
+import Button from "../objects/Button";
 
-export default class ResultScene extends PIXI.Container {
+export default class StartScene extends PIXI.Container {
   constructor() {
     super();
-
-    // 나중에 이미지로 대체할지도(?)
     this.displayText = new PIXI.Text();
     this.displayWindow = new PIXI.Graphics();
     this.displayWindow.lineStyle(2, 0xFF00FF, 1);
@@ -16,39 +12,28 @@ export default class ResultScene extends PIXI.Container {
     this.displayWindow.drawRoundedRect(100, 100, 1000, 1000, 16);
     this.displayWindow.endFill();
     this.addChild(this.displayWindow);
-
     this.sceneManager = new SceneManager();
-    this.game = new Game();
-    this.showSceneSign();
     this.showNextTurnButton();
-
-
+    this.showMenuButton();
   }
 
-
-  showSceneSign() {
-    let sceneDetailButton = new Button({
-      text: 'Result Scene',
-      width: 300
+  showMenuButton() {
+    let newStartButton = new Button({
+      text: '새로하기',
+      width: 300,
+      x: 500,
+      y: 200
     });
 
-    this.addChild(sceneDetailButton);
-
-    let sound = new Howl({
-      src: ["app/assets/sounds/bgm_maoudamashii_acoustic51.mp3"]
+    let continueButton = new Button({
+      text: '이어하기',
+      width: 300,
+      x: 500,
+      y: 500
     });
 
-    let soundOn = true;
-    sceneDetailButton.on('click', function () {
-      Game.getInstance().nextTurn();
-      if (soundOn) {
-        sound.play();
-      } else {
-        sound.stop();
-      }
-      soundOn = !soundOn;
-    });
-
+    this.addChild(newStartButton);
+    this.addChild(continueButton);
   }
 
   showNextTurnButton() {
@@ -67,22 +52,8 @@ export default class ResultScene extends PIXI.Container {
       let briefScene = new BriefScene();
       console.log(briefScene);
       self.sceneManager.goTo(briefScene);
-
-      // 턴도 넘기자
-      this.game.nextTurn();
     });
     this.addChild(nextTurnButton);
 
   }
-
-  displayResult() {
-    let game = new Game();
-    console.log("this is from RESULT SCENE, resource point is " + game.resource);
-    this.displayText.text = this.game.resource;
-    this.displayText.style = {fill: 0xf442d4, fontSize: 150, align: 'left'};
-
-    this.addChild(this.displayText);
-  }
-
-
 }

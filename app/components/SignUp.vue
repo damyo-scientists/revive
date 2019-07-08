@@ -17,6 +17,7 @@
 
 <script>
   import axios from 'axios';
+  import {signUp} from '../core/Api';
 
   const API_URL = 'http://revive-api.hbpz.pw/api';
   export default {
@@ -30,10 +31,7 @@
     methods: {
       async onSubmit(evt) {
         try {
-          let login = await axios.post(API_URL + '/sign-up', {
-            'user_id': this.userId,
-            'password': this.password
-          });
+          let login = await signUp(this.userId, this.password);
           console.log(login);
           if (login.status == 200) {
             alert('가입되었습니다. 로그인해주세요.');
@@ -41,10 +39,14 @@
               path: '/sign-in'
             });
           } else {
-            alert(login.response.data.message);
+            if (typeof login.response.data !== undefined) {
+              alert(login.response.data.message);
+            } else {
+              console.log(login.response);
+            }
           }
         } catch (error) {
-          alert(error.response.data.message);
+          alert(error);
           console.log(error.message);
         }
       }
