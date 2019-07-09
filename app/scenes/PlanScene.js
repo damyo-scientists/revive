@@ -170,6 +170,7 @@ export default class PlanScene extends PIXI.Container {
         this.data = event.data;
         this.alpha = 0.5;
 
+        this.parent.onDrag();1
         console.log(this.parent.characterName);
 
         this.dragging = true;
@@ -207,6 +208,9 @@ export default class PlanScene extends PIXI.Container {
         if (isInside == false) {
             this.parent.returnToInitialPoint();
             this.parent.undeployed();
+
+            // 되돌아오면 상태창을 다시붙여주자
+            this.parent.onDragEnd();
         }
 
 

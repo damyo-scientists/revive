@@ -4,7 +4,8 @@
       "doramong": "app/assets/sprites/doramong.png",
       "confirm": "app/assets/sprites/confirm.png",
       "cancel": "app/assets/sprites/cancel.png",
-      "next": "app/assets/sprites/next.png"
+      "next": "app/assets/sprites/next.png",
+      "standing_sarah": "app/assets/sprites/standing_sarah.png"
     },
     "json": {
     },

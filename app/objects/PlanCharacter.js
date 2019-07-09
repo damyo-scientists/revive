@@ -20,12 +20,16 @@ export default class PlanCharacter extends PIXI.Container {
         this.mentalBar = new PIXI.Container();
         this.outerMentalBar = new PIXI.Graphics();
         this.innerMentalBar = new PIXI.Graphics();
-
         this.outerHealthBar = new PIXI.Graphics();
         this.innnerHealthBar = new PIXI.Graphics();
 
         this.initialPositionX = 0;
         this.initialPositionY = 0;
+
+        // 상태창 관련
+        this.statusSprite = new PIXI.Sprite();
+        this.statusBox = new PIXI.Graphics();
+        this.mentalText = new PIXI.Text();
 
 
         // 로직 관련
@@ -41,6 +45,7 @@ export default class PlanCharacter extends PIXI.Container {
         // 이거 포인터처럼 작동하나??
         this.tempMentalPoint = this.data.mentalPoint;
         this.setMentalPoint(this.mentalPoint / this.maxMentalPoint);
+        this.setStatusData(this.id);
         this.spriteImage.addChild(this.mentalBar);
     }
 
@@ -136,6 +141,9 @@ export default class PlanCharacter extends PIXI.Container {
         this.outerMentalBar.drawRect(0, 0, 150, 10);
         this.outerMentalBar.endFill();
         this.mentalBar.addChild(this.outerMentalBar);
+        this.outerMentalBar.position.x = -75;
+        this.outerMentalBar.position.y = -95;
+
 
         // 멘탈바 게이지
         this.innerMentalBar = new PIXI.Graphics();
@@ -144,6 +152,49 @@ export default class PlanCharacter extends PIXI.Container {
         this.innerMentalBar.endFill();
         this.mentalBar.addChild(this.innerMentalBar);
 
+        this.innerMentalBar.position.x = -75;
+        this.innerMentalBar.position.y = -95;
+
 
     }
+
+
+    // 상태창 정보 설정
+    setStatusData(characterIndex) {
+        let spriteImage = PIXI.loader.resources['standing_sarah'].texture;
+        spriteImage.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
+
+        this.statusSprite.texture = spriteImage;
+
+        this.mentalBar.addChild(this.statusSprite);
+
+
+        this.statusSprite.position.x = -75;
+        this.statusSprite.position.y = 95;
+        // 이미지가 현재 사이즈가 맞춰져서 오지 않았기 때문에 수동조정
+
+
+        this.statusSprite.addChild(this.statusBox);
+        this.statusBox.beginFill(0xC3F9A3);
+
+        // 현재 비율이 다르기 때문에 넓이도 이에 맞춰져있다.
+        this.statusBox.drawRect(0, 300, 600, 600);
+        this.statusBox.endFill();
+
+        this.statusBox.alpha = 0.5;
+
+        this.mentalText.text = "남아있는 양심은? " + this.mentalPoint;
+        this.mentalText.style = {fill: 0x42f48f, fontSize: 25, align: 'left'};
+        this.statusBox.addChild(this.mentalText);
+
+    }
+
+    onDrag() {
+        this.mentalBar.removeChild(this.statusSprite);
+    }
+
+    onDragEnd() {
+        this.mentalBar.addChild(this.statusSprite);
+    }
+
 }
