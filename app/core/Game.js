@@ -1,22 +1,10 @@
-const axios = require('axios');
 const API_URL = 'http://revive-api.hbpz.pw/api';
 export default class Game {
-  constructor(store) {
+  constructor() {
     if (Game.instance)
       return Game.instance;
     Game.instance = this;
-
-    var config = {
-      headers: {'Access-Control-Allow-Origin': '*'}
-    };
-
-    // axios.get('http://119.196.38.174:4040/api/games', config)
-    //     .then(function (response) {
-    //         // handle success
-    //         console.log("game", response.data);
-    //     });
-
-    this.setInitialInfo(store);
+    this.setInitialInfo();
   }
 
   toJSON() {
@@ -26,10 +14,9 @@ export default class Game {
     }, {});
   }
 
-  setInitialInfo(store) {
+  setInitialInfo() {
     this.currentTurn = 1;
     this.maxTurn = 2;
-    this.store = store;
     this.app = null;
     this.characterList = [{name: 'Janitor', mentalPoint: 5},
       {
@@ -82,8 +69,6 @@ export default class Game {
     if (this.currentTurn < this.maxTurn) {
       this.currentTurn += 1;
     }
-    this.store.commit('nextTurn');
-    console.log('next turn');
   }
 
   setChracterStatus(index) {

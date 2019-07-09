@@ -82,7 +82,9 @@
     },
     computed: {
       turn: function () {
-        return this.$store.state.turn;
+        if (typeof(this.game) !== 'undefined') {
+          return this.game.currentTurn;
+        }
       }
     },
     data() {
