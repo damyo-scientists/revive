@@ -4,13 +4,13 @@ export default class Facility extends PIXI.Container {
         this.id = 0;
         let style = new PIXI.TextStyle({
             fontSize: 36,
-            fill: '#ffffff',
+            fill: '#dd2fff',
             align: 'center'
         });
         this.name = new PIXI.Text('say', style);
         this.requiredMentalPoint = 2;
         this.spriteImage = new PIXI.Sprite();
-        this.spriteImage.anchor.set(0.5);
+        // this.spriteImage.anchor.set(0.5);
         this.informationBox = new PIXI.Graphics();
 
 
@@ -18,16 +18,19 @@ export default class Facility extends PIXI.Container {
 
         this.data = null;
         this.resource = 0;
+        this.isInside = false;
     }
 
-    setupFacility(game, texture) {
-        this.spriteImage.texture = texture;
+
+    setupFacility(game) {
+
         this.spriteImage.interactive = true;
-        this.setupData(game.facilityList[this.id]);
+
+        // this.setupData(game.facilityList[this.id]);
         this.addChild(this.spriteImage);
         // 위치를 맞추자
-        this.spriteImage.x = game.app.renderer.width * (this.id / 5) + this.spriteImage.width / 2;
-        this.spriteImage.y = game.app.renderer.height / 10;
+        // this.spriteImage.x = game.app.renderer.width * (this.id / 5) + this.spriteImage.width / 2;
+        // this.spriteImage.y = game.app.renderer.height / 10;
 
         this.spriteImage.addChild(this.name);
         this.spriteImage.addChild(this.informationBox);
@@ -39,7 +42,7 @@ export default class Facility extends PIXI.Container {
         this.informationBox.endFill();
         this.informationBox.visible = false;
 
-
+        this.setupInteraction();
     }
 
     // 범위안인지 쳌
@@ -69,10 +72,12 @@ export default class Facility extends PIXI.Container {
 
     facilityPointerOver() {
         this.parent.informationBox.visible = true;
+        this.isInside = true;
     }
 
     facilityPointerOut() {
         this.parent.informationBox.visible = false;
+        this.isInside = false;
     }
 
 
@@ -80,4 +85,12 @@ export default class Facility extends PIXI.Container {
 
     }
 
+
+    getTexture(textureName) {
+        let spriteImage = PIXI.loader.resources[textureName].texture;
+        spriteImage.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
+
+
+        return spriteImage;
+    }
 }

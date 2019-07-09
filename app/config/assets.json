@@ -5,7 +5,14 @@
       "confirm": "app/assets/sprites/confirm.png",
       "cancel": "app/assets/sprites/cancel.png",
       "next": "app/assets/sprites/next.png",
-      "standing_sarah": "app/assets/sprites/standing_sarah.png"
+      "standing_sarah": "app/assets/sprites/standing_sarah.png",
+      "wework_facility": "app/assets/sprites/facility/wework_facility.png",
+      "one_for_all": "app/assets/sprites/facility/one_for_all.png",
+      "process_facility": "app/assets/sprites/facility/process_facility.png",
+      "security_facility": "app/assets/sprites/facility/security_facility.png",
+      "research_facility": "app/assets/sprites/facility/research_facility.png",
+      "server_facility": "app/assets/sprites/facility/server_facility.png",
+      "yanolza_facility": "app/assets/sprites/facility/yanolza_facility.png"
     },
     "json": {
     },

@@ -1,9 +1,19 @@
 import Facility from "../Facility";
 import Game from "../../core/Game";
 
-export default class LabFacility extends Facility {
+export default class ResearchFacility extends Facility {
     constructor() {
         super();
+    }
+
+    setupFacility(game) {
+        super.setupFacility(game);
+
+        this.spriteImage.texture = this.getTexture('research_facility');
+
+
+        this.x = game.app.renderer.width * 0.442;
+        this.y = game.app.renderer.height * 0.39;
     }
 
     FacilityWork() {

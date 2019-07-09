@@ -8,6 +8,13 @@ import ResultScene from "./ResultScene";
 import Event from "../objects/Event";
 import AlertText from "../objects/dialog/AlertText";
 import SceneChangeButton from "../objects/interface/SceneChangeButton";
+import WeWorkFacility from "../objects/Facilities/WeWorkFacility"
+import FacilityBackground from "../objects/Facilities/FacilityBackground"
+import ProcessFacility from "../objects/Facilities/ProcessFacility"
+import SecurityFacility from "../objects/Facilities/SecurityFacility"
+import ResearchFacility from "../objects/Facilities/ResearchFacility"
+import ServerFacility from "../objects/Facilities/ServerFacility"
+import YaNolZaFacility from "../objects/Facilities/YaNolZaFacility"
 
 
 export default class PlanScene extends PIXI.Container {
@@ -50,14 +57,53 @@ export default class PlanScene extends PIXI.Container {
         this.facilityList = [];
 
 
-        for (var i = 0; i < 5; i++) {
-            let facility = new Facility();
-            facility.id = i;
-            facility.setupFacility(game, facilityTexture);
-            this.facilityList[i] = facility;
-            facility.setupInteraction();
-            this.addChild(facility);
-        }
+        // for (var i = 0; i < 5; i++) {
+        //     let facility = new Facility();
+        //     facility.id = i;
+        //     facility.setupFacility(game);
+        //     this.facilityList[i] = facility;
+        //     facility.setupInteraction();
+        //     this.addChild(facility);
+        // }
+
+        let facilityBacground = new FacilityBackground();
+        this.addChild(facilityBacground);
+
+        // 사무실
+        let weWorkFacility = new WeWorkFacility();
+        weWorkFacility.setupFacility(game);
+        this.facilityList[0] = weWorkFacility;
+        this.addChild(weWorkFacility);
+
+        // 처리실
+        let processFacility = new ProcessFacility();
+        processFacility.setupFacility(game);
+        this.facilityList[1] = processFacility;
+        this.addChild(processFacility);
+
+        //경비실
+        let securityFacility = new SecurityFacility();
+        securityFacility.setupFacility(game);
+        this.facilityList[2] = securityFacility;
+        this.addChild(securityFacility);
+
+        // 연구실
+        let researchFacility = new ResearchFacility();
+        researchFacility.setupFacility(game);
+        this.facilityList[3] = researchFacility;
+        this.addChild(researchFacility);
+
+        // 서버실
+        let serverFacility = new ServerFacility();
+        serverFacility.setupFacility(game);
+        this.facilityList[4] = serverFacility;
+        this.addChild(serverFacility);
+
+        // 숙소
+        let yaNolZaFacility = new YaNolZaFacility();
+        yaNolZaFacility.setupFacility(game);
+        this.facilityList[5] = yaNolZaFacility;
+        this.addChild(yaNolZaFacility);
 
         for (var i = 0; i < 5; i++) {
             let planCharacter = new PlanCharacter();
@@ -170,7 +216,8 @@ export default class PlanScene extends PIXI.Container {
         this.data = event.data;
         this.alpha = 0.5;
 
-        this.parent.onDrag();1
+        this.parent.onDrag();
+        1
         console.log(this.parent.characterName);
 
         this.dragging = true;
@@ -180,7 +227,7 @@ export default class PlanScene extends PIXI.Container {
         this.alpha = 1;
         this.dragging = false;
 
-
+        console.log(this);
         // 할아버지의 힘을 이용하자
         let isInside = false;
 
