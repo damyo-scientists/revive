@@ -4,12 +4,12 @@ export default class Dialog extends PIXI.Container {
     constructor({say = '...게임은 시작되었다'} = {}) {
         super();
         this._name = null;
-        this._dialogBox = new PIXI.Graphics;
+        this.slotBox = new PIXI.Graphics;
         this._dialogBox2 = new PIXI.Graphics;
 
-        this._dialogBox.beginFill(0xffff);
-        this._dialogBox.drawRoundedRect(0, 0, 1000, 150, 10);
-        this._dialogBox.endFill();
+        this.slotBox.beginFill(0xffff);
+        this.slotBox.drawRoundedRect(0, 0, 1000, 150, 10);
+        this.slotBox.endFill();
 
         this._dialogBox2.beginFill(0xff00bbff);
         this._dialogBox2.drawRect(5, 5, 990, 140);
@@ -29,7 +29,7 @@ export default class Dialog extends PIXI.Container {
         this.addChild(this._leftSprite);
         this.addChild(this._rightSprite);
         this.addChild(this._centerSprite);
-        this.addChild(this._dialogBox);
+        this.addChild(this.slotBox);
         this.addChild(this._dialogBox2);
         this.addChild(this._sayText);
 

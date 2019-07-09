@@ -32,6 +32,53 @@ export default class StartScene extends PIXI.Container {
       y: 500
     });
 
+    let slotBox = new PIXI.Graphics;
+    let newStartClicked = false;
+    newStartButton.on('click', () => {
+      if (!newStartClicked) {
+        this.removeChild(slotBox);
+        let firstSlotButton = new Button({
+          text: 'Slot 1',
+          width: 200,
+          height: 200,
+          x: 250,
+          y: 300
+        });
+
+        let secondSlotButton = new Button({
+          text: 'Slot 2',
+          width: 200,
+          height: 200,
+          x: 500,
+          y: 300
+        });
+
+        let thirdSlotButton = new Button({
+          text: 'Slot 3',
+          width: 200,
+          height: 200,
+          x: 750,
+          y: 300
+        });
+
+        slotBox.beginFill(0xffff);
+        slotBox.drawRoundedRect(200, 280, 800, 250, 10);
+        slotBox.endFill();
+
+        slotBox.addChild(firstSlotButton);
+        slotBox.addChild(secondSlotButton);
+        slotBox.addChild(thirdSlotButton);
+        this.addChild(slotBox);
+      } else {
+        this.removeChild(slotBox);
+      }
+      newStartClicked = !newStartClicked;
+    });
+
+    continueButton.on('click', () => {
+      this.removeChild(slotBox);
+    });
+
     this.addChild(newStartButton);
     this.addChild(continueButton);
   }
