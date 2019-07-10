@@ -77,7 +77,7 @@ export default class Event extends PIXI.Container {
         // 여기에 추가로 들어갈 작업
         let event = this.parent.parent;
 
-        event.game.resource -= event.cancelResult;
+        // event.game.resource -= event.cancelResult;
         event.visible = false;
     }
 }
