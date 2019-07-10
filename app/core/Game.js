@@ -55,24 +55,28 @@ export default class Game {
         }];
 
         this.facilityList = [{
-            name: 'Lab',
+            name: '사무실',
             category: 'normal',
             resource: 5
         }, {
-            name: 'Storage',
+            name: '처리실',
             category: 'normal',
             resource: 4
         }, {
-            name: 'Server',
+            name: '경비실',
             category: 'normal',
             resource: 3
         }, {
-            name: 'Jail',
+            name: '연구실',
             category: 'normal',
             resource: 2
         }, {
-            name: 'Archive',
+            name: '서버실',
             category: 'research',
+            resource: 1
+        }, {
+            name: '숙소',
+            category: 'normal',
             resource: 1
         }]
 

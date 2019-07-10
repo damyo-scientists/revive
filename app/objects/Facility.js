@@ -22,11 +22,12 @@ export default class Facility extends PIXI.Container {
     }
 
 
-    setupFacility(game) {
+    setupFacility(game, index) {
 
         this.spriteImage.interactive = true;
+        this.id = index;
 
-        // this.setupData(game.facilityList[this.id]);
+        this.setupData(game);
         this.addChild(this.spriteImage);
         // 위치를 맞추자
         // this.spriteImage.x = game.app.renderer.width * (this.id / 5) + this.spriteImage.width / 2;
@@ -47,11 +48,13 @@ export default class Facility extends PIXI.Container {
 
     // 범위안인지 쳌
     checkCollision(start, end) {
-        let isInside = false;
-        if (Math.sqrt(Math.pow(start.x - end.x, 2) + Math.pow(start.y - end.y, 2)) < 50) {
-            isInside = true;
-        }
-        return isInside;
+        // let isInside = false;
+        // if (Math.sqrt(Math.pow(start.x - end.x, 2) + Math.pow(start.y - end.y, 2)) < 50) {
+        //     isInside = true;
+        // }
+        // return isInside;
+
+        return this.spriteImage.containsPoint(start);
     }
 
 
@@ -61,10 +64,14 @@ export default class Facility extends PIXI.Container {
             .on('pointerout', this.facilityPointerOut)
     }
 
-    setupData(data) {
-        this.resource = data.resource;
-        this.category = data.category;
-        this.name.text = data.name;
+    setupData(game) {
+
+        // let data = game.facilityList[this.id];
+        console.log(game);
+
+        // this.resource = data.resource;
+        // this.category = data.category;
+        // this.name.text = data.name;
 
 
     }

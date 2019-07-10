@@ -100,7 +100,7 @@ export default class PlanCharacter extends PIXI.Container {
         }
         this.category = facility.category;
 
-        console.log(this.category);
+        //console.log(this.category);
     }
 
     undeployed() {

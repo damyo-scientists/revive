@@ -1,18 +1,18 @@
 import Facility from "../Facility"
 
 export default class ProcessFacility extends Facility {
-    constructor() {
-        super();
+  constructor() {
+    super();
 
-    }
+  }
 
-    setupFacility(game) {
-        super.setupFacility(game);
+  setupFacility(game) {
+    super.setupFacility(game);
 
-        this.spriteImage.texture = this.getTexture('process_facility');
+    this.spriteImage.texture = this.getTexture('process_facility');
 
-        this.spriteImage.x = game.app.renderer.width * 0.32;
-        this.spriteImage.y = game.app.renderer.height * 0.315;
+    this.x = game.app.renderer.width * 0.345;
+    this.y = game.app.renderer.height * 0.31;
 
-    }
+  }
 }

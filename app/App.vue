@@ -17,74 +17,77 @@
 
 <script>
 
-    import 'babel-polyfill';
-    import BriefScene from './scenes/BriefScene';
-    import Game from "./core/Game";
-    import SceneManager from './managers/SceneManager';
-    import AssetManager from "./managers/AssetManager";
+  import 'babel-polyfill';
+  import BriefScene from './scenes/BriefScene';
+  import Game from "./core/Game";
+  import SceneManager from './managers/SceneManager';
+  import AssetManager from "./managers/AssetManager";
 
 
-    export default {
-        name: "App.vue",
-        mounted() {
-            // this.app = new PIXI.Application({
-            //
-            //     antialias: true,
-            // });
+  export default {
+    name: "App.vue",
+    mounted() {
+      // this.app = new PIXI.Application({
+      //
+      //     antialias: true,
+      // });
 
-            var size = [screen.availWidth, screen.availHeight];
-            var ratio = size[0] / size[1];
-            // const pixiRenderer = this.app.renderer;
-            // pixiRenderer = PIXI.autoDetectRenderer(size[0], size[1]);
-            //this.app.renderer = PIXI.autoDetectRenderer(size[0], size[1]);
+      let size = [screen.availWidth, screen.availHeight];
+      let ratio = size[0] / size[1];
+      // const pixiRenderer = this.app.renderer;
+      // pixiRenderer = PIXI.autoDetectRenderer(size[0], size[1]);
+      //this.app.renderer = PIXI.autoDetectRenderer(size[0], size[1]);
 
-            var game = new Game();
-            game.generateApplication();
-            //game.setChracterStatus();
-            game.app.renderer = PIXI.autoDetectRenderer(screen.availWidth, screen.availHeight);
-
-
-            function resize(app) {
-                if (window.innerWidth / window.innerHeight >= ratio) {
-                    var w = window.innerHeight * ratio;
-                    var h = window.innerHeight;
-                } else {
-                    var w = window.innerWidth;
-                    var h = window.innerWidth / ratio;
-                }
-
-                app.renderer.view.style.width = w + 'px';
-                app.renderer.view.style.height = h + 'px';
-            }
-
-            resize(game.app);
-
-            window.onresize = function (event) {
-                resize(game.app);
-            }
+      let game = new Game();
+      game.generateApplication();
+      //game.setChracterStatus();
+      game.app.renderer = PIXI.autoDetectRenderer(screen.availWidth, screen.availHeight);
 
 
-            this.sceneManager = new SceneManager();
-            this.sceneManager.app = game.app;
+      function resize(app) {
 
-            let assetManager = new AssetManager();
-            assetManager.loadAllAssets(() => {
-                let briefScene = new BriefScene();
-                game.app.stage.addChild(briefScene);
-                this.$el.appendChild(game.app.view);
-            });
-        },
-        created() {
-        },
-        computed: {
-            turn: function () {
-                return this.$store.state.turn;
-            }
-        },
-        data() {
-            return {}
+        let w, h;
+
+        if (window.innerWidth / window.innerHeight >= ratio) {
+          w = window.innerHeight * ratio;
+          h = window.innerHeight;
+        } else {
+          w = window.innerWidth;
+          h = window.innerWidth / ratio;
         }
+
+        app.renderer.view.style.width = w + 'px';
+        app.renderer.view.style.height = h + 'px';
+      }
+
+      resize(game.app);
+
+      window.onresize = function (event) {
+        resize(game.app);
+      }
+
+
+      this.sceneManager = new SceneManager();
+      this.sceneManager.app = game.app;
+
+      let assetManager = new AssetManager();
+      assetManager.loadAllAssets(() => {
+        let briefScene = new BriefScene();
+        game.app.stage.addChild(briefScene);
+        this.$el.appendChild(game.app.view);
+      });
+    },
+    created() {
+    },
+    computed: {
+      turn: function () {
+        return this.$store.state.turn;
+      }
+    },
+    data() {
+      return {}
     }
+  }
 </script>
 
 <style scoped>
