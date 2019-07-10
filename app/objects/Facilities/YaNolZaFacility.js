@@ -6,11 +6,7 @@ export default class YaNolZaFacility extends Facility {
   }
 
   setupFacility(game) {
-    super.setupFacility(game);
+    super.setupFacility(game, 'yanolza_facility', 0.57, 0.39);
 
-    this.spriteImage.texture = this.getTexture('yanolza_facility');
-
-    this.x = game.app.renderer.width * 0.57;
-    this.y = game.app.renderer.height * 0.39;
   }
 }

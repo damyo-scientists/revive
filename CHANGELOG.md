@@ -1,4 +1,6 @@
 # Change Log
+## 1.0.6
+- Facility renewal [#114](https://github.com/damyo-scientists/revive/pull/44)
 ## 1.0.5
 - Added login interlinking [#92](https://github.com/damyo-scientists/revive/pull/41)
 ## 1.0.4

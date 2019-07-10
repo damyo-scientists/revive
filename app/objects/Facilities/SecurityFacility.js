@@ -6,11 +6,7 @@ export default class ProcessFacility extends Facility {
   }
 
   setupFacility(game) {
-    super.setupFacility(game);
+    super.setupFacility(game, 'security_facility', 0.398, 0.31);
 
-    this.spriteImage.texture = this.getTexture('security_facility');
-
-    this.x = game.app.renderer.width * 0.398;
-    this.y = game.app.renderer.height * 0.31;
   }
 }

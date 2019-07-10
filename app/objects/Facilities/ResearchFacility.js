@@ -7,13 +7,8 @@ export default class ResearchFacility extends Facility {
   }
 
   setupFacility(game) {
-    super.setupFacility(game);
+    super.setupFacility(game, 'research_facility', 0.45, 0.4);
 
-    this.spriteImage.texture = this.getTexture('research_facility');
-
-
-    this.x = game.app.renderer.width * 0.45;
-    this.y = game.app.renderer.height * 0.4;
   }
 
   FacilityWork() {

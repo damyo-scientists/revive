@@ -7,13 +7,8 @@ export default class ServerFacility extends Facility {
   }
 
   setupFacility(game) {
-    super.setupFacility(game);
+    super.setupFacility(game, 'server_facility', 0.557, 0.31);
 
-    this.spriteImage.texture = this.getTexture('server_facility');
-
-
-    this.x = game.app.renderer.width * 0.557;
-    this.y = game.app.renderer.height * 0.31;
   }
 
 
