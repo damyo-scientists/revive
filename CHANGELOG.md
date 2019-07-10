@@ -1,4 +1,6 @@
 # Change Log
+## 1.0.5
+- Added login interlinking [#92](https://github.com/damyo-scientists/revive/pull/41)
 ## 1.0.4
 - Added event object [#105](https://github.com/damyo-scientists/revive/pull/40/files)
 ## 1.0.3
