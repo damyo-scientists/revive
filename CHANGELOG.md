@@ -1,4 +1,6 @@
 # Change Log
+## 1.0.7
+- Character renewal [#45](https://github.com/damyo-scientists/revive/pull/46)
 ## 1.0.6
 - Facility renewal [#114](https://github.com/damyo-scientists/revive/pull/44)
 ## 1.0.5

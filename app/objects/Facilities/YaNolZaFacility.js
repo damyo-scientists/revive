@@ -6,7 +6,7 @@ export default class YaNolZaFacility extends Facility {
   }
 
   setupFacility(game) {
-    super.setupFacility(game, 'yanolza_facility', 0.57, 0.39);
+    super.setupFacility(game, 'yanolza_facility', 0.583, 0.376);
 
   }
 }
