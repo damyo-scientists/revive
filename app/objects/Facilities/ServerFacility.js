@@ -7,7 +7,7 @@ export default class ServerFacility extends Facility {
   }
 
   setupFacility(game) {
-    super.setupFacility(game, 'server_facility', 0.557, 0.31);
+    super.setupFacility(game, 'server_facility', 0.568, 0.268);
 
   }
 

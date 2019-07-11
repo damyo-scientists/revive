@@ -7,7 +7,7 @@ export default class ResearchFacility extends Facility {
   }
 
   setupFacility(game) {
-    super.setupFacility(game, 'research_facility', 0.45, 0.4);
+    super.setupFacility(game, 'research_facility', 0.443, 0.388);
 
   }
 

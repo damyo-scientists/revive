@@ -99,7 +99,7 @@ export default class PlanScene extends PIXI.Container {
     for (var i = 0; i < 5; i++) {
       let planCharacter = new PlanCharacter();
       planCharacter.id = i;
-      planCharacter.setCharacterData(game, doraButton);
+      planCharacter.setCharacterData(game);
       // PlanCharacter가 관리하는 리스트에 할당
       this.characterList[i] = planCharacter;
       this.addChild(planCharacter);

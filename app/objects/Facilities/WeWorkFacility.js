@@ -9,7 +9,7 @@ export default class WeWorkFacility extends Facility {
 
 
   setupFacility(game) {
-    super.setupFacility(game, 'wework_facility', 0.345, 0.451);
+    super.setupFacility(game, 'wework_facility', 0.32, 0.445);
 
 
   }
