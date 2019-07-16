@@ -96,7 +96,7 @@ export default class PlanScene extends PIXI.Container {
     this.facilityList[5] = yaNolZaFacility;
     this.addChild(yaNolZaFacility);
 
-    for (var i = 0; i < 5; i++) {
+    for (var i = 0; i < 6; i++) {
       let planCharacter = new PlanCharacter();
       planCharacter.id = i;
       planCharacter.setCharacterData(game);

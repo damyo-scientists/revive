@@ -24,22 +24,26 @@ export default class Game {
     this.maxTurn = 2;
     this.store = store;
     this.app = null;
-    this.characterList = [{name: 'Janitor', mentalPoint: 5},
+    this.characterList = [{name: 'hank', mentalPoint: 5},
       {
-        name: 'Scientist',
+        name: 'kenny',
         mentalPoint: 5
       },
       {
-        name: 'Teacher',
+        name: 'kim',
         mentalPoint: 5
       },
       {
-        name: 'Soldier',
+        name: 'niki',
         mentalPoint: 5
       },
       {
-        name: 'Programmer',
+        name: 'sarah',
         mentalPoint: 5
+      },
+      {
+        name: 'yuki',
+        mentalPoint: 1
       }
 
     ];

@@ -61,7 +61,7 @@ export default class PlanCharacter extends PIXI.Container {
     this.spriteImage.interactive = true;
     this.spriteImage.buttonMode = true;
     this.spriteImage.anchor.set(0.5);
-    this.spriteImage.x = game.app.renderer.width * (this.id / 5) + this.spriteImage.width / 2;
+    this.spriteImage.x = game.app.renderer.width * (this.id / 6) + this.spriteImage.width / 2;
     this.spriteImage.y = game.app.renderer.height * 9 / 10;
 
     // save initial point, for return purpose
@@ -187,7 +187,7 @@ export default class PlanCharacter extends PIXI.Container {
         break;
     }
   }
-
+  //announcements, featured member, I
   // 상태창 정보 설정
   setStatus() {
     this.setVisual(this.statusSprite, 'standing');

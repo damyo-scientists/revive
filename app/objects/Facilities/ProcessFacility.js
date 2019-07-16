@@ -9,6 +9,6 @@ export default class ProcessFacility extends Facility {
   setupFacility(game) {
     super.setupFacility(game, 'process_facility', 0.32, 0.27);
 
-
+    
   }
 }
