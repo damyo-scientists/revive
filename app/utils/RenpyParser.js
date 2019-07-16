@@ -96,8 +96,8 @@ export default class RenpyParser {
       case 'define':
         if (args[3].startsWith('Character')) {
           let characterDef = args[1];
-          console.log("캐릭정의 - " + characterDef);
-          console.log("args[3]", args[3]);
+          //console.log("캐릭정의 - " + characterDef);
+          //console.log("args[3]", args[3]);
           let parseLeft = args[3].split('(');
           let param;
           if (parseLeft[1] === ')') {
@@ -105,10 +105,10 @@ export default class RenpyParser {
           } else {
             param = parseLeft[1].split(')')[0];
           }
-          console.log("charic param : " + param);
+          //console.log("charic param : " + param);
           let params = [];
           if (param.indexOf(",") >= 0) {
-            console.log("color", args[4].split('"')[1]);
+            //console.log("color", args[4].split('"')[1]);
             params = [param.split(",")[0], args[4].split('"')[1]];
           } else {
             params = [param];

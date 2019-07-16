@@ -82,6 +82,8 @@ export default class StartScene extends PIXI.Container {
           element.removeAllListeners();
           element.on('click', () => {
             this.game.loadSlot(index);
+            this.removeChild(slotBox);
+            this.sceneManager.goTo(new BriefScene());
           });
         });
 
@@ -104,6 +106,8 @@ export default class StartScene extends PIXI.Container {
           element.removeAllListeners();
           element.on('click', () => {
             this.game.createSlot(index);
+            this.removeChild(slotBox);
+            this.sceneManager.goTo(new BriefScene());
           });
         });
         this.addChild(slotBox);
