@@ -32,6 +32,9 @@
           let login = await signIn(this.userId, this.password);
           console.log(login);
           if (login.status == 200) {
+            console.log(login);
+            let game = new Game();
+            game.userId = login.id;
             this.$router.push({
               path: '/game'
             });

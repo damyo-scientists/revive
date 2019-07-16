@@ -16,7 +16,6 @@
 </template>
 
 <script>
-  import axios from 'axios';
   import {signUp} from '../core/Api';
 
   const API_URL = 'http://revive-api.hbpz.pw/api';

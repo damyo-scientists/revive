@@ -50,8 +50,18 @@ async function saveSlotData(userId, slotNumber, slotData) {
   return result;
 }
 
+async function loadSlotData(userId, slotNumber) {
+  let result = await axios.get(API_URL + '/slot', {
+    'user_id': userId,
+    'slot_no': slotNumber
+  });
+
+  console.log(result);
+  return result;
+}
+
 async function createEnvData(userId) {
   let result = await axios.put(API_URL + '/slot', {})
 }
 
-export {signIn, signUp, createSlotData, saveSlotData};
+export {signIn, signUp, createSlotData, loadSlotData, saveSlotData};
