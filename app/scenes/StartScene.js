@@ -80,10 +80,18 @@ export default class StartScene extends PIXI.Container {
         slotList.forEach((element, index) => {
           slotBox.addChild(element);
           element.removeAllListeners();
-          element.on('click', () => {
-            this.game.loadSlot(index);
-            this.removeChild(slotBox);
-            this.sceneManager.goTo(new BriefScene());
+          element.on('click', async () => {
+            console.log('new clicked');
+            let result = await this.game.createSlot(index);
+            if (result.status == 201) {
+              alert((index + 1) + "번째 슬롯이 새로 만들어졌습니다.");
+              console.log("게임 데이터", this.game.data);
+              this.removeChild(slotBox);
+              this.sceneManager.goTo(new BriefScene());
+            } else {
+              alert("에러 발생 ! 콘솔 로그를 확인하세요 ");
+              console.log("에러 발생", result)
+            }
           });
         });
 
@@ -104,8 +112,16 @@ export default class StartScene extends PIXI.Container {
         slotList.forEach((element, index) => {
           slotBox.addChild(element);
           element.removeAllListeners();
-          element.on('click', () => {
-            this.game.createSlot(index);
+          element.on('click', async () => {
+            let result = await this.game.loadSlot(index);
+            if (result.status === 200) {
+              alert((index + 1) + "번째 슬롯이 로드 되었습니다.");
+              console.log("로드 데이터", this.game.data);
+            } else {
+              alert("에러 발생! 콘솔 로그를 확인하세요.");
+              console.log(result);
+            }
+
             this.removeChild(slotBox);
             this.sceneManager.goTo(new BriefScene());
           });

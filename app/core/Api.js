@@ -27,11 +27,11 @@ async function signUp(userId, password) {
 }
 
 async function createSlotData(userId, slotNumber) {
-  console.log("user_id", userId);
-  console.log("slot_number", slotNumber);
-  let result = await axios.post(API_URL + '/slot', {
-    'user_id': userId,
-    'slot_number': slotNumber
+  console.log("userId", userId);
+  console.log("slotNumber", slotNumber);
+  let result = await axios.post(API_URL + '/slots', {
+    'userId': userId,
+    'slotNumber': slotNumber
   });
 
   console.log(result);
@@ -40,9 +40,9 @@ async function createSlotData(userId, slotNumber) {
 
 async function saveSlotData(userId, slotNumber, slotData) {
   console.log(slotData);
-  let result = await axios.put(API_URL + '/slot', {
-    'user_id': userId,
-    'slot_no': slotNumber,
+  let result = await axios.put(API_URL + '/slots', {
+    'userId': userId,
+    'slotNumber': slotNumber,
     'data': slotData
   });
 
@@ -51,17 +51,26 @@ async function saveSlotData(userId, slotNumber, slotData) {
 }
 
 async function loadSlotData(userId, slotNumber) {
-  let result = await axios.get(API_URL + '/slot', {
-    'user_id': userId,
-    'slot_no': slotNumber
-  });
+  let result;
+  try {
+    console.log(userId);
+    result = await axios.get(API_URL + '/slots', {
+      params: {
+        'userId': userId,
+        'slotNumber': slotNumber
+      }
+    });
+  } catch (e) {
+    alert('로드중 에러가 발생했습니다.');
+    console.log("error", e);
+  }
 
   console.log(result);
   return result;
 }
 
 async function createEnvData(userId) {
-  let result = await axios.put(API_URL + '/slot', {})
+  let result = await axios.put(API_URL + '/slots', {})
 }
 
 export {signIn, signUp, createSlotData, loadSlotData, saveSlotData};

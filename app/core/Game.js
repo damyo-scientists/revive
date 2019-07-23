@@ -1,4 +1,6 @@
 import {saveSlotData, loadSlotData} from '../core/Api';
+import {createSlotData} from "./Api";
+import '@babel/polyfill';
 
 export default class Game {
   constructor() {
@@ -8,11 +10,16 @@ export default class Game {
     this.setInitialInfo();
   }
 
-  loadSlot(slotNumber) {
-    let loadData = loadSlotData(this.userId, slotNumber);
+  async loadSlot(slotNumber) {
+    if (typeof this.userId === "undefined") {
+      this.userId = "5d2f035c9dc6d6081c0b5922";
+    }
+    let loadData = await loadSlotData(this.userId, slotNumber);
+    console.log("loadData", loadData);
     loadData.slotNumber = slotNumber;
-    this.data = loadData;
-    console.log(this.data);
+    this.data = loadData.data.data.data;
+    console.log(this.data.data);
+    return loadData;
   }
 
   resize() {
@@ -32,20 +39,26 @@ export default class Game {
   }
 
   createSlot(slotNumber) {
+    console.log("lets create slot!!!");
+    if (typeof this.userId === "undefined") {
+      this.userId = "5d2f035c9dc6d6081c0b5922";
+    }
     let createData = {};
     createData.slotNumber = slotNumber;
     this.data = createData;
-    let result = saveSlotData(this.userId, slotNumber);
+    let result = createSlotData(this.userId, slotNumber);
     return result;
   }
 
   saveSlot() {
+    if (typeof this.userId === "undefined") {
+      this.userId = "5d2f035c9dc6d6081c0b5922";
+    }
     let result = saveSlotData(this.userId, this.data.slotNumber, this.data);
     return result;
   }
 
   setInitialInfo() {
-    this.userId = 'dhkim09';
     this.data = {
       currentTurn: 1,
       maxTurn: 2,

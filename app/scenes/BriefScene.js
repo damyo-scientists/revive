@@ -13,8 +13,8 @@ export default class BriefScene extends PIXI.Container {
     this.showSceneSign();
     this.showDialog();
     let game = new Game();
-    console.log(game);
-    console.log(game.characterList);
+    console.log("game", game);
+    console.log(game.data.characterList);
   }
 
   initializeVariables() {
