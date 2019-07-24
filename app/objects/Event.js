@@ -24,7 +24,7 @@ export default class Event extends PIXI.Container {
     setupData(confirmButtonImage, cancelButtonImage) {
 
 
-        let eventData = this.game.eventList[this.game.getTurn() - 1];
+        let eventData = this.game.data.eventList[this.game.getTurn() - 1];
 
 
         this.eventBox.lineStyle(2, 0x4286f4, 1);
@@ -67,8 +67,8 @@ export default class Event extends PIXI.Container {
         let event = this.parent.parent;
 
 
-        if (event.game.resource >= event.confirmResult) {
-            event.game.resource -= event.confirmResult;
+        if (event.game.data.resource >= event.confirmResult) {
+            event.game.data.resource -= event.confirmResult;
             event.visible = false;
         }
     }
@@ -77,7 +77,7 @@ export default class Event extends PIXI.Container {
         // 여기에 추가로 들어갈 작업
         let event = this.parent.parent;
 
-        event.game.resource -= event.cancelResult;
+        // event.game.resource -= event.cancelResult;
         event.visible = false;
     }
 }

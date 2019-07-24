@@ -3,7 +3,27 @@
     "sprites": {
       "doramong": "app/assets/sprites/doramong.png",
       "confirm": "app/assets/sprites/confirm.png",
-      "cancel": "app/assets/sprites/cancel.png"
+      "cancel": "app/assets/sprites/cancel.png",
+      "next": "app/assets/sprites/next.png",
+      "standing_sarah": "app/assets/sprites/character/standing/standing_sarah.png",
+      "wework_facility": "app/assets/sprites/facility/wework_facility.png",
+      "one_for_all": "app/assets/sprites/facility/one_for_all.png",
+      "process_facility": "app/assets/sprites/facility/process_facility.png",
+      "security_facility": "app/assets/sprites/facility/security_facility.png",
+      "research_facility": "app/assets/sprites/facility/research_facility.png",
+      "server_facility": "app/assets/sprites/facility/server_facility.png",
+      "yanolza_facility": "app/assets/sprites/facility/yanolza_facility.png",
+      "icon_hank": "app/assets/sprites/character/icon/icon_hank.png",
+      "icon_kenny": "app/assets/sprites/character/icon/icon_kenny.png",
+      "icon_kim": "app/assets/sprites/character/icon/icon_kim.png",
+      "icon_niki": "app/assets/sprites/character/icon/icon_niki.png",
+      "icon_sarah": "app/assets/sprites/character/icon/icon_sarah.png",
+      "icon_yuki": "app/assets/sprites/character/icon/icon_yuki.png",
+      "standing_hank": "app/assets/sprites/character/standing/standing_hank.png",
+      "standing_kenny": "app/assets/sprites/character/standing/standing_kenny.png",
+      "standing_kim": "app/assets/sprites/character/standing/standing_kim.png",
+      "standing_niki": "app/assets/sprites/character/standing/standing_niki.png",
+      "standing_yuki": "app/assets/sprites/character/standing/standing_yuki.png"
     },
     "json": {
     },

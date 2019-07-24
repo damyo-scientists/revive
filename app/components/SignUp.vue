@@ -18,7 +18,6 @@
 <script>
   import {signUp} from '../core/Api';
 
-  const API_URL = 'http://revive-api.hbpz.pw/api';
   export default {
     data() {
       return {
@@ -32,7 +31,7 @@
         try {
           let login = await signUp(this.userId, this.password);
           console.log(login);
-          if (login.status == 200) {
+          if (login.status === 200) {
             alert('가입되었습니다. 로그인해주세요.');
             this.$router.push({
               path: '/sign-in'

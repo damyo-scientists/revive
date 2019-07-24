@@ -138,7 +138,7 @@ export default class StartScene extends PIXI.Container {
   }
 
   showNextTurnButton() {
-    let nextTurnButtonTexture = new PIXI.Texture.fromImage('app/assets/change.png');
+    let nextTurnButtonTexture = new PIXI.Texture.fromImage('app/assets/sprites/next.png');
     nextTurnButtonTexture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
     let nextTurnButton = new PIXI.Sprite(nextTurnButtonTexture);
 

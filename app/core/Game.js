@@ -46,6 +46,7 @@ export default class Game {
     let createData = {};
     createData.slotNumber = slotNumber;
     this.data = createData;
+    this.data = Object.assign({}, this.data, this.initialData);
     let result = createSlotData(this.userId, slotNumber);
     return result;
   }
@@ -59,40 +60,49 @@ export default class Game {
   }
 
   setInitialInfo() {
-    this.data = {
+    this.initialData = {
       currentTurn: 1,
       maxTurn: 2,
-      characterList: [{name: 'Janitor', mentalPoint: 5},
+      characterList: [
         {
-          name: 'Scientist',
+          name: 'hank',
           mentalPoint: 5
         },
         {
-          name: 'Teacher',
+          name: 'kenny',
           mentalPoint: 5
         },
         {
-          name: 'Soldier',
+          name: 'kim',
           mentalPoint: 5
         },
         {
-          name: 'Programmer',
+          name: 'yuki',
           mentalPoint: 5
         },
+        {
+          name: 'sarah',
+          mentalPoint: 5
+        },
+        {
+          name: 'niki',
+          mentalPoint: 3
+        }
       ],
-      resource: 0,
-      eventList: [{
-        text: '파란약을 드시길 바랍니다. 빨간약을 먹을 시에는 피곤할 거에요.',
-        required: 2,
-        confirmResult: 1,
-        cancelResult: -1
-      }, {
-        text: '이 스토리까지 들키다니, 여기까지 오느라 수고했네. 빨간약을 먹게',
-        required: 0,
-        confirmResult: 1,
-        cancelResult: -1
-      }]
+      eventList: [
+        {
+          text: '파란약을 드시길 바랍니다. 빨간약을 먹을 시에는 피곤할 거에요.',
+          required: 2,
+          confirmResult: 1,
+          cancelResult: -1
+        }, {
+          text: '이 스토리까지 들키다니, 여기까지 오느라 수고했네. 빨간약을 먹게',
+          required: 0,
+          confirmResult: 1,
+          cancelResult: -1
+        }]
     };
+    this.data = [];
     this.app = null;
   }
 
@@ -122,7 +132,7 @@ export default class Game {
     // 이게 왜 되는거지??? characterList도 Game 걸 가져오는데 왜 -1이 적용되있는거지?
     let assignedData = Object.assign({}, this.data.characterList[index]);
 
-    this.characterList[index] = assignedData;
+    this.data.characterList[index] = assignedData;
 
   }
 

@@ -32,7 +32,7 @@
         try {
           let login = await signIn(this.userId, this.password);
           console.log("login", login);
-          if (login.status == 200) {
+          if (login.status === 200) {
             let game = new Game();
             game.userId = login.data.data._id;
             alert("로그인 되었습니다 : " + game.userId);
@@ -43,7 +43,7 @@
             alert(login.response.data.message);
           }
         } catch (error) {
-          if (typeof error.response.data != 'undefined') {
+          if (typeof error.response.data !== 'undefined') {
             alert(error.response.data.message);
           } else {
             console.log(error.message);
