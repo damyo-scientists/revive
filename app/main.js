@@ -3,7 +3,6 @@ import Vue from 'vue';
 import BootstrapVue from 'bootstrap-vue';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
-import {store} from './core/Store';
 import Game from "./core/Game";
 import App from './App';
 import "@babel/polyfill";
@@ -26,12 +25,12 @@ Vue.config.productionTip = false;
 // };
 //api();
 
+new Game();
 const router = new VueRouter({
-    routes
+  routes
 });
 
 new Vue({
-    router,
-    store,
-    render: h => h(App)
+  router,
+  render: h => h(App)
 }).$mount('#app');

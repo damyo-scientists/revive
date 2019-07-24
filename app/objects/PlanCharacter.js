@@ -39,7 +39,7 @@ export default class PlanCharacter extends PIXI.Container {
 
   setData(game) {
 
-    this.data = game.characterList[this.id];
+    this.data = game.data.characterList[this.id];
     this.characterName = this.data.name;
     this.mentalPoint = this.data.mentalPoint;
 

@@ -16,9 +16,8 @@
 </template>
 
 <script>
-  import axios from 'axios';
-
-  const API_URL = 'http://revive-api.hbpz.pw/api';
+  import {signIn} from '../core/Api';
+  import Game from "../core/Game";
 
   export default {
     data() {
@@ -31,12 +30,12 @@
     methods: {
       async onSubmit(evt) {
         try {
-          let login = await axios.post(API_URL + '/sign-in', {
-              'user_id': this.userId,
-              'password': this.password
-          });
-          console.log(login);
-          if (login.status == 200) {
+          let login = await signIn(this.userId, this.password);
+          console.log("login", login);
+          if (login.status === 200) {
+            let game = new Game();
+            game.userId = login.data.data._id;
+            alert("로그인 되었습니다 : " + game.userId);
             this.$router.push({
               path: '/game'
             });
@@ -44,8 +43,11 @@
             alert(login.response.data.message);
           }
         } catch (error) {
-          alert(error.response.data.message);
-          console.log(error.message);
+          if (typeof error.response.data !== 'undefined') {
+            alert(error.response.data.message);
+          } else {
+            console.log(error.message);
+          }
         }
       }
     }

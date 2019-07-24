@@ -147,7 +147,7 @@ export default class PlanScene extends PIXI.Container {
           }
         }
       }
-    })
+    });
 
 
     // mousewheel 이벤트는 자스로 해결해야한다
@@ -160,7 +160,7 @@ export default class PlanScene extends PIXI.Container {
         this.scrollDown();
       }
 
-    })
+    });
 
 
     // 사건
@@ -208,7 +208,6 @@ export default class PlanScene extends PIXI.Container {
     this.alpha = 0.5;
 
     this.parent.onDrag();
-    1
     console.log(this.parent.characterName);
 
     this.dragging = true;
@@ -226,7 +225,7 @@ export default class PlanScene extends PIXI.Container {
     let currentPlanCharacter = this.parent;
     let currentScene = currentPlanCharacter.parent;
 
-    let facilityList = this.parent.parent.facilityList
+    let facilityList = this.parent.parent.facilityList;
     for (let i in facilityList) {
       if (facilityList[i].checkCollision(this, facilityList[i])) {
         isInside = true;
