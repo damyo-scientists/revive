@@ -42,18 +42,10 @@ export default class BriefScene extends PIXI.Container {
     this.addChild(dialog);
   }
 
-    showNextTurnButton() {
-        let sceneChangeTexture = PIXI.loader.resources['next'].texture;
-        sceneChangeTexture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
-        let game = new Game();
-        let sceneChangeButton = new SceneChangeButton(game, sceneChangeTexture);
-        let self = this;
-        sceneChangeButton.on('pointerdown', () => {
-            let planScene = new PlanScene();
-            console.log(planScene);
-            self.sceneManager.goTo(planScene);
-        });
-        this.addChild(sceneChangeButton);
+  showNextTurnButton() {
+    let game = new Game();
+    let sceneChangeButton = new SceneChangeButton(game, new PlanScene());
+    this.addChild(sceneChangeButton);
 
   }
 

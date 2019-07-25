@@ -55,18 +55,8 @@ export default class ResultScene extends PIXI.Container {
   }
 
   showSceneChangeButton() {
-    let sceneChangeTexture = PIXI.loader.resources['next'].texture;
-    sceneChangeTexture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
-    let sceneChangeButton = new SceneChangeButton(this.game, sceneChangeTexture);
-    let self = this;
-    sceneChangeButton.on('pointerdown', () => {
-      let briefScene = new BriefScene();
 
-      self.sceneManager.goTo(briefScene);
-
-      // 턴도 넘기자
-      this.game.nextTurn();
-    });
+    let sceneChangeButton = new SceneChangeButton(this.game, new BriefScene());
     this.addChild(sceneChangeButton);
 
   }

@@ -1,16 +1,16 @@
 <template>
 
-  <div class="stage">
-    <button class="btn btn-primary">Vue UI</button>
-    <button class="btn btn-secondary" v-model="turn">Turn : {{turn}}</button>
-    <button class="btn btn-dark" onclick="document.querySelector('body').style.backgroundColor='gray';">Awesome
-      Theme
-    </button>
-    <button class="btn btn-light" onclick="document.querySelector('body').style.backgroundColor='white';">Weirdo
-      Theme
-    </button>
+    <div class="stage">
+        <button class="btn btn-primary">Vue UI</button>
+        <button class="btn btn-secondary" v-model="turn">Turn : {{turn}}</button>
+        <button class="btn btn-dark" onclick="document.querySelector('body').style.backgroundColor='gray';">Awesome
+            Theme
+        </button>
+        <button class="btn btn-light" onclick="document.querySelector('body').style.backgroundColor='white';">Weirdo
+            Theme
+        </button>
 
-  </div>
+    </div>
 </template>
 
 <script>
@@ -27,8 +27,7 @@
     mounted() {
       let game = new Game();
       game.generateApplication();
-      game.app.renderer = PIXI.autoDetectRenderer(screen.availWidth, screen.availHeight);
-
+      game.app.renderer = PIXI.autoDetectRenderer(1920, 1080);
       game.resize();
       window.onresize = function (event) {
         game.resize(game.app);
@@ -57,7 +56,7 @@
     },
     computed: {
       turn: function () {
-        if (typeof(this.game) !== 'undefined') {
+        if (typeof (this.game) !== 'undefined') {
           return this.game.currentTurn;
         }
       }

@@ -23,7 +23,7 @@ export default class Game {
   }
 
   resize() {
-    let size = [screen.availWidth, screen.availHeight];
+    let size = [1920, 1080];
     let ratio = size[0] / size[1];
     let w, h;
     if (window.innerWidth / window.innerHeight >= ratio) {

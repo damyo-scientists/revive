@@ -34,22 +34,9 @@ export default class PlanScene extends PIXI.Container {
     sceneChangeTexture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
 
 
-    let sceneChangeButton = new SceneChangeButton(game, sceneChangeTexture);
-
+    let sceneChangeButton = new SceneChangeButton(game, new ResultScene());
     sceneChangeButton.on('pointerdown', this.onClick);
     this.addChild(sceneChangeButton);
-
-    //// 텍스쳐 로딩 ////
-    var doraButton = PIXI.loader.resources['doramong'].texture;
-    doraButton.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
-
-    let confirmButton = PIXI.loader.resources['confirm'].texture;
-    confirmButton.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
-    let cancelButton = PIXI.loader.resources['cancel'].texture;
-    cancelButton.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
-
-    var facilityTexture = new PIXI.Texture.from('app/assets/rabbit.png');
-    facilityTexture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
 
 
     // PlanScene에서 관리하는 캐릭터 목록, 시설 목록
@@ -167,7 +154,7 @@ export default class PlanScene extends PIXI.Container {
     let event = new Event();
 
 
-    event.setupData(confirmButton, cancelButton);
+    event.setupData();
     event.eventBox.x = game.app.renderer.width / 2;
     event.eventBox.y = game.app.renderer.height / 2;
 
@@ -274,8 +261,6 @@ export default class PlanScene extends PIXI.Container {
   }
 
   onClick() {
-    let resultScene = new ResultScene();
-    let sceneManager = new SceneManager();
     let game = new Game();
     // 정산에 보내기 위해 Game에 저장
 
@@ -335,7 +320,6 @@ export default class PlanScene extends PIXI.Container {
     resultScene.displayResult();
 
 
-    sceneManager.goTo(resultScene);
   }
 
 
