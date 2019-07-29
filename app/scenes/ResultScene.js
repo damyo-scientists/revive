@@ -19,12 +19,11 @@ export default class ResultScene extends PIXI.Container {
     this.displayWindow.drawRoundedRect(100, 100, 1000, 1000, 16);
     this.displayWindow.endFill();
     this.addChild(this.displayWindow);
-
-    this.sceneManager = new SceneManager();
     this.game = new Game();
+    this.sceneManager = new SceneManager();
     this.showSceneSign();
     this.showSceneChangeButton();
-
+    this.displayResult();
 
   }
 
@@ -56,18 +55,18 @@ export default class ResultScene extends PIXI.Container {
 
   showSceneChangeButton() {
 
-    let sceneChangeButton = new SceneChangeButton(this.game, new BriefScene());
+    let sceneChangeButton = new SceneChangeButton(this.game, BriefScene);
     this.addChild(sceneChangeButton);
 
   }
 
   displayResult() {
 
+    this.game.setResultData();
 
-    this.displayText.text = this.game.resource;
     this.displayText.style = {fill: 0xf442d4, fontSize: 150, align: 'left'};
-
-    this.betterResourceText.text = "더 좋은 자원 ^^ : " + this.game.betterResource;
+    console.log(this.game.data);
+    this.betterResourceText.text = "더 좋은 자원 ^^ : " + this.game.data.resource;
     this.betterResourceText.style = {fill: 0x42f48f, fontSize: 130, align: 'left'};
     this.betterResourceText.y = 150;
 

@@ -61,6 +61,7 @@ export default class Game {
 
   setInitialInfo() {
     this.initialData = {
+      resource: 0,
       currentTurn: 1,
       maxTurn: 2,
       characterList: [
@@ -104,6 +105,18 @@ export default class Game {
     };
     this.data = [];
     this.app = null;
+    this.facilityList = [];
+    this.tempData = {
+      resource: 0,
+      betterResource: 0
+    }
+  }
+
+  resetTempData() {
+    this.tempData = {
+      resource: 0,
+      betterResource: 0
+    }
   }
 
   getTurn() {
@@ -147,5 +160,47 @@ export default class Game {
       a[b] = this[b];
       return a;
     }, {});
+  }
+
+  setFacilityList(facility, index) {
+    this.facilityList[index] = facility;
+  }
+
+  setCurrentScene(currentScene) {
+    this.currentScene = currentScene;
+  }
+
+  isInsideFacility(currentPlanCharacter, point) {
+
+    let isInside = false;
+    for (let i in this.facilityList) {
+      if (this.facilityList[i].checkCollision(point)) {
+        isInside = true;
+        currentPlanCharacter.deployed(this.facilityList[i]);
+
+        this.facilityList[i].facilityWork(currentPlanCharacter);
+
+        if (currentPlanCharacter.tempMentalPoint < 0) {
+          isInside = false;
+          this.currentScene.alertText.alpha = 1;
+        }
+      } else {
+        this.facilityList[i].facilityQuit(currentPlanCharacter);
+      }
+    }
+
+    if (isInside === false) {
+      currentPlanCharacter.returnToInitialPoint();
+      currentPlanCharacter.undeployed();
+
+    }
+  }
+
+  setResultData() {
+    this.data.resource += this.tempData.resource;
+    console.log(this.tempData.resource);
+    console.log(this.resource);
+
+    this.resetTempData();
   }
 }

@@ -27,15 +27,10 @@ export default class PlanScene extends PIXI.Container {
     // 경고용 메시지
     this.alertText = new AlertText(game, "멘탈이 부족하당.... ㅠㅅ ㅠ");
     this.addChild(this.alertText);
-
-
     this.showSceneSign();
-    let sceneChangeTexture = PIXI.loader.resources['next'].texture;
-    sceneChangeTexture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
 
-
-    let sceneChangeButton = new SceneChangeButton(game, new ResultScene());
-    sceneChangeButton.on('pointerdown', this.onClick);
+    let sceneChangeButton = new SceneChangeButton(game, ResultScene);
+    //sceneChangeButton.on('pointerdown', this.onClick);
     this.addChild(sceneChangeButton);
 
 
@@ -83,18 +78,14 @@ export default class PlanScene extends PIXI.Container {
     this.facilityList[5] = yaNolZaFacility;
     this.addChild(yaNolZaFacility);
 
-    for (var i = 0; i < 5; i++) {
+    for (var i = 0; i < 6; i++) {
       let planCharacter = new PlanCharacter();
       planCharacter.id = i;
       planCharacter.setCharacterData(game);
       // PlanCharacter가 관리하는 리스트에 할당
       this.characterList[i] = planCharacter;
       this.addChild(planCharacter);
-      // planCharacter 에 인터렉션을 달아주자
-      planCharacter.spriteImage.on('pointerdown', this.onDragStart)
-          .on('pointerup', this.onDragEnd)
-          .on('pointerupoutside', this.onDragEnd)
-          .on('pointermove', this.onDragMove)
+
 
     }
 
@@ -111,15 +102,13 @@ export default class PlanScene extends PIXI.Container {
       if (this.alertText.alpha >= 0) {
         this.alertText.alpha -= 0.015;
       }
-
-
       // 스크롤용 틱 이벤트
       for (let i in this.characterList) {
 
         // 버튼에 들어온 입력 값에 따라 보는게 맞다. 한곳에 다 넣을 려고했지만, ticker가 시간 함수기 때문에 정확한 값으로 딱 알맞지않아서 값이 범위를 넘어가면 처리하기 곤란해짐.
         if (this.characterScrollIndex < 0) {
-          if (this.characterList[i].isDeployed == false && this.characterList[i].spriteImage.y >= 100) {
-            this.characterList[i].spriteImage.y += this.characterScrollIndex * 25;
+          if (this.characterList[i].isDeployed == false && this.characterList[i].y >= 100) {
+            this.characterList[i].y += this.characterScrollIndex * 25;
           } else if (this.characterList[i].isDeployed == false) {
             this.characterScrollIndex = 0;
           }
@@ -127,8 +116,8 @@ export default class PlanScene extends PIXI.Container {
 
         if (this.characterScrollIndex > 0) {
           //this.characterList[i].spriteImage.y <= game.app.renderer.height * 9 / 10
-          if (this.characterList[i].isDeployed == false && this.characterList[i].spriteImage.y <= game.app.renderer.height * 9 / 10) {
-            this.characterList[i].spriteImage.y += this.characterScrollIndex * 25;
+          if (this.characterList[i].isDeployed == false && this.characterList[i].y <= game.app.renderer.height * 9 / 10) {
+            this.characterList[i].y += this.characterScrollIndex * 25;
           } else if (this.characterList[i].isDeployed == false) {
             this.characterScrollIndex = 0;
           }
@@ -139,7 +128,6 @@ export default class PlanScene extends PIXI.Container {
 
     // mousewheel 이벤트는 자스로 해결해야한다
     game.app.view.addEventListener('mousewheel', (event) => {
-
 
       if (event.deltaY < 0) {
         this.scrollUp();
@@ -189,81 +177,9 @@ export default class PlanScene extends PIXI.Container {
     }
   }
 
-
-  onDragStart(event) {
-    this.data = event.data;
-    this.alpha = 0.5;
-
-    this.parent.onDrag();
-    console.log(this.parent.characterName);
-
-    this.dragging = true;
-  }
-
-  onDragEnd() {
-    this.alpha = 1;
-    this.dragging = false;
-
-
-    // 할아버지의 힘을 이용하자
-    let isInside = false;
-
-    //
-    let currentPlanCharacter = this.parent;
-    let currentScene = currentPlanCharacter.parent;
-
-    let facilityList = this.parent.parent.facilityList;
-    for (let i in facilityList) {
-      if (facilityList[i].checkCollision(this, facilityList[i])) {
-        isInside = true;
-
-        console.log(this.x + " " + currentPlanCharacter.x);
-        // 캐릭터에게 어느 건물에 들어왔는지 알려준다.\
-        currentPlanCharacter.deployed(facilityList[i]);
-        //this.parent.deployed(facilityList[i]);
-
-        // 만약 멘탈포인트가 부족하다면 나가자
-        if (currentPlanCharacter.tempMentalPoint < 0) {
-          isInside = false;
-          // this.parent.parent -> PlanScene
-          currentScene.alertText.alpha = 1;
-        }
-      }
-
-
-    }
-
-    // 일하지 않을 거면 돌아가시오
-    if (isInside == false) {
-      this.parent.returnToInitialPoint();
-      this.parent.undeployed();
-
-      // 되돌아오면 상태창을 다시붙여주자
-      this.parent.onDragEnd();
-    }
-
-
-    this.data = null;
-
-
-  }
-
-  onDragMove() {
-    if (this.dragging) {
-      var newPosition = this.data.getLocalPosition(this.parent);
-      this.x = newPosition.x;
-      this.y = newPosition.y;
-    }
-  }
-
-  getDistance(start, end) {
-    return Math.sqrt(Math.pow(start.x - end.x, 2) + Math.pow(start.y - end.y, 2));
-  }
-
   onClick() {
     let game = new Game();
     // 정산에 보내기 위해 Game에 저장
-
     let resourcePoint = 0;
 
     for (let i in this.parent.characterList) {
@@ -297,11 +213,6 @@ export default class PlanScene extends PIXI.Container {
         }
 
 
-        // 잠깐 임시방편
-
-        // 멘탈 포인트 값 념겨주기 인데 안넘겨줘도 되네..?
-        //let planCharacter = this.parent.characterList[i];
-
         game.setChracterStatus(i);
 
 
@@ -317,7 +228,7 @@ export default class PlanScene extends PIXI.Container {
 
 
     // 넘어가서 ResultScene에서 부르게 되면 계산이 한 박자 늦게 적용된다.
-    resultScene.displayResult();
+    // resultScene.displayResult();
 
 
   }

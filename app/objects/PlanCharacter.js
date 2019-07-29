@@ -4,7 +4,7 @@ export default class PlanCharacter extends PIXI.Container {
   constructor() {
     super();
 
-    // 정보 관련
+    // data
     this.mentalPoint = 0;
     this.maxMentalPoint = 10.0;
     this.tempMentalPoint = 0;
@@ -14,31 +14,33 @@ export default class PlanCharacter extends PIXI.Container {
     this.resource = 0;
     this.betterResource = 0;
     this.category = null;
+    this.game = null;
 
-    // Visual 관련
+
+    // visual
     this.spriteImage = new PIXI.Sprite();
     this.mentalBar = new PIXI.Container();
     this.outerMentalBar = new PIXI.Graphics();
     this.innerMentalBar = new PIXI.Graphics();
     this.outerHealthBar = new PIXI.Graphics();
     this.innnerHealthBar = new PIXI.Graphics();
-
     this.initialPositionX = 0;
     this.initialPositionY = 0;
-
-    // 상태창 관련
     this.statusSprite = new PIXI.Sprite();
     this.statusBox = new PIXI.Graphics();
     this.mentalText = new PIXI.Text();
 
 
-    // 로직 관련
+    // logic
     this.isDeployed = false;
+    this.interactive = true;
+    this.buttonMode = true;
 
   }
 
   setData(game) {
 
+    this.game = game;
     this.data = game.data.characterList[this.id];
     this.characterName = this.data.name;
     this.mentalPoint = this.data.mentalPoint;
@@ -61,46 +63,28 @@ export default class PlanCharacter extends PIXI.Container {
     this.spriteImage.interactive = true;
     this.spriteImage.buttonMode = true;
     this.spriteImage.anchor.set(0.5);
-    this.spriteImage.x = game.app.renderer.width * (this.id / 5) + this.spriteImage.width / 2;
-    this.spriteImage.y = game.app.renderer.height * 9 / 10;
+    this.x = game.app.renderer.width * (this.id / 6) + this.spriteImage.width / 2;
+    this.y = game.app.renderer.height * 9 / 10;
+
+    this.on('pointerdown', this.onDragStart)
+        .on('pointerup', this.onDragEnd)
+        .on('pointerupoutside', this.onDragEnd)
+
 
     // save initial point, for return purpose
-    this.setInitialpoint(this.spriteImage.x, this.spriteImage.y);
+    this.setInitialpoint(this.x, this.y);
 
 
     this.addChild(this.spriteImage);
 
-
+    this.dragging = false;
   }
 
   // 건물의 역할에 따라서 할 일을 정하자.
   deployed(facility) {
 
+    console.log(facility.name.text);
     this.isDeployed = true;
-
-    switch (facility.category) {
-      case 'normal': {
-
-        this.resource = facility.resource;
-        this.tempMentalPoint = this.mentalPoint - facility.requiredMentalPoint;
-
-        // 넘겨주기 용 데이터
-        this.data.mentalPoint = this.tempMentalPoint;
-        // 임시 보여주기
-        this.setMentalPoint(this.tempMentalPoint / this.maxMentalPoint);
-
-
-        break;
-      }
-
-      case 'research': {
-
-        break;
-      }
-
-
-    }
-    this.category = facility.category;
 
     //console.log(this.category);
   }
@@ -123,8 +107,8 @@ export default class PlanCharacter extends PIXI.Container {
   }
 
   returnToInitialPoint() {
-    this.spriteImage.x = this.initialPositionX;
-    this.spriteImage.y = this.initialPositionY;
+    this.x = this.initialPositionX;
+    this.y = this.initialPositionY;
   }
 
 
@@ -223,12 +207,37 @@ export default class PlanCharacter extends PIXI.Container {
     return spriteImage;
   }
 
-  onDrag() {
+  onDragStart() {
+
+
+    this.alpha = 0.5;
+    this.dragging = true;
     this.mentalBar.removeChild(this.statusSprite);
   }
 
-  onDragEnd() {
+  onDragEnd(event) {
+
+
+    console.log(event.data.global.x, event.data.global.y);
+
+    this.alpha = 1;
+    this.dragging = false;
+
+    this.game.isInsideFacility(this, event.data.global);
     this.mentalBar.addChild(this.statusSprite);
+
   }
+
+  onDragMove(event) {
+
+    console.log(event.data.getLocalPosition(this));
+
+    if (this.dragging) {
+      let newPosition = event.data.getLocalPosition(this);
+      this.x = newPosition.x;
+      this.y = newPosition.y;
+    }
+  }
+
 
 }

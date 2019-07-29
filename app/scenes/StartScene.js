@@ -1,5 +1,6 @@
 import BriefScene from "./BriefScene";
 import SceneManager from "../managers/SceneManager";
+import SceneChangeButton from '../objects/interface/SceneChangeButton';
 import Button from "../objects/Button";
 import Game from "../core/Game";
 
@@ -138,23 +139,8 @@ export default class StartScene extends PIXI.Container {
   }
 
   showNextTurnButton() {
-    let nextTurnButtonTexture = new PIXI.Texture.fromImage('app/assets/sprites/next.png');
-    nextTurnButtonTexture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
-    let nextTurnButton = new PIXI.Sprite(nextTurnButtonTexture);
-
-    nextTurnButton.scale.x = 0.5;
-    nextTurnButton.scale.y = 0.5;
-    nextTurnButton.y = 300;
-    nextTurnButton.interactive = true;
-    nextTurnButton.buttonMode = true;
-
-    let self = this;
-    nextTurnButton.on('pointerdown', () => {
-      let briefScene = new BriefScene();
-      console.log(briefScene);
-      self.sceneManager.goTo(briefScene);
-    });
-    this.addChild(nextTurnButton);
+    let sceneChangeButton = new SceneChangeButton(this.game, BriefScene);
+    this.addChild(sceneChangeButton);
 
   }
 }

@@ -14,8 +14,14 @@ export default class SceneChangeButton extends PIXI.Sprite {
     this.setupData();
 
     this.on('pointerdown', () => {
+      let scene = new nextScene();
       let sceneManager = new SceneManager();
-      sceneManager.goTo(nextScene);
+
+      if (sceneManager.id = 3) {
+
+      }
+
+      sceneManager.goTo(scene);
     })
 
   }

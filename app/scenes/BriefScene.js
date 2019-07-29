@@ -44,7 +44,7 @@ export default class BriefScene extends PIXI.Container {
 
   showNextTurnButton() {
     let game = new Game();
-    let sceneChangeButton = new SceneChangeButton(game, new PlanScene());
+    let sceneChangeButton = new SceneChangeButton(game, PlanScene);
     this.addChild(sceneChangeButton);
 
   }
