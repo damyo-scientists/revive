@@ -62,6 +62,10 @@ export default class Game {
   setInitialInfo() {
     this.initialData = {
       resource: 0,
+      fund: 0,
+      memoryDisc: 0,
+      bio: 0,
+      reviver: 0,
       currentTurn: 1,
       maxTurn: 2,
       characterList: [
@@ -78,7 +82,7 @@ export default class Game {
           mentalPoint: 5
         },
         {
-          name: 'yuki',
+          name: 'niki',
           mentalPoint: 5
         },
         {
@@ -86,7 +90,7 @@ export default class Game {
           mentalPoint: 5
         },
         {
-          name: 'niki',
+          name: 'yuki',
           mentalPoint: 3
         }
       ],
@@ -106,16 +110,16 @@ export default class Game {
     this.data = [];
     this.app = null;
     this.facilityList = [];
-    this.tempData = {
-      resource: 0,
-      betterResource: 0
-    }
+    this.resetTempData();
   }
 
   resetTempData() {
     this.tempData = {
       resource: 0,
-      betterResource: 0
+      fund: 0,
+      memoryDisc: 0,
+      bio: 0,
+      reviver: 0,
     }
   }
 
@@ -175,31 +179,40 @@ export default class Game {
     let isInside = false;
     for (let i in this.facilityList) {
       if (this.facilityList[i].checkCollision(point)) {
+
+
         isInside = true;
         currentPlanCharacter.deployed(this.facilityList[i]);
 
         this.facilityList[i].facilityWork(currentPlanCharacter);
 
-        if (currentPlanCharacter.tempMentalPoint < 0) {
-          isInside = false;
-          this.currentScene.alertText.alpha = 1;
-        }
+
       } else {
         this.facilityList[i].facilityQuit(currentPlanCharacter);
       }
     }
 
-    if (isInside === false) {
-      currentPlanCharacter.returnToInitialPoint();
-      currentPlanCharacter.undeployed();
+    if (isInside
+
+        ===
+        false
+    ) {
+      currentPlanCharacter
+          .returnToInitialPoint();
+
+      currentPlanCharacter
+          .undeployed();
 
     }
   }
 
   setResultData() {
     this.data.resource += this.tempData.resource;
-    console.log(this.tempData.resource);
-    console.log(this.resource);
+    this.data.fund += this.tempData.fund;
+    this.data.memoryDisc += this.tempData.memoryDisc;
+    this.data.bio += this.tempData.bio;
+    this.data.reviver += this.tempData.reviver;
+
 
     this.resetTempData();
   }

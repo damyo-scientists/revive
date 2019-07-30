@@ -4,6 +4,9 @@ import Game from "../../core/Game";
 export default class YaNolZaFacility extends Facility {
   constructor() {
     super();
+
+    this.recoverData = [{mental: 10, stamina: 10}, {mental: 20, stamina: 30}];
+    this.remainder = 0;
   }
 
   setupFacility(game, index) {
@@ -16,9 +19,29 @@ export default class YaNolZaFacility extends Facility {
 
     let game = new Game();
 
+    if (this.workerState == 0) {
 
-    // 자원 5, 진척도 1
-    game.tempData.resource += 5;
+      planCharacter.tempMentalPoint = planCharacter.mentalPoint + 10;
+      if (planCharacter.tempMentalPoint > planCharacter.maxMentalPoint) {
+        this.remainder = planCharacter.tempMentalPoint - planCharacter.maxMentalPoint;
+        planCharacter.tempMentalPoint = planCharacter.maxMentalPoint;
+      }
+      planCharacter.data.mentalPoint = planCharacter.tempMentalPoint;
+      planCharacter.setMentalPoint(planCharacter.tempMentalPoint / planCharacter.maxMentalPoint);
 
+
+    }
+
+  }
+
+  facilityQuit(planCharacter) {
+    super.facilityQuit(planCharacter);
+
+    if (this.workerState == 1) {
+
+      let game = new Game();
+      this.workerState = 0;
+
+    }
   }
 }

@@ -21,4 +21,15 @@ export default class ProcessFacility extends Facility {
     game.tempData.resource += 5;
 
   }
+
+  facilityQuit(planCharacter) {
+    super.facilityQuit(planCharacter);
+
+    if (this.workerState == 1) {
+
+      console.log("일 그만둠: " + planCharacter.characterName);
+
+      this.workerState = 0;
+    }
+  }
 }

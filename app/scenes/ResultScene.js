@@ -18,6 +18,8 @@ export default class ResultScene extends PIXI.Container {
     this.displayWindow.beginFill(0x650A5A, 0.25);
     this.displayWindow.drawRoundedRect(100, 100, 1000, 1000, 16);
     this.displayWindow.endFill();
+    this.memoryDiscText = new PIXI.Text();
+
     this.addChild(this.displayWindow);
     this.game = new Game();
     this.sceneManager = new SceneManager();
@@ -65,14 +67,19 @@ export default class ResultScene extends PIXI.Container {
     this.game.setResultData();
 
     this.displayText.style = {fill: 0xf442d4, fontSize: 150, align: 'left'};
+    this.displayText.text = "현재 자금 : " + this.game.data.fund;
     console.log(this.game.data);
     this.betterResourceText.text = "더 좋은 자원 ^^ : " + this.game.data.resource;
     this.betterResourceText.style = {fill: 0x42f48f, fontSize: 130, align: 'left'};
     this.betterResourceText.y = 150;
+    this.memoryDiscText.text = "메모리 디스크 보유량: " + this.game.data.memoryDisc;
+    this.memoryDiscText.style = {fill: 0x42f48f, fontSize: 130, align: 'left'};
+    this.memoryDiscText.y = 280;
 
 
     this.addChild(this.displayText);
     this.addChild(this.betterResourceText);
+    this.addChild(this.memoryDiscText);
   }
 
 

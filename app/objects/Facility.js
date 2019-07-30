@@ -20,6 +20,9 @@ export default class Facility extends PIXI.Container {
     this.resource = 0;
     this.isInside = false;
     this.worker = null;
+    this.workerState = 0;
+    this.workerImage = new PIXI.Sprite();
+
   }
 
 
@@ -29,9 +32,6 @@ export default class Facility extends PIXI.Container {
     this.spriteImage.interactive = true;
 
     this.addChild(this.spriteImage);
-    // 위치를 맞추자
-    // this.spriteImage.x = game.app.renderer.width * (this.id / 5) + this.spriteImage.width / 2;
-    // this.spriteImage.y = game.app.renderer.height / 10;
     this.spriteImage.texture = this.getTexture(textureName);
     this.spriteImage.addChild(this.name);
     this.spriteImage.addChild(this.informationBox);
@@ -48,6 +48,7 @@ export default class Facility extends PIXI.Container {
 
     game.setFacilityList(this, index);
     this.setupInteraction();
+
   }
 
   checkCollision(start) {
@@ -76,14 +77,20 @@ export default class Facility extends PIXI.Container {
 
 
     if (this.worker == planCharacter) {
+      this.workerState = 1;
       return;
     }
 
     if (this.worker != null) {
       console.log("This job is occupied");
       planCharacter.undeployed();
+      this.workerState = 1;
     } else {
+
       this.worker = planCharacter;
+
+      this.workerImage.texture = this.getTexture('icon_' + planCharacter.characterName);
+      this.addChild(this.workerImage);
       console.log(planCharacter);
 
     }
@@ -91,10 +98,9 @@ export default class Facility extends PIXI.Container {
 
   facilityQuit(planCharacter) {
     if (this.worker == planCharacter) {
-      console.log("일 그만둠: " + planCharacter.characterName);
+      this.removeChild(this.workerImage);
       this.worker = null;
-    } else {
-      return;
+      this.workerState = 1;
     }
   }
 

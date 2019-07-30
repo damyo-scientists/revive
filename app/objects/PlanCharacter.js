@@ -63,6 +63,7 @@ export default class PlanCharacter extends PIXI.Container {
     this.spriteImage.interactive = true;
     this.spriteImage.buttonMode = true;
     this.spriteImage.anchor.set(0.5);
+
     this.x = game.app.renderer.width * (this.id / 6) + this.spriteImage.width / 2;
     this.y = game.app.renderer.height * 9 / 10;
 
@@ -146,8 +147,6 @@ export default class PlanCharacter extends PIXI.Container {
 
 
   setVisual(spriteImage, imageType) {
-    console.log(imageType);
-    console.log(imageType + '_hank');
     switch (this.id) {
       case 0:
         spriteImage.texture = this.getTexture(imageType + '_hank');
