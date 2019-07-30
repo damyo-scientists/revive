@@ -1,0 +1,56 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --web-view-ids: TurnStartPopup___1;
+}
+
+#TurnStartPopup___1 * {
+    margin: 0;
+    padding: 0;
+}
+
+#TurnStartPopup___1 {
+    position: absolute;
+    box-sizing: border-box;
+    background: #E5E5E5;
+    width: 1920px;
+    height: 1080px;
+    background-color: rgba(255, 255, 255, 1);
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    --web-view-id: TurnStartPopup___1;
+    --web-enable-deep-linking: true;
+}
+
+#kisspng_paper_royalty_free_sto {
+    fill: url(#kisspng_paper_royalty_free_sto_A29_Rectangle_2_pattern);
+}
+
+.kisspng_paper_royalty_free_sto {
+    position: absolute;
+    overflow: visible;
+    width: 771px;
+    height: 1042px;
+    left: 0px;
+    top: 0px;
+}
+
+#Day_1 {
+    position: absolute;
+    left: 260px;
+    top: 300px;
+    overflow: visible;
+    width: 252px;
+    white-space: nowrap;
+    text-align: left;
+    font-family: Segoe UI;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 100px;
+    color: rgba(112, 112, 112, 1);
+}
+

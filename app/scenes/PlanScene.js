@@ -8,13 +8,13 @@ import ResultScene from "./ResultScene";
 import Event from "../objects/Event";
 import AlertText from "../objects/dialog/AlertText";
 import SceneChangeButton from "../objects/interface/SceneChangeButton";
-import WeWorkFacility from "../objects/Facilities/WeWorkFacility"
-import FacilityBackground from "../objects/Facilities/FacilityBackground"
-import ProcessFacility from "../objects/Facilities/ProcessFacility"
-import SecurityFacility from "../objects/Facilities/SecurityFacility"
-import ResearchFacility from "../objects/Facilities/ResearchFacility"
-import ServerFacility from "../objects/Facilities/ServerFacility"
-import YaNolZaFacility from "../objects/Facilities/YaNolZaFacility"
+import WeWorkFacility from "../objects/facilities/WeWorkFacility"
+import FacilityBackground from "../objects/facilities/FacilityBackground"
+import ProcessFacility from "../objects/facilities/ProcessFacility"
+import SecurityFacility from "../objects/facilities/SecurityFacility"
+import ResearchFacility from "../objects/facilities/ResearchFacility"
+import ServerFacility from "../objects/facilities/ServerFacility"
+import YaNolZaFacility from "../objects/facilities/YaNolZaFacility"
 
 
 export default class PlanScene extends PIXI.Container {
