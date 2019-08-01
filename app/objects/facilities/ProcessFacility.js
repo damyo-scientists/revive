@@ -27,7 +27,7 @@ export default class ProcessFacility extends Facility {
         planCharacter.setMentalPoint(planCharacter.tempMentalPoint / planCharacter.maxMentalPoint);
       } else {
         game.currentScene.alertText.alpha = 1;
-        this.facilityQuit(planCharacter);
+        planCharacter.undeployed();
       }
 
 

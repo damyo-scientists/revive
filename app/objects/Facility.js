@@ -1,3 +1,5 @@
+import PlanManager from "../managers/PlanManager";
+
 export default class Facility extends PIXI.Container {
   constructor() {
     super();
@@ -14,6 +16,7 @@ export default class Facility extends PIXI.Container {
     this.informationBox = new PIXI.Graphics();
 
 
+    this.manager = null;
     this.category = "normal";
 
     this.data = null;
@@ -28,6 +31,7 @@ export default class Facility extends PIXI.Container {
 
   setupFacility(game, textureName, widthValue, heightValue, index) {
 
+    this.manager = new PlanManager();
 
     this.spriteImage.interactive = true;
 
@@ -46,7 +50,7 @@ export default class Facility extends PIXI.Container {
     this.x = game.app.renderer.width * widthValue;
     this.y = game.app.renderer.height * heightValue;
 
-    game.setFacilityList(this, index);
+    this.manager.setFacilityList(this, index);
     this.setupInteraction();
 
   }
@@ -91,12 +95,12 @@ export default class Facility extends PIXI.Container {
 
       this.workerImage.texture = this.getTexture('icon_' + planCharacter.characterName);
       this.addChild(this.workerImage);
-      console.log(planCharacter);
 
     }
   }
 
   facilityQuit(planCharacter) {
+
     if (this.worker == planCharacter) {
       this.removeChild(this.workerImage);
       this.worker = null;

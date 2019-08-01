@@ -1,3 +1,5 @@
+import PlanManager from "../managers/PlanManager";
+
 export default class PlanCharacter extends PIXI.Container {
 
 
@@ -15,8 +17,8 @@ export default class PlanCharacter extends PIXI.Container {
     this.betterResource = 0;
     this.category = null;
     this.game = null;
-
-
+    this.manager = null;
+    this.currentFacility = null;
     // visual
     this.spriteImage = new PIXI.Sprite();
     this.mentalBar = new PIXI.Container();
@@ -41,6 +43,8 @@ export default class PlanCharacter extends PIXI.Container {
   setData(game) {
 
     this.game = game;
+    this.manager = new PlanManager();
+    this.manager.setCharacterList(this, this.id);
     this.data = game.data.characterList[this.id];
     this.characterName = this.data.name;
     this.mentalPoint = this.data.mentalPoint;
@@ -67,10 +71,9 @@ export default class PlanCharacter extends PIXI.Container {
     this.x = game.app.renderer.width * (this.id / 6) + this.spriteImage.width / 2;
     this.y = game.app.renderer.height * 9 / 10;
 
-    this.on('pointerdown', this.onDragStart)
-        .on('pointerup', this.onDragEnd)
-        .on('pointerupoutside', this.onDragEnd)
-
+    this.on('mousedown', this.onDragStart)
+        .on('mouseup', this.onDragEnd)
+        .on('mousemove', this.onDragMove);
 
     // save initial point, for return purpose
     this.setInitialpoint(this.x, this.y);
@@ -84,9 +87,12 @@ export default class PlanCharacter extends PIXI.Container {
   // 건물의 역할에 따라서 할 일을 정하자.
   deployed(facility) {
 
-    console.log(facility.name.text);
     this.isDeployed = true;
-
+    if (this.currentFacility != null && this.currentFacility != facility) {
+      this.currentFacility.facilityQuit(this);
+    }
+    this.currentFacility = facility;
+    this.currentFacility.facilityWork(this);
     //console.log(this.category);
   }
 
@@ -100,6 +106,10 @@ export default class PlanCharacter extends PIXI.Container {
     // 넘겨주기용 데이터
     this.data.mentalPoint = this.tempMentalPoint;
     this.setMentalPoint(this.tempMentalPoint / this.maxMentalPoint);
+    if (this.currentFacility) {
+      this.currentFacility.facilityQuit(this);
+    }
+    this.currentFacility = null;
   }
 
   setInitialpoint(x, y) {
@@ -206,36 +216,40 @@ export default class PlanCharacter extends PIXI.Container {
     return spriteImage;
   }
 
-  onDragStart() {
+  onDragStart(event) {
 
 
     this.alpha = 0.5;
     this.dragging = true;
     this.mentalBar.removeChild(this.statusSprite);
+    this.mouseData = event.data;
   }
 
   onDragEnd(event) {
 
 
-    console.log(event.data.global.x, event.data.global.y);
-
     this.alpha = 1;
     this.dragging = false;
 
-    this.game.isInsideFacility(this, event.data.global);
+    this.manager.isInsideFacility(this, event.data.global);
     this.mentalBar.addChild(this.statusSprite);
-
+    this.returnToInitialPoint();
+    this.mouseData = null;
   }
 
-  onDragMove(event) {
+  onDragMove() {
 
-    console.log(event.data.getLocalPosition(this));
 
     if (this.dragging) {
-      let newPosition = event.data.getLocalPosition(this);
+      let newPosition = this.mouseData.getLocalPosition(this.parent);
       this.x = newPosition.x;
       this.y = newPosition.y;
     }
+  }
+
+  onClick(event) {
+    console.log(event);
+    console.log(this);
   }
 
 

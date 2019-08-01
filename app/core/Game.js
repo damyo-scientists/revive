@@ -127,11 +127,6 @@ export default class Game {
     return this.data.currentTurn;
   }
 
-  addResource(point) {
-    this.data.resource += point;
-  }
-
-
   nextTurn() {
     // go next Game
 
@@ -139,18 +134,6 @@ export default class Game {
     if (this.data.currentTurn < this.data.maxTurn) {
       this.data.currentTurn += 1;
     }
-  }
-
-  setChracterStatus(index) {
-
-    // this.characterList[index].name = characterData.name;
-    // this.characterList[index].mentalPoint = characterData.mentalPoint;
-
-    // 이게 왜 되는거지??? characterList도 Game 걸 가져오는데 왜 -1이 적용되있는거지?
-    let assignedData = Object.assign({}, this.data.characterList[index]);
-
-    this.data.characterList[index] = assignedData;
-
   }
 
   generateApplication() {
@@ -166,44 +149,8 @@ export default class Game {
     }, {});
   }
 
-  setFacilityList(facility, index) {
-    this.facilityList[index] = facility;
-  }
-
   setCurrentScene(currentScene) {
     this.currentScene = currentScene;
-  }
-
-  isInsideFacility(currentPlanCharacter, point) {
-
-    let isInside = false;
-    for (let i in this.facilityList) {
-      if (this.facilityList[i].checkCollision(point)) {
-
-
-        isInside = true;
-        currentPlanCharacter.deployed(this.facilityList[i]);
-
-        this.facilityList[i].facilityWork(currentPlanCharacter);
-
-
-      } else {
-        this.facilityList[i].facilityQuit(currentPlanCharacter);
-      }
-    }
-
-    if (isInside
-
-        ===
-        false
-    ) {
-      currentPlanCharacter
-          .returnToInitialPoint();
-
-      currentPlanCharacter
-          .undeployed();
-
-    }
   }
 
   setResultData() {

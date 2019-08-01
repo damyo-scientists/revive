@@ -8,13 +8,13 @@ import ResultScene from "./ResultScene";
 import Event from "../objects/Event";
 import AlertText from "../objects/dialog/AlertText";
 import SceneChangeButton from "../objects/interface/SceneChangeButton";
-import WeWorkFacility from "../objects/Facilities/WeWorkFacility"
-import FacilityBackground from "../objects/Facilities/FacilityBackground"
-import ProcessFacility from "../objects/Facilities/ProcessFacility"
-import SecurityFacility from "../objects/Facilities/SecurityFacility"
-import ResearchFacility from "../objects/Facilities/ResearchFacility"
-import ServerFacility from "../objects/Facilities/ServerFacility"
-import YaNolZaFacility from "../objects/Facilities/YaNolZaFacility"
+import WeWorkFacility from "../objects/facilities/WeWorkFacility"
+import FacilityBackground from "../objects/facilities/FacilityBackground"
+import ProcessFacility from "../objects/facilities/ProcessFacility"
+import SecurityFacility from "../objects/facilities/SecurityFacility"
+import ResearchFacility from "../objects/facilities/ResearchFacility"
+import ServerFacility from "../objects/facilities/ServerFacility"
+import YaNolZaFacility from "../objects/facilities/YaNolZaFacility"
 
 
 export default class PlanScene extends PIXI.Container {
@@ -34,9 +34,8 @@ export default class PlanScene extends PIXI.Container {
     this.addChild(sceneChangeButton);
 
 
-    // PlanScene에서 관리하는 캐릭터 목록, 시설 목록
     this.characterList = [];
-    this.facilityList = [];
+
 
     game.setCurrentScene(this);
 
@@ -46,37 +45,31 @@ export default class PlanScene extends PIXI.Container {
     // 사무실
     let weWorkFacility = new WeWorkFacility();
     weWorkFacility.setupFacility(game, 0);
-    this.facilityList[0] = weWorkFacility;
     this.addChild(weWorkFacility);
 
     // 처리실
     let processFacility = new ProcessFacility();
     processFacility.setupFacility(game, 1);
-    this.facilityList[1] = processFacility;
     this.addChild(processFacility);
 
     //경비실
     let securityFacility = new SecurityFacility();
     securityFacility.setupFacility(game, 2);
-    this.facilityList[2] = securityFacility;
     this.addChild(securityFacility);
 
     // 연구실
     let researchFacility = new ResearchFacility();
     researchFacility.setupFacility(game, 3);
-    this.facilityList[3] = researchFacility;
     this.addChild(researchFacility);
 
     // 서버실
     let serverFacility = new ServerFacility();
     serverFacility.setupFacility(game, 4);
-    this.facilityList[4] = serverFacility;
     this.addChild(serverFacility);
 
     // 숙소
     let yaNolZaFacility = new YaNolZaFacility();
     yaNolZaFacility.setupFacility(game, 5);
-    this.facilityList[5] = yaNolZaFacility;
     this.addChild(yaNolZaFacility);
 
     for (var i = 0; i < 6; i++) {
@@ -176,62 +169,6 @@ export default class PlanScene extends PIXI.Container {
     for (let i in this.characterList) {
       this.characterList[i].spriteImage.interactive = true;
     }
-  }
-
-  onClick() {
-    let game = new Game();
-    // 정산에 보내기 위해 Game에 저장
-    let resourcePoint = 0;
-
-    for (let i in this.parent.characterList) {
-
-      if (this.parent.characterList[i].isDeployed) {
-
-        // 자원 값 넘겨주기
-
-
-        switch (this.parent.characterList[i].category) {
-          case 'research':
-
-            // 일단은 지금은 전부 다 바꾸자 새로운 자원으로
-            let tempResource = parseInt(game.resource / 3);
-            let tempRemainder = game.resource % 3;
-
-            game.betterResource += tempResource;
-            game.resource = tempRemainder;
-
-            console.log(tempResource);
-            console.log(tempRemainder);
-
-            break;
-
-          case 'normal':
-            resourcePoint += this.parent.characterList[i].resource;
-
-            break;
-
-
-        }
-
-
-        game.setChracterStatus(i);
-
-
-        //상태복귀
-        this.parent.characterList[i].undeployed();
-      }
-    }
-
-    // console.log("whole point is " + resourcePoint);
-
-
-    game.addResource(resourcePoint);
-
-
-    // 넘어가서 ResultScene에서 부르게 되면 계산이 한 박자 늦게 적용된다.
-    // resultScene.displayResult();
-
-
   }
 
 
