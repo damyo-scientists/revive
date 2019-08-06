@@ -1,0 +1,191 @@
+{
+  "StartScene": {
+    "artboard": {
+      "guid": "53fcd4f9-43cc-4fc9-a2bf-625511135697",
+      "component": "Artboard",
+      "name": "BriefingScene",
+      "width": 1920,
+      "height": 1080
+    },
+    "rectangleList": [
+      {
+        "guid": "c3770774-d3bc-4b61-b4a1-07ffb9609b7f",
+        "component": "Rectangle",
+        "name": "backgroundImage",
+        "parentGuid": "53fcd4f9-43cc-4fc9-a2bf-625511135697",
+        "siblingIndex": 0,
+        "artboardPosX": 575,
+        "artboardPosY": 38,
+        "width": 771,
+        "height": 1042,
+        "color": "#FFF"
+      },
+      {
+        "guid": "e594d72f-d7a9-4dd5-952b-19d9e3d1851e",
+        "component": "Rectangle",
+        "name": "border(titleText)",
+        "parentGuid": "80b51fdf-da07-47b3-9796-f658f01db83d",
+        "siblingIndex": 0,
+        "artboardPosX": 703,
+        "artboardPosY": 303,
+        "width": 543,
+        "height": 130,
+        "color": "#ffffff"
+      },
+      {
+        "guid": "56df0af2-1ff0-4668-a586-2eb1291a1755",
+        "component": "Rectangle",
+        "name": "border(objectTextContainer)",
+        "parentGuid": "407b1fc4-9c6e-43ac-8159-4e4208439d98",
+        "siblingIndex": 0,
+        "artboardPosX": 703,
+        "artboardPosY": 451,
+        "width": 543,
+        "height": 207,
+        "color": "#ffffff"
+      },
+      {
+        "guid": "0d2ab274-69ba-4959-b370-1295082e1513",
+        "component": "Rectangle",
+        "name": "border(conditionTextContainer)",
+        "parentGuid": "62271ac7-e3fc-49f3-b1b6-a6d378ff890c",
+        "siblingIndex": 0,
+        "artboardPosX": 703,
+        "artboardPosY": 676,
+        "width": 543,
+        "height": 207,
+        "color": "#ffffff"
+      },
+      {
+        "guid": "d392217a-b36a-4d36-a985-bedf8bafaf4d",
+        "component": "Rectangle",
+        "name": "button_yes",
+        "parentGuid": "53fcd4f9-43cc-4fc9-a2bf-625511135697",
+        "siblingIndex": 4,
+        "artboardPosX": 970,
+        "artboardPosY": 901,
+        "width": 280,
+        "height": 60,
+        "color": "#FFF"
+      },
+      {
+        "guid": "4e188c85-7b20-433c-8e63-eef092892171",
+        "component": "Rectangle",
+        "name": "button_no",
+        "parentGuid": "53fcd4f9-43cc-4fc9-a2bf-625511135697",
+        "siblingIndex": 5,
+        "artboardPosX": 670,
+        "artboardPosY": 901,
+        "width": 280,
+        "height": 60,
+        "color": "#FFF"
+      }
+    ],
+    "groupList": [
+      {
+        "guid": "80b51fdf-da07-47b3-9796-f658f01db83d",
+        "component": "Group",
+        "name": "titleTextContainer",
+        "parentGuid": "53fcd4f9-43cc-4fc9-a2bf-625511135697",
+        "siblingIndex": 1,
+        "artboardPosX": 703,
+        "artboardPosY": 303
+      },
+      {
+        "guid": "407b1fc4-9c6e-43ac-8159-4e4208439d98",
+        "component": "Group",
+        "name": "objectTextContainer",
+        "parentGuid": "53fcd4f9-43cc-4fc9-a2bf-625511135697",
+        "siblingIndex": 2,
+        "artboardPosX": 703,
+        "artboardPosY": 451
+      },
+      {
+        "guid": "62271ac7-e3fc-49f3-b1b6-a6d378ff890c",
+        "component": "Group",
+        "name": "conditionTextContainer",
+        "parentGuid": "53fcd4f9-43cc-4fc9-a2bf-625511135697",
+        "siblingIndex": 3,
+        "artboardPosX": 703,
+        "artboardPosY": 676
+      }
+    ],
+    "textList": [
+      {
+        "guid": "e798a578-be2e-4f87-bfa3-e4ba1470632d",
+        "component": "Text",
+        "name": "titleText(titleText)",
+        "parentGuid": "80b51fdf-da07-47b3-9796-f658f01db83d",
+        "siblingIndex": 1,
+        "artboardPosX": 817.5,
+        "artboardPosY": 335,
+        "text": "타브리스 강림",
+        "fontSize": 50,
+        "color": "#000000",
+        "charSpacing": 0,
+        "lineSpacing": 0,
+        "align": "center"
+      },
+      {
+        "guid": "9cb6b1a5-3e86-4375-95ee-c89b923b09de",
+        "component": "Text",
+        "name": "bodyText(objectTextContainer)",
+        "parentGuid": "407b1fc4-9c6e-43ac-8159-4e4208439d98",
+        "siblingIndex": 1,
+        "artboardPosX": 733,
+        "artboardPosY": 522,
+        "text": "나나세 카오루가 아담과 접촉하려 한다.\n당신은 그를 죽이기 싫었기에, 에바에 타는 것을 망설이고 있다.",
+        "fontSize": 20,
+        "color": "#707070",
+        "charSpacing": 0,
+        "lineSpacing": 0,
+        "align": "left"
+      },
+      {
+        "guid": "a08fdedf-1874-4ffd-bef7-6a6aa975d6ad",
+        "component": "Text",
+        "name": "titleText(objectTextContainer)",
+        "parentGuid": "407b1fc4-9c6e-43ac-8159-4e4208439d98",
+        "siblingIndex": 2,
+        "artboardPosX": 729.5,
+        "artboardPosY": 467,
+        "text": "목표",
+        "fontSize": 30,
+        "color": "#000000",
+        "charSpacing": 0,
+        "lineSpacing": 0,
+        "align": "center"
+      },
+      {
+        "guid": "fbcaaecc-30c0-4c26-929e-f7e84a132561",
+        "component": "Text",
+        "name": "bodyText(conditionTextContainer)",
+        "parentGuid": "62271ac7-e3fc-49f3-b1b6-a6d378ff890c",
+        "siblingIndex": 1,
+        "artboardPosX": 733,
+        "artboardPosY": 747,
+        "text": "나나세 카오루가 아담과 접촉하려 한다.\n당신은 그를 죽이기 싫었기에, 에바에 타는 것을 망설이고 있다.",
+        "fontSize": 20,
+        "color": "#707070",
+        "charSpacing": 0,
+        "lineSpacing": 0,
+        "align": "left"
+      },
+      {
+        "guid": "10f6cf9f-7019-4621-ab1e-7c30975d2ffb",
+        "component": "Text",
+        "name": "titleText(conditionTextContainer)",
+        "parentGuid": "62271ac7-e3fc-49f3-b1b6-a6d378ff890c",
+        "siblingIndex": 2,
+        "artboardPosX": 729.5,
+        "artboardPosY": 692,
+        "text": "목표",
+        "fontSize": 30,
+        "color": "#000000",
+        "charSpacing": 0,
+        "lineSpacing": 0,
+        "align": "center"
+      }
+    ]
+  }
+}

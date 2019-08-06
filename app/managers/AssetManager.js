@@ -16,6 +16,7 @@ export default class AssetManager {
         this._loadData(data.theme);
         this._loadData(data.sound);
         this._loadData(data.assets.sprites);
+        this._loadData(data.assets.json);
         const file = path.join('app/assets/rpy/', 'script.rpy');
         PIXI.loader.add("rpy", file).load(() => {
           callback();

@@ -26,6 +26,7 @@
       "standing_yuki": "app/assets/sprites/character/standing/standing_yuki.png"
     },
     "json": {
+      "scenes" : "app/assets/json/scenes.json"
     },
     "sound": {
     }
