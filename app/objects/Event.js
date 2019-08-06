@@ -3,8 +3,12 @@ import Game from '../core/Game'
 export default class Event extends PIXI.Container {
   constructor() {
     super();
-    this.eventBox = new PIXI.Graphics();
+    this.eventBox = new PIXI.Sprite();
     this.eventText = new PIXI.Text();
+    this.eventTitleText = new PIXI.Text();
+    this.eventRewardText = new PIXI.Text();
+    this.characterSlot = new PIXI.Graphics();
+    this.selectedCharacter = new PIXI.Sprite();
     this.confirmButton = new PIXI.Sprite();
     this.confirmButton.buttonMode = true;
     this.confirmButton.interactive = true;
@@ -28,17 +32,24 @@ export default class Event extends PIXI.Container {
     confirmButtonImage.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
     let cancelButtonImage = PIXI.loader.resources['cancel'].texture;
     cancelButtonImage.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
+    let eventBoxImage = PIXI.loader.resources['notepad'].texture;
+    eventBoxImage.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
 
+
+    this.eventBox.texture = eventBoxImage;
 
     let eventData = this.game.data.eventList[this.game.getTurn() - 1];
 
 
-    this.eventBox.lineStyle(2, 0x4286f4, 1);
-    this.eventBox.beginFill(0x9abff9);
-    this.eventBox.drawRoundedRect(0, 0, 1000, 500, 16);
-    this.eventBox.endFill();
+    console.log(this.eventBox.x + " and " + this.eventBox.y);
 
     this.addChild(this.eventBox);
+
+    this.characterSlot.lineStyle(2, 0xde34eb, 1);
+    this.characterSlot.beginFill(0xcccccc);
+    this.characterSlot.drawCircle(0, 0, 100);
+    this.characterSlot.endFill();
+
 
     // text는 Game instance에서 받을 예정(해당 Scene에서)
     this.eventText.text = eventData.text;
@@ -59,6 +70,7 @@ export default class Event extends PIXI.Container {
     this.cancelButton.scale.x = 0.5;
     this.cancelButton.scale.y = 0.5;
 
+    this.eventBox.addChild(this.characterSlot);
     this.eventBox.addChild(this.confirmButton);
     this.eventBox.addChild(this.cancelButton);
     this.eventBox.addChild(this.eventText);

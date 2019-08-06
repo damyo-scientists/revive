@@ -10,7 +10,8 @@ export default class ResultScene extends PIXI.Container {
     super();
 
     // 나중에 이미지로 대체할지도(?)
-    this.displayText = new PIXI.Text();
+    this.fundText = new PIXI.Text();
+    this.fundResultText = new PIXI.Text();
     this.betterResourceText = new PIXI.Text();
 
     this.displayWindow = new PIXI.Graphics();
@@ -64,20 +65,27 @@ export default class ResultScene extends PIXI.Container {
 
   displayResult() {
 
+    this.fundText.text = "이번 실험으로 얻은 자금은 " + this.game.tempData.fund + " 입니다.";
+
+
     this.game.setResultData();
 
-    this.displayText.style = {fill: 0xf442d4, fontSize: 150, align: 'left'};
-    this.displayText.text = "현재 자금 : " + this.game.data.fund;
+    this.fundText.style = {fill: 0xf442d4, fontSize: 75, align: 'left'};
+    this.fundResultText.style = {fill: 0xF886E4, fontSize: 75, align: 'left'};
+    this.fundResultText.text = "현재 총 자금량 : " + this.game.data.fund;
+    this.fundResultText.y = 75;
+
     console.log(this.game.data);
     this.betterResourceText.text = "더 좋은 자원 ^^ : " + this.game.data.resource;
     this.betterResourceText.style = {fill: 0x42f48f, fontSize: 130, align: 'left'};
-    this.betterResourceText.y = 150;
+    this.betterResourceText.y = 225;
     this.memoryDiscText.text = "메모리 디스크 보유량: " + this.game.data.memoryDisc;
     this.memoryDiscText.style = {fill: 0x42f48f, fontSize: 130, align: 'left'};
-    this.memoryDiscText.y = 280;
+    this.memoryDiscText.y = 355;
 
 
-    this.addChild(this.displayText);
+    this.addChild(this.fundText);
+    this.addChild(this.fundResultText);
     this.addChild(this.betterResourceText);
     this.addChild(this.memoryDiscText);
   }
