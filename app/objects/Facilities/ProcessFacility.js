@@ -63,5 +63,5 @@ export default class ProcessFacility extends Facility {
   }
 
 
-  // 07/30 the resources might differ for all of facilities, so this function is in every facility script.
+  // 07/30 the resources might differ for all of Facilities, so this function is in every facility script.
 }
