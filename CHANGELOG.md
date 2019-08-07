@@ -1,4 +1,6 @@
 # Change Log
+## 1.0.9
+- Add Scene Data as Json structure [#53](https://github.com/damyo-scientists/revive/pull/53)
 ## 1.0.8
 - Setup game data from database [#43](https://github.com/damyo-scientists/revive/pull/50)
 ## 1.0.7
