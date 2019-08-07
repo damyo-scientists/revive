@@ -161,6 +161,7 @@ export default class StartScene extends PIXI.Container {
 
   loadSceneData() {
     const sceneData = PIXI.loader.resources["scenes"].data;
-    console.log(sceneData["StartScene"]);
+    const startSceneData = sceneData["StartScene"];
+    console.log(startSceneData);
   }
 }
