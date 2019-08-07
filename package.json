@@ -7,7 +7,7 @@
     "start": "webpack-dev-server --progress --inline --hot --mode development",
     "production": "webpack-dev-server --progress --mode production",
     "publish": "webpack --progress --mode production",
-    "test": "mocha --require @babel/register --recursive ./tests"
+    "test": "mocha --require @babel/register tests/**/**spec.js"
   },
   "repository": {
     "type": "git",
