@@ -27,6 +27,7 @@
       "notepad": "app/assets/sprites/notepad.png"
     },
     "json": {
+      "scenes" : "app/assets/json/scenes.json"
     },
     "sound": {
     }

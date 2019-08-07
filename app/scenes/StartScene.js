@@ -13,6 +13,7 @@ export default class StartScene extends PIXI.Container {
     this.displayWindow.beginFill(0x650A5A, 0.25);
     this.displayWindow.drawRoundedRect(100, 100, 1000, 1000, 16);
     this.displayWindow.endFill();
+    this.loadSceneData();
     this.game = new Game();
     this.addChild(this.displayWindow);
     this.sceneManager = new SceneManager();
@@ -142,5 +143,11 @@ export default class StartScene extends PIXI.Container {
     let sceneChangeButton = new SceneChangeButton(this.game, BriefScene);
     this.addChild(sceneChangeButton);
 
+  }
+
+  loadSceneData() {
+    const sceneData = PIXI.loader.resources["scenes"].data;
+    const startSceneData = sceneData["StartScene"];
+    console.log(startSceneData);
   }
 }
