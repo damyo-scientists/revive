@@ -17,7 +17,7 @@ export default class RenpyParser {
   }
 
   parseRenpyFile(file) {
-    let lines = file.split('\r\n');
+    let lines = file.split(/[\r\n]+/g);
     for (let i = 0; i < lines.length; i++) {
       let line = lines[i];
       if (RenpyParser._isUselessLine(line)) {
