@@ -6,8 +6,8 @@ export default class ResearchFacility extends Facility {
     super();
   }
 
-  setupFacility(game, index) {
-    super.setupFacility(game, 'research_facility', 0.443, 0.388, index);
+  setupFacility(index) {
+    super.setupFacility('research_facility', 0.443, 0.388, index);
     this.name.text = '연구실';
   }
 

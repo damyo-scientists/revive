@@ -1,4 +1,5 @@
 import PlanManager from "../managers/PlanManager";
+import Game from "../components/Game";
 
 export default class Facility extends PIXI.Container {
   constructor() {
@@ -29,7 +30,9 @@ export default class Facility extends PIXI.Container {
   }
 
 
-  setupFacility(game, textureName, widthValue, heightValue, index) {
+  setupFacility(textureName, widthValue, heightValue, index) {
+
+    let game = new Game();
 
     this.manager = new PlanManager();
 

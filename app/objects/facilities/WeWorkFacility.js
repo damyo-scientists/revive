@@ -9,8 +9,8 @@ export default class WeWorkFacility extends Facility {
   }
 
 
-  setupFacility(game, index) {
-    super.setupFacility(game, 'wework_facility', 0.32, 0.445, index);
+  setupFacility(index) {
+    super.setupFacility('wework_facility', 0.32, 0.445, index);
     this.name.text = '사무실';
 
   }

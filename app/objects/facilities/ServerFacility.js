@@ -7,8 +7,8 @@ export default class ServerFacility extends Facility {
 
   }
 
-  setupFacility(game, index) {
-    super.setupFacility(game, 'server_facility', 0.568, 0.268, index);
+  setupFacility(index) {
+    super.setupFacility('server_facility', 0.568, 0.268, index);
     this.name.text = '서버실';
   }
 

@@ -6,8 +6,8 @@ export default class ProcessFacility extends Facility {
     super();
   }
 
-  setupFacility(game, index) {
-    super.setupFacility(game, 'security_facility', 0.382, 0.27, index);
+  setupFacility(index) {
+    super.setupFacility('security_facility', 0.382, 0.27, index);
     this.name.text = '경비실';
   }
 
