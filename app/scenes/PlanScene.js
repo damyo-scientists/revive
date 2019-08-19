@@ -39,8 +39,8 @@ export default class PlanScene extends PIXI.Container {
 
     game.setCurrentScene(this);
 
-    let facilityBacground = new FacilityBackground(game);
-    this.addChild(facilityBacground);
+    let facilityBackground = new FacilityBackground();
+    this.addChild(facilityBackground);
 
     // 사무실
     let weWorkFacility = new WeWorkFacility();

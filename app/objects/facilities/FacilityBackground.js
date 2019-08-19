@@ -1,7 +1,10 @@
+import Game from "../../components/Game";
+
 export default class FacilityBackground extends PIXI.Container {
-  constructor(game) {
+  constructor() {
     super();
 
+    let game = new Game();
     let spriteImage = PIXI.loader.resources['one_for_all'].texture;
     spriteImage.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
 
