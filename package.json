@@ -32,7 +32,7 @@
     "@babel/preset-react": "^7.0.0",
     "@fortawesome/fontawesome-free": "^5.7.0",
     "autoprefixer": "^6.5.3",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "babel-loader": "^8.0.5",
     "bootstrap": "^4.2.1",
     "bootstrap-vue": "^2.0.0-rc.16",
