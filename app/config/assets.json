@@ -23,7 +23,8 @@
       "standing_kenny": "app/assets/sprites/character/standing/standing_kenny.png",
       "standing_kim": "app/assets/sprites/character/standing/standing_kim.png",
       "standing_niki": "app/assets/sprites/character/standing/standing_niki.png",
-      "standing_yuki": "app/assets/sprites/character/standing/standing_yuki.png"
+      "standing_yuki": "app/assets/sprites/character/standing/standing_yuki.png",
+      "notepad": "app/assets/sprites/notepad.png"
     },
     "json": {
       "scenes" : "app/assets/json/scenes.json"

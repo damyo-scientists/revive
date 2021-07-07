@@ -1,10 +1,12 @@
+import PlanManager from "../managers/PlanManager";
+
 export default class PlanCharacter extends PIXI.Container {
 
 
   constructor() {
     super();
 
-    // 정보 관련
+    // data
     this.mentalPoint = 0;
     this.maxMentalPoint = 10.0;
     this.tempMentalPoint = 0;
@@ -14,31 +16,35 @@ export default class PlanCharacter extends PIXI.Container {
     this.resource = 0;
     this.betterResource = 0;
     this.category = null;
-
-    // Visual 관련
+    this.game = null;
+    this.manager = null;
+    this.currentFacility = null;
+    // visual
     this.spriteImage = new PIXI.Sprite();
     this.mentalBar = new PIXI.Container();
     this.outerMentalBar = new PIXI.Graphics();
     this.innerMentalBar = new PIXI.Graphics();
     this.outerHealthBar = new PIXI.Graphics();
     this.innnerHealthBar = new PIXI.Graphics();
-
     this.initialPositionX = 0;
     this.initialPositionY = 0;
-
-    // 상태창 관련
     this.statusSprite = new PIXI.Sprite();
     this.statusBox = new PIXI.Graphics();
     this.mentalText = new PIXI.Text();
 
 
-    // 로직 관련
+    // logic
     this.isDeployed = false;
+    this.interactive = true;
+    this.buttonMode = true;
 
   }
 
   setData(game) {
 
+    this.game = game;
+    this.manager = new PlanManager();
+    this.manager.setCharacterList(this, this.id);
     this.data = game.data.characterList[this.id];
     this.characterName = this.data.name;
     this.mentalPoint = this.data.mentalPoint;
@@ -61,47 +67,32 @@ export default class PlanCharacter extends PIXI.Container {
     this.spriteImage.interactive = true;
     this.spriteImage.buttonMode = true;
     this.spriteImage.anchor.set(0.5);
-    this.spriteImage.x = game.app.renderer.width * (this.id / 5) + this.spriteImage.width / 2;
-    this.spriteImage.y = game.app.renderer.height * 9 / 10;
+
+    this.x = game.app.renderer.width * (this.id / 6) + this.spriteImage.width / 2;
+    this.y = game.app.renderer.height * 9 / 10;
+
+    this.on('mousedown', this.onDragStart)
+        .on('mouseup', this.onDragEnd)
+        .on('mousemove', this.onDragMove);
 
     // save initial point, for return purpose
-    this.setInitialpoint(this.spriteImage.x, this.spriteImage.y);
+    this.setInitialpoint(this.x, this.y);
 
 
     this.addChild(this.spriteImage);
 
-
+    this.dragging = false;
   }
 
   // 건물의 역할에 따라서 할 일을 정하자.
   deployed(facility) {
 
     this.isDeployed = true;
-
-    switch (facility.category) {
-      case 'normal': {
-
-        this.resource = facility.resource;
-        this.tempMentalPoint = this.mentalPoint - facility.requiredMentalPoint;
-
-        // 넘겨주기 용 데이터
-        this.data.mentalPoint = this.tempMentalPoint;
-        // 임시 보여주기
-        this.setMentalPoint(this.tempMentalPoint / this.maxMentalPoint);
-
-
-        break;
-      }
-
-      case 'research': {
-
-        break;
-      }
-
-
+    if (this.currentFacility != null && this.currentFacility != facility) {
+      this.currentFacility.facilityQuit(this);
     }
-    this.category = facility.category;
-
+    this.currentFacility = facility;
+    this.currentFacility.facilityWork(this);
     //console.log(this.category);
   }
 
@@ -115,6 +106,10 @@ export default class PlanCharacter extends PIXI.Container {
     // 넘겨주기용 데이터
     this.data.mentalPoint = this.tempMentalPoint;
     this.setMentalPoint(this.tempMentalPoint / this.maxMentalPoint);
+    if (this.currentFacility) {
+      this.currentFacility.facilityQuit(this);
+    }
+    this.currentFacility = null;
   }
 
   setInitialpoint(x, y) {
@@ -123,8 +118,8 @@ export default class PlanCharacter extends PIXI.Container {
   }
 
   returnToInitialPoint() {
-    this.spriteImage.x = this.initialPositionX;
-    this.spriteImage.y = this.initialPositionY;
+    this.x = this.initialPositionX;
+    this.y = this.initialPositionY;
   }
 
 
@@ -162,8 +157,6 @@ export default class PlanCharacter extends PIXI.Container {
 
 
   setVisual(spriteImage, imageType) {
-    console.log(imageType);
-    console.log(imageType + '_hank');
     switch (this.id) {
       case 0:
         spriteImage.texture = this.getTexture(imageType + '_hank');
@@ -223,12 +216,41 @@ export default class PlanCharacter extends PIXI.Container {
     return spriteImage;
   }
 
-  onDrag() {
+  onDragStart(event) {
+
+
+    this.alpha = 0.5;
+    this.dragging = true;
     this.mentalBar.removeChild(this.statusSprite);
+    this.mouseData = event.data;
   }
 
-  onDragEnd() {
+  onDragEnd(event) {
+
+
+    this.alpha = 1;
+    this.dragging = false;
+
+    this.manager.isInsideFacility(this, event.data.global);
     this.mentalBar.addChild(this.statusSprite);
+    this.returnToInitialPoint();
+    this.mouseData = null;
   }
+
+  onDragMove() {
+
+
+    if (this.dragging) {
+      let newPosition = this.mouseData.getLocalPosition(this.parent);
+      this.x = newPosition.x;
+      this.y = newPosition.y;
+    }
+  }
+
+  onClick(event) {
+    console.log(event);
+    console.log(this);
+  }
+
 
 }

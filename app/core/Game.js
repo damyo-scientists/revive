@@ -23,7 +23,7 @@ export default class Game {
   }
 
   resize() {
-    let size = [screen.availWidth, screen.availHeight];
+    let size = [1920, 1080];
     let ratio = size[0] / size[1];
     let w, h;
     if (window.innerWidth / window.innerHeight >= ratio) {
@@ -61,6 +61,11 @@ export default class Game {
 
   setInitialInfo() {
     this.initialData = {
+      resource: 0,
+      fund: 0,
+      memoryDisc: 0,
+      bio: 0,
+      reviver: 0,
       currentTurn: 1,
       maxTurn: 2,
       characterList: [
@@ -77,7 +82,7 @@ export default class Game {
           mentalPoint: 5
         },
         {
-          name: 'yuki',
+          name: 'niki',
           mentalPoint: 5
         },
         {
@@ -85,7 +90,7 @@ export default class Game {
           mentalPoint: 5
         },
         {
-          name: 'niki',
+          name: 'yuki',
           mentalPoint: 3
         }
       ],
@@ -104,16 +109,23 @@ export default class Game {
     };
     this.data = [];
     this.app = null;
+    this.facilityList = [];
+    this.resetTempData();
+  }
+
+  resetTempData() {
+    this.tempData = {
+      resource: 0,
+      fund: 0,
+      memoryDisc: 0,
+      bio: 0,
+      reviver: 0,
+    }
   }
 
   getTurn() {
     return this.data.currentTurn;
   }
-
-  addResource(point) {
-    this.data.resource += point;
-  }
-
 
   nextTurn() {
     // go next Game
@@ -122,18 +134,6 @@ export default class Game {
     if (this.data.currentTurn < this.data.maxTurn) {
       this.data.currentTurn += 1;
     }
-  }
-
-  setChracterStatus(index) {
-
-    // this.characterList[index].name = characterData.name;
-    // this.characterList[index].mentalPoint = characterData.mentalPoint;
-
-    // 이게 왜 되는거지??? characterList도 Game 걸 가져오는데 왜 -1이 적용되있는거지?
-    let assignedData = Object.assign({}, this.data.characterList[index]);
-
-    this.data.characterList[index] = assignedData;
-
   }
 
   generateApplication() {
@@ -147,5 +147,20 @@ export default class Game {
       a[b] = this[b];
       return a;
     }, {});
+  }
+
+  setCurrentScene(currentScene) {
+    this.currentScene = currentScene;
+  }
+
+  setResultData() {
+    this.data.resource += this.tempData.resource;
+    this.data.fund += this.tempData.fund;
+    this.data.memoryDisc += this.tempData.memoryDisc;
+    this.data.bio += this.tempData.bio;
+    this.data.reviver += this.tempData.reviver;
+
+
+    this.resetTempData();
   }
 }
